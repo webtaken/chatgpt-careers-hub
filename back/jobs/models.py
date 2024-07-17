@@ -7,9 +7,11 @@ from django.db.models import (
     ManyToManyField,
     Model,
     PositiveSmallIntegerField,
+    SlugField,
     TextField,
     URLField,
 )
+from django.template.defaultfilters import slugify
 
 
 class Location(Model):
@@ -29,7 +31,7 @@ class Location(Model):
         max_length=20, choices=LOCATION_TYPE_CHOICES, verbose_name="Location Type"
     )
     # rank from 0 to 100
-    rank = PositiveSmallIntegerField(default=0)
+    rank = PositiveSmallIntegerField(default=0, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.location
@@ -53,9 +55,11 @@ class Job(TimeStampedModel):
         db_table = "jobs"
 
     company_name = CharField(max_length=150, verbose_name="Company Name")
-    title = CharField(max_length=150, verbose_name="Title")
-    description = TextField(verbose_name="Description")
+    title = CharField(max_length=150, verbose_name="Title", db_index=True)
+    slug = SlugField(null=True, blank=True, unique=True, db_index=True)
+    description = TextField(verbose_name="Description", db_index=True)
     tags = ManyToManyField(Tag)
+    location = ManyToManyField(Location)
     remote = BooleanField(default=False)
     apply_url = URLField(null=True, blank=True, verbose_name="Apply URL")
     apply_by_email = BooleanField(default=False)
@@ -63,3 +67,11 @@ class Job(TimeStampedModel):
     company_email = EmailField(verbose_name="Company Email (For Invoice)")
     pin_on_top = BooleanField(default=False, verbose_name="Pin on top (30 days)")
     verified = BooleanField(default=False, verbose_name="Verified")
+
+    def __str__(self):
+        return f"{self.title}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.slug == "":
+            self.slug = slugify(f"{self.title} {self.company_name}")
+        return super().save(*args, **kwargs)

@@ -30,7 +30,7 @@ from drf_spectacular.views import (
 def server_status(_request):
     return JsonResponse(
         {
-            "project": "Marcaciones NOC Deployment",
+            "project": "ChatGPT jobs Deployment",
             "message": "server ON",
             "comments": "Only GOD knows what is going on here",
         }
@@ -41,6 +41,7 @@ urlpatterns = [
     path("", server_status),
     path("admin/", admin.site.urls),
     path("api/auth/", include("authentication.urls")),
+    path("api/", include("jobs.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/schema/swagger-ui/",

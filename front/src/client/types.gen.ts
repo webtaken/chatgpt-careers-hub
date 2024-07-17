@@ -9,10 +9,74 @@ export type JWT = {
     user: UserDetails;
 };
 
+export type Job = {
+    readonly id: number;
+    readonly created_at: string;
+    readonly updated_at: string;
+    company_name: string;
+    title: string;
+    slug?: string | null;
+    description: string;
+    remote?: boolean;
+    apply_url?: string | null;
+    apply_by_email?: boolean;
+    apply_email?: string | null;
+    company_email: string;
+    pin_on_top?: boolean;
+    verified?: boolean;
+    tags: Array<(number)>;
+    location: Array<(number)>;
+};
+
+export type Location = {
+    readonly id: number;
+    location: string;
+    location_type: LocationTypeEnum;
+    rank?: number | null;
+};
+
+/**
+ * * `region` - Region
+ * * `country` - Country
+ * * `city` - City
+ */
+export type LocationTypeEnum = 'region' | 'country' | 'city';
+
 export type Login = {
     username?: string;
     email?: string;
     password: string;
+};
+
+export type PatchedJob = {
+    readonly id?: number;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+    company_name?: string;
+    title?: string;
+    slug?: string | null;
+    description?: string;
+    remote?: boolean;
+    apply_url?: string | null;
+    apply_by_email?: boolean;
+    apply_email?: string | null;
+    company_email?: string;
+    pin_on_top?: boolean;
+    verified?: boolean;
+    tags?: Array<(number)>;
+    location?: Array<(number)>;
+};
+
+export type PatchedLocation = {
+    readonly id?: number;
+    location?: string;
+    location_type?: LocationTypeEnum;
+    rank?: number | null;
+};
+
+export type PatchedTag = {
+    readonly id?: number;
+    text?: string;
 };
 
 /**
@@ -44,6 +108,11 @@ export type SocialLogin = {
     access_token?: string;
     code?: string;
     id_token?: string;
+};
+
+export type Tag = {
+    readonly id: number;
+    text: string;
 };
 
 export type TokenRefresh = {
@@ -125,6 +194,144 @@ export type AuthUserPartialUpdateData = {
 
 export type AuthUserPartialUpdateResponse = UserDetails;
 
+export type JobsListResponse = Array<Job>;
+
+export type JobsCreateData = {
+    requestBody: Job;
+};
+
+export type JobsCreateResponse = Job;
+
+export type JobsRetrieveData = {
+    /**
+     * A unique integer value identifying this job.
+     */
+    id: number;
+};
+
+export type JobsRetrieveResponse = Job;
+
+export type JobsUpdateData = {
+    /**
+     * A unique integer value identifying this job.
+     */
+    id: number;
+    requestBody: Job;
+};
+
+export type JobsUpdateResponse = Job;
+
+export type JobsPartialUpdateData = {
+    /**
+     * A unique integer value identifying this job.
+     */
+    id: number;
+    requestBody?: PatchedJob;
+};
+
+export type JobsPartialUpdateResponse = Job;
+
+export type JobsDestroyData = {
+    /**
+     * A unique integer value identifying this job.
+     */
+    id: number;
+};
+
+export type JobsDestroyResponse = void;
+
+export type LocationsListResponse = Array<Location>;
+
+export type LocationsCreateData = {
+    requestBody: Location;
+};
+
+export type LocationsCreateResponse = Location;
+
+export type LocationsRetrieveData = {
+    /**
+     * A unique integer value identifying this location.
+     */
+    id: number;
+};
+
+export type LocationsRetrieveResponse = Location;
+
+export type LocationsUpdateData = {
+    /**
+     * A unique integer value identifying this location.
+     */
+    id: number;
+    requestBody: Location;
+};
+
+export type LocationsUpdateResponse = Location;
+
+export type LocationsPartialUpdateData = {
+    /**
+     * A unique integer value identifying this location.
+     */
+    id: number;
+    requestBody?: PatchedLocation;
+};
+
+export type LocationsPartialUpdateResponse = Location;
+
+export type LocationsDestroyData = {
+    /**
+     * A unique integer value identifying this location.
+     */
+    id: number;
+};
+
+export type LocationsDestroyResponse = void;
+
+export type TagsListResponse = Array<Tag>;
+
+export type TagsCreateData = {
+    requestBody: Tag;
+};
+
+export type TagsCreateResponse = Tag;
+
+export type TagsRetrieveData = {
+    /**
+     * A unique integer value identifying this tag.
+     */
+    id: number;
+};
+
+export type TagsRetrieveResponse = Tag;
+
+export type TagsUpdateData = {
+    /**
+     * A unique integer value identifying this tag.
+     */
+    id: number;
+    requestBody: Tag;
+};
+
+export type TagsUpdateResponse = Tag;
+
+export type TagsPartialUpdateData = {
+    /**
+     * A unique integer value identifying this tag.
+     */
+    id: number;
+    requestBody?: PatchedTag;
+};
+
+export type TagsPartialUpdateResponse = Tag;
+
+export type TagsDestroyData = {
+    /**
+     * A unique integer value identifying this tag.
+     */
+    id: number;
+};
+
+export type TagsDestroyResponse = void;
+
 export type $OpenApiTs = {
     '/api/auth/google/': {
         post: {
@@ -197,6 +404,132 @@ export type $OpenApiTs = {
             req: AuthUserPartialUpdateData;
             res: {
                 200: UserDetails;
+            };
+        };
+    };
+    '/api/jobs/': {
+        get: {
+            res: {
+                200: Array<Job>;
+            };
+        };
+        post: {
+            req: JobsCreateData;
+            res: {
+                201: Job;
+            };
+        };
+    };
+    '/api/jobs/{id}/': {
+        get: {
+            req: JobsRetrieveData;
+            res: {
+                200: Job;
+            };
+        };
+        put: {
+            req: JobsUpdateData;
+            res: {
+                200: Job;
+            };
+        };
+        patch: {
+            req: JobsPartialUpdateData;
+            res: {
+                200: Job;
+            };
+        };
+        delete: {
+            req: JobsDestroyData;
+            res: {
+                /**
+                 * No response body
+                 */
+                204: void;
+            };
+        };
+    };
+    '/api/locations/': {
+        get: {
+            res: {
+                200: Array<Location>;
+            };
+        };
+        post: {
+            req: LocationsCreateData;
+            res: {
+                201: Location;
+            };
+        };
+    };
+    '/api/locations/{id}/': {
+        get: {
+            req: LocationsRetrieveData;
+            res: {
+                200: Location;
+            };
+        };
+        put: {
+            req: LocationsUpdateData;
+            res: {
+                200: Location;
+            };
+        };
+        patch: {
+            req: LocationsPartialUpdateData;
+            res: {
+                200: Location;
+            };
+        };
+        delete: {
+            req: LocationsDestroyData;
+            res: {
+                /**
+                 * No response body
+                 */
+                204: void;
+            };
+        };
+    };
+    '/api/tags/': {
+        get: {
+            res: {
+                200: Array<Tag>;
+            };
+        };
+        post: {
+            req: TagsCreateData;
+            res: {
+                201: Tag;
+            };
+        };
+    };
+    '/api/tags/{id}/': {
+        get: {
+            req: TagsRetrieveData;
+            res: {
+                200: Tag;
+            };
+        };
+        put: {
+            req: TagsUpdateData;
+            res: {
+                200: Tag;
+            };
+        };
+        patch: {
+            req: TagsPartialUpdateData;
+            res: {
+                200: Tag;
+            };
+        };
+        delete: {
+            req: TagsDestroyData;
+            res: {
+                /**
+                 * No response body
+                 */
+                204: void;
             };
         };
     };

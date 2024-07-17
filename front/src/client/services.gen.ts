@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse } from './types.gen';
+import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse } from './types.gen';
 
 /**
  * class used for social authentications
@@ -184,4 +184,256 @@ export const authUserPartialUpdate = (data: AuthUserPartialUpdateData = {}): Can
     url: '/api/auth/user/',
     body: data.requestBody,
     mediaType: 'application/json'
+}); };
+
+/**
+ * @returns Job
+ * @throws ApiError
+ */
+export const jobsList = (): CancelablePromise<JobsListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/jobs/'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns Job
+ * @throws ApiError
+ */
+export const jobsCreate = (data: JobsCreateData): CancelablePromise<JobsCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/jobs/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this job.
+ * @returns Job
+ * @throws ApiError
+ */
+export const jobsRetrieve = (data: JobsRetrieveData): CancelablePromise<JobsRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/jobs/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this job.
+ * @param data.requestBody
+ * @returns Job
+ * @throws ApiError
+ */
+export const jobsUpdate = (data: JobsUpdateData): CancelablePromise<JobsUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PUT',
+    url: '/api/jobs/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this job.
+ * @param data.requestBody
+ * @returns Job
+ * @throws ApiError
+ */
+export const jobsPartialUpdate = (data: JobsPartialUpdateData): CancelablePromise<JobsPartialUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PATCH',
+    url: '/api/jobs/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this job.
+ * @returns void No response body
+ * @throws ApiError
+ */
+export const jobsDestroy = (data: JobsDestroyData): CancelablePromise<JobsDestroyResponse> => { return __request(OpenAPI, {
+    method: 'DELETE',
+    url: '/api/jobs/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * @returns Location
+ * @throws ApiError
+ */
+export const locationsList = (): CancelablePromise<LocationsListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/locations/'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns Location
+ * @throws ApiError
+ */
+export const locationsCreate = (data: LocationsCreateData): CancelablePromise<LocationsCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/locations/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this location.
+ * @returns Location
+ * @throws ApiError
+ */
+export const locationsRetrieve = (data: LocationsRetrieveData): CancelablePromise<LocationsRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/locations/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this location.
+ * @param data.requestBody
+ * @returns Location
+ * @throws ApiError
+ */
+export const locationsUpdate = (data: LocationsUpdateData): CancelablePromise<LocationsUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PUT',
+    url: '/api/locations/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this location.
+ * @param data.requestBody
+ * @returns Location
+ * @throws ApiError
+ */
+export const locationsPartialUpdate = (data: LocationsPartialUpdateData): CancelablePromise<LocationsPartialUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PATCH',
+    url: '/api/locations/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this location.
+ * @returns void No response body
+ * @throws ApiError
+ */
+export const locationsDestroy = (data: LocationsDestroyData): CancelablePromise<LocationsDestroyResponse> => { return __request(OpenAPI, {
+    method: 'DELETE',
+    url: '/api/locations/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * @returns Tag
+ * @throws ApiError
+ */
+export const tagsList = (): CancelablePromise<TagsListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/tags/'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns Tag
+ * @throws ApiError
+ */
+export const tagsCreate = (data: TagsCreateData): CancelablePromise<TagsCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/tags/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this tag.
+ * @returns Tag
+ * @throws ApiError
+ */
+export const tagsRetrieve = (data: TagsRetrieveData): CancelablePromise<TagsRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/tags/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this tag.
+ * @param data.requestBody
+ * @returns Tag
+ * @throws ApiError
+ */
+export const tagsUpdate = (data: TagsUpdateData): CancelablePromise<TagsUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PUT',
+    url: '/api/tags/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this tag.
+ * @param data.requestBody
+ * @returns Tag
+ * @throws ApiError
+ */
+export const tagsPartialUpdate = (data: TagsPartialUpdateData): CancelablePromise<TagsPartialUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PATCH',
+    url: '/api/tags/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this tag.
+ * @returns void No response body
+ * @throws ApiError
+ */
+export const tagsDestroy = (data: TagsDestroyData): CancelablePromise<TagsDestroyResponse> => { return __request(OpenAPI, {
+    method: 'DELETE',
+    url: '/api/tags/{id}/',
+    path: {
+        id: data.id
+    }
 }); };

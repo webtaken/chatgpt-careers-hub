@@ -17,6 +17,121 @@ export const $JWT = {
     required: ['access', 'refresh', 'user']
 } as const;
 
+export const $Job = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        updated_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        company_name: {
+            type: 'string',
+            maxLength: 150
+        },
+        title: {
+            type: 'string',
+            maxLength: 150
+        },
+        slug: {
+            type: 'string',
+            nullable: true,
+            maxLength: 50,
+            pattern: '^[-a-zA-Z0-9_]+$'
+        },
+        description: {
+            type: 'string'
+        },
+        remote: {
+            type: 'boolean'
+        },
+        apply_url: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            maxLength: 200
+        },
+        apply_by_email: {
+            type: 'boolean'
+        },
+        apply_email: {
+            type: 'string',
+            format: 'email',
+            nullable: true,
+            title: 'Apply E-mail',
+            maxLength: 254
+        },
+        company_email: {
+            type: 'string',
+            format: 'email',
+            title: 'Company Email (For Invoice)',
+            maxLength: 254
+        },
+        pin_on_top: {
+            type: 'boolean',
+            title: 'Pin on top (30 days)'
+        },
+        verified: {
+            type: 'boolean'
+        },
+        tags: {
+            type: 'array',
+            items: {
+                type: 'integer'
+            }
+        },
+        location: {
+            type: 'array',
+            items: {
+                type: 'integer'
+            }
+        }
+    },
+    required: ['company_email', 'company_name', 'created_at', 'description', 'id', 'location', 'tags', 'title', 'updated_at']
+} as const;
+
+export const $Location = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        location: {
+            type: 'string',
+            maxLength: 200
+        },
+        location_type: {
+            '$ref': '#/components/schemas/LocationTypeEnum'
+        },
+        rank: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: 0,
+            format: 'int64',
+            nullable: true
+        }
+    },
+    required: ['id', 'location', 'location_type']
+} as const;
+
+export const $LocationTypeEnum = {
+    enum: ['region', 'country', 'city'],
+    type: 'string',
+    description: `* \`region\` - Region
+* \`country\` - Country
+* \`city\` - City`
+} as const;
+
 export const $Login = {
     type: 'object',
     properties: {
@@ -32,6 +147,126 @@ export const $Login = {
         }
     },
     required: ['password']
+} as const;
+
+export const $PatchedJob = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        updated_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        company_name: {
+            type: 'string',
+            maxLength: 150
+        },
+        title: {
+            type: 'string',
+            maxLength: 150
+        },
+        slug: {
+            type: 'string',
+            nullable: true,
+            maxLength: 50,
+            pattern: '^[-a-zA-Z0-9_]+$'
+        },
+        description: {
+            type: 'string'
+        },
+        remote: {
+            type: 'boolean'
+        },
+        apply_url: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            maxLength: 200
+        },
+        apply_by_email: {
+            type: 'boolean'
+        },
+        apply_email: {
+            type: 'string',
+            format: 'email',
+            nullable: true,
+            title: 'Apply E-mail',
+            maxLength: 254
+        },
+        company_email: {
+            type: 'string',
+            format: 'email',
+            title: 'Company Email (For Invoice)',
+            maxLength: 254
+        },
+        pin_on_top: {
+            type: 'boolean',
+            title: 'Pin on top (30 days)'
+        },
+        verified: {
+            type: 'boolean'
+        },
+        tags: {
+            type: 'array',
+            items: {
+                type: 'integer'
+            }
+        },
+        location: {
+            type: 'array',
+            items: {
+                type: 'integer'
+            }
+        }
+    }
+} as const;
+
+export const $PatchedLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        location: {
+            type: 'string',
+            maxLength: 200
+        },
+        location_type: {
+            '$ref': '#/components/schemas/LocationTypeEnum'
+        },
+        rank: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: 0,
+            format: 'int64',
+            nullable: true
+        }
+    }
+} as const;
+
+export const $PatchedTag = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        text: {
+            type: 'string',
+            title: 'Tag',
+            maxLength: 150
+        }
+    }
 } as const;
 
 export const $PatchedUserDetails = {
@@ -114,6 +349,22 @@ export const $SocialLogin = {
             type: 'string'
         }
     }
+} as const;
+
+export const $Tag = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        text: {
+            type: 'string',
+            title: 'Tag',
+            maxLength: 150
+        }
+    },
+    required: ['id', 'text']
 } as const;
 
 export const $TokenRefresh = {

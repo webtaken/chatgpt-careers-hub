@@ -1,10 +1,16 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Link from "next/link";
+import ProfileActions from "../auth/ProfileActions";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await getServerSession(authOptions);
+
   return (
     <nav className="flex items-center justify-between px-4 pt-3">
-      <div className="flex items-center gap-x-2">
+      <Link href="/" className="flex items-center gap-x-2">
         <Image
           src="/brand-icon.png"
           alt="Brand icon"
@@ -12,10 +18,13 @@ export default function Navbar() {
           width={100}
           height={100}
         />
-        <h1 className="text-2xl font-semibold">ChatGPT Careers Hub</h1>
-      </div>
+        <h1 className="text-2xl font-semibold">ChatGPT Jobs</h1>
+      </Link>
       <div className="flex items-center gap-x-2">
-        <Button>Post a Job - $100</Button>
+        <Button asChild>
+          <Link href={session ? "/hiring" : "/signin"}>Post a Job - $100</Link>
+        </Button>
+        {session && <ProfileActions size="medium" session={session} />}
       </div>
     </nav>
   );
