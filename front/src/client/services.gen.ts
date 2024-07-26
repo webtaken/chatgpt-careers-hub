@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse } from './types.gen';
+import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse } from './types.gen';
 
 /**
  * class used for social authentications
@@ -184,6 +184,90 @@ export const authUserPartialUpdate = (data: AuthUserPartialUpdateData = {}): Can
     url: '/api/auth/user/',
     body: data.requestBody,
     mediaType: 'application/json'
+}); };
+
+/**
+ * @returns Category
+ * @throws ApiError
+ */
+export const categoriesList = (): CancelablePromise<CategoriesListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/categories/'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns Category
+ * @throws ApiError
+ */
+export const categoriesCreate = (data: CategoriesCreateData): CancelablePromise<CategoriesCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/categories/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this category.
+ * @returns Category
+ * @throws ApiError
+ */
+export const categoriesRetrieve = (data: CategoriesRetrieveData): CancelablePromise<CategoriesRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/categories/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this category.
+ * @param data.requestBody
+ * @returns Category
+ * @throws ApiError
+ */
+export const categoriesUpdate = (data: CategoriesUpdateData): CancelablePromise<CategoriesUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PUT',
+    url: '/api/categories/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this category.
+ * @param data.requestBody
+ * @returns Category
+ * @throws ApiError
+ */
+export const categoriesPartialUpdate = (data: CategoriesPartialUpdateData): CancelablePromise<CategoriesPartialUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PATCH',
+    url: '/api/categories/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this category.
+ * @returns void No response body
+ * @throws ApiError
+ */
+export const categoriesDestroy = (data: CategoriesDestroyData): CancelablePromise<CategoriesDestroyResponse> => { return __request(OpenAPI, {
+    method: 'DELETE',
+    url: '/api/categories/{id}/',
+    path: {
+        id: data.id
+    }
 }); };
 
 /**

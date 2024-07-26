@@ -9,14 +9,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export async function setCredentialsToAPI() {
-  if (!OpenAPI.TOKEN) {
-    const session = await getServerSession(authOptions);
-    if (!session) throw Error("set credentials failed");
-    // eslint-disable-next-line
-    // @ts-ignore
-    OpenAPI.TOKEN = session.django_data.access;
-    OpenAPI.BASE = process.env.BASE_PATH_API!;
-  }
+  const session = await getServerSession(authOptions);
+  if (!session) throw Error("set credentials failed");
+  // eslint-disable-next-line
+  // @ts-ignore
+  OpenAPI.TOKEN = session.django_data.access;
+  OpenAPI.BASE = process.env.BASE_PATH_API!;
 }
 
 export function setBasePathToAPI() {

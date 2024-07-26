@@ -37,11 +37,27 @@ class Location(Model):
         return self.location
 
 
+class Category(Model):
+    class Meta:
+        db_table = "categories"
+
+    text = CharField(max_length=150, verbose_name="Category")
+    slug = SlugField(null=True, blank=True, unique=True, db_index=True)
+
+    def __str__(self):
+        return self.text
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.slug == "":
+            self.slug = slugify(f"{self.text}")
+        return super().save(*args, **kwargs)
+
+
 class Tag(Model):
     class Meta:
         db_table = "tags"
         indexes = [
-            Index(fields=["text"], name="text_idx"),
+            Index(fields=["text"], name="text_tag_idx"),
         ]
 
     text = CharField(max_length=150, verbose_name="Tag")
@@ -60,6 +76,7 @@ class Job(TimeStampedModel):
     description = TextField(verbose_name="Description", db_index=True)
     tags = ManyToManyField(Tag)
     location = ManyToManyField(Location)
+    category = ManyToManyField(Category)
     remote = BooleanField(default=False)
     apply_url = URLField(null=True, blank=True, verbose_name="Apply URL")
     apply_by_email = BooleanField(default=False)

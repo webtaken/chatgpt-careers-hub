@@ -54,11 +54,10 @@ export default function ProfileActions({
         <DropdownMenuItem
           onSelect={() => {
             async function logout() {
-              const data = await signOut({
-                redirect: false,
+              await signOut({
+                redirect: true,
                 callbackUrl: "/",
               });
-              router.push(data.url);
             }
             logout();
           }}

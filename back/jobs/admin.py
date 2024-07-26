@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.forms import ModelForm
 
-from .models import Job, Location, Tag
+from .models import Category, Job, Location, Tag
 
 
 class JobAdminForm(ModelForm):
@@ -20,6 +20,11 @@ class JobAdmin(admin.ModelAdmin):
     list_display = ("title", "company_name", "verified")
 
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("text", "slug")
+
+
 admin.site.register(Job, JobAdmin)
 admin.site.register(Tag)
 admin.site.register(Location)
+admin.site.register(Category, CategoryAdmin)

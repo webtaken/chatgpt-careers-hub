@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from jobs.models import Job, Location, Tag
+from jobs.models import Category, Job, Location, Tag
 
 
 class JobSerializer(ModelSerializer):
@@ -18,4 +18,10 @@ class TagSerializer(ModelSerializer):
 class LocationSerializer(ModelSerializer):
     class Meta:
         model = Location
+        fields = "__all__"
+
+
+class CategorySerializer(ModelSerializer):
+    class Meta:
+        model = Category
         fields = "__all__"

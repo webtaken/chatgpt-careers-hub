@@ -1,8 +1,13 @@
 from rest_framework.viewsets import ModelViewSet
 
-from jobs.models import Job, Location, Tag
+from jobs.models import Category, Job, Location, Tag
 
-from .serializers import JobSerializer, LocationSerializer, TagSerializer
+from .serializers import (
+    CategorySerializer,
+    JobSerializer,
+    LocationSerializer,
+    TagSerializer,
+)
 
 
 class JobViewSet(ModelViewSet):
@@ -18,3 +23,8 @@ class TagViewSet(ModelViewSet):
 class LocationViewSet(ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
