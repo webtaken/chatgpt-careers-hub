@@ -1,8 +1,10 @@
 from commons.models import TimeStampedModel
 from django.db.models import (
+    CASCADE,
     BooleanField,
     CharField,
     EmailField,
+    ForeignKey,
     Index,
     ManyToManyField,
     Model,
@@ -12,6 +14,7 @@ from django.db.models import (
     URLField,
 )
 from django.template.defaultfilters import slugify
+from users.models import User
 
 
 class Location(Model):
@@ -70,6 +73,7 @@ class Job(TimeStampedModel):
     class Meta:
         db_table = "jobs"
 
+    user = ForeignKey(User, on_delete=CASCADE, null=True)
     company_name = CharField(max_length=150, verbose_name="Company Name")
     title = CharField(max_length=150, verbose_name="Title", db_index=True)
     slug = SlugField(null=True, blank=True, unique=True, db_index=True)
@@ -90,5 +94,5 @@ class Job(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if not self.slug or self.slug == "":
-            self.slug = slugify(f"{self.title} {self.company_name}")
+            self.slug = slugify(f"{self.title} {self.company_name} {self.pk}")
         return super().save(*args, **kwargs)

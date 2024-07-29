@@ -105,6 +105,10 @@ export const $Job = {
         verified: {
             type: 'boolean'
         },
+        user: {
+            type: 'integer',
+            nullable: true
+        },
         tags: {
             type: 'array',
             items: {
@@ -264,6 +268,10 @@ export const $PatchedJob = {
         verified: {
             type: 'boolean'
         },
+        user: {
+            type: 'integer',
+            nullable: true
+        },
         tags: {
             type: 'array',
             items: {
@@ -404,6 +412,17 @@ export const $SocialLogin = {
             type: 'string'
         }
     }
+} as const;
+
+export const $Subscribe = {
+    type: 'object',
+    properties: {
+        email: {
+            type: 'string',
+            format: 'email'
+        }
+    },
+    required: ['email']
 } as const;
 
 export const $Tag = {

@@ -14,6 +14,7 @@ import ZipRecruiterLogo from "../../../public/brands/ziprecruiter-logo.png";
 import IndeedLogo from "../../../public/brands/indeed-logo.png";
 import { CategoriesListResponse, Category } from "@/client";
 import CategoriesSelect from "./CategoriesSelect";
+import { SubscriptionForm } from "./SubscriptionForm";
 
 export default function Header({
   title,
@@ -57,10 +58,15 @@ export default function Header({
           />
         </div>
       </div>
-      <div className="flex items-center gap-x-2 px-20">
-        <p className="text-sm">Filter by:</p>
-        {categories && <CategoriesSelect categories={categories} />}
+      <div className="my-4">
+        <SubscriptionForm />
       </div>
+      {categories && (
+        <div className="flex items-center gap-x-2 px-20">
+          <p className="text-sm">Filter by:</p>
+          <CategoriesSelect categories={categories} />
+        </div>
+      )}
     </>
   );
 }

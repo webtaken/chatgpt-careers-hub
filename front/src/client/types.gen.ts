@@ -30,6 +30,7 @@ export type Job = {
     company_email: string;
     pin_on_top?: boolean;
     verified?: boolean;
+    user?: number | null;
     tags: Array<(number)>;
     location: Array<(number)>;
     category: Array<(number)>;
@@ -76,6 +77,7 @@ export type PatchedJob = {
     company_email?: string;
     pin_on_top?: boolean;
     verified?: boolean;
+    user?: number | null;
     tags?: Array<(number)>;
     location?: Array<(number)>;
     category?: Array<(number)>;
@@ -122,6 +124,10 @@ export type SocialLogin = {
     access_token?: string;
     code?: string;
     id_token?: string;
+};
+
+export type Subscribe = {
+    email: string;
 };
 
 export type Tag = {
@@ -345,6 +351,14 @@ export type LocationsDestroyData = {
 };
 
 export type LocationsDestroyResponse = void;
+
+export type SubscriptionsSubscribeCreateData = {
+    requestBody: Subscribe;
+};
+
+export type SubscriptionsSubscribeCreateResponse = {
+    [key: string]: unknown;
+};
 
 export type TagsListResponse = Array<Tag>;
 
@@ -590,6 +604,19 @@ export type $OpenApiTs = {
                  * No response body
                  */
                 204: void;
+            };
+        };
+    };
+    '/api/subscriptions/subscribe/': {
+        post: {
+            req: SubscriptionsSubscribeCreateData;
+            res: {
+                200: {
+                    [key: string]: unknown;
+                };
+                400: {
+                    [key: string]: unknown;
+                };
             };
         };
     };
