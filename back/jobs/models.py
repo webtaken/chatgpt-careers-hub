@@ -25,6 +25,7 @@ class Location(Model):
         ]
 
     LOCATION_TYPE_CHOICES = [
+        ("remote", "Remote"),
         ("region", "Region"),
         ("country", "Country"),
         ("city", "City"),
@@ -82,7 +83,9 @@ class Job(TimeStampedModel):
     location = ManyToManyField(Location)
     category = ManyToManyField(Category)
     remote = BooleanField(default=False)
-    apply_url = URLField(null=True, blank=True, verbose_name="Apply URL")
+    apply_url = URLField(
+        null=True, max_length=2048, blank=True, verbose_name="Apply URL"
+    )
     apply_by_email = BooleanField(default=False)
     apply_email = EmailField(null=True, blank=True, verbose_name="Apply E-mail")
     company_email = EmailField(verbose_name="Company Email (For Invoice)")

@@ -67,6 +67,15 @@ export type Job = {
     category: Array<(number)>;
 };
 
+export type JobList = {
+    readonly id: number;
+    title: string;
+    company_name: string;
+    readonly tags: Array<(string)>;
+    verified?: boolean;
+    readonly location: Array<(string)>;
+};
+
 export type Location = {
     readonly id: number;
     location: string;
@@ -79,16 +88,24 @@ export type LocationID = {
 };
 
 /**
+ * * `remote` - Remote
  * * `region` - Region
  * * `country` - Country
  * * `city` - City
  */
-export type LocationTypeEnum = 'region' | 'country' | 'city';
+export type LocationTypeEnum = 'remote' | 'region' | 'country' | 'city';
 
 export type Login = {
     username?: string;
     email?: string;
     password: string;
+};
+
+export type PaginatedJobListList = {
+    count: number;
+    next?: string | null;
+    previous?: string | null;
+    results: Array<JobList>;
 };
 
 export type PatchedCategory = {
@@ -289,7 +306,24 @@ export type CategoriesDestroyData = {
 
 export type CategoriesDestroyResponse = void;
 
-export type JobsListResponse = Array<Job>;
+export type JobsListData = {
+    category?: Array<(number)>;
+    categoryText?: string;
+    location?: Array<(number)>;
+    locationLocation?: string;
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number;
+    tags?: Array<(number)>;
+    tagsText?: string;
+};
+
+export type JobsListResponse = PaginatedJobListList;
 
 export type JobsCreateData = {
     requestBody: Job;
@@ -566,8 +600,9 @@ export type $OpenApiTs = {
     };
     '/api/jobs/': {
         get: {
+            req: JobsListData;
             res: {
-                200: Array<Job>;
+                200: PaginatedJobListList;
             };
         };
         post: {

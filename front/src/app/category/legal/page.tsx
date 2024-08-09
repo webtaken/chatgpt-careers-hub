@@ -10,12 +10,12 @@ export default async function Page({
   const pageSize = parseInt(searchParams.pageSize || "10");
 
   const categories = await getCategories();
-  const jobs = await getJobs({ page, pageSize, categoryText: "education" });
+  const jobs = await getJobs({ page, pageSize, categoryText: "legal" });
 
   return (
     <main>
       <Header
-        title="FIND THE BEST ChatGPT JOBS IN EDUCATION"
+        title="FIND THE BEST ChatGPT JOBS IN LEGAL ASSISTANCE AND CONSULTING."
         categories={categories}
         jobs={jobs}
         page={page}

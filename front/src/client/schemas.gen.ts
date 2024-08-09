@@ -211,6 +211,42 @@ export const $Job = {
     required: ['category', 'company_email', 'company_name', 'created_at', 'description', 'id', 'location', 'tags', 'title', 'updated_at']
 } as const;
 
+export const $JobList = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        title: {
+            type: 'string',
+            maxLength: 150
+        },
+        company_name: {
+            type: 'string',
+            maxLength: 150
+        },
+        tags: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            readOnly: true
+        },
+        verified: {
+            type: 'boolean'
+        },
+        location: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            readOnly: true
+        }
+    },
+    required: ['company_name', 'id', 'location', 'tags', 'title']
+} as const;
+
 export const $Location = {
     type: 'object',
     properties: {
@@ -247,9 +283,10 @@ export const $LocationID = {
 } as const;
 
 export const $LocationTypeEnum = {
-    enum: ['region', 'country', 'city'],
+    enum: ['remote', 'region', 'country', 'city'],
     type: 'string',
-    description: `* \`region\` - Region
+    description: `* \`remote\` - Remote
+* \`region\` - Region
 * \`country\` - Country
 * \`city\` - City`
 } as const;
@@ -269,6 +306,35 @@ export const $Login = {
         }
     },
     required: ['password']
+} as const;
+
+export const $PaginatedJobListList = {
+    type: 'object',
+    required: ['count', 'results'],
+    properties: {
+        count: {
+            type: 'integer',
+            example: 123
+        },
+        next: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=4'
+        },
+        previous: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=2'
+        },
+        results: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/JobList'
+            }
+        }
+    }
 } as const;
 
 export const $PatchedCategory = {

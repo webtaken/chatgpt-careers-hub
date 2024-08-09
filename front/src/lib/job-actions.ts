@@ -1,15 +1,15 @@
 "use server";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 
 import {
   CreateLocation,
+  JobsListData,
   LocationTypeEnum,
   categoriesList,
   jobsCreate,
-  locationsCreate,
+  jobsList,
   locationsCreateLocationsCreate,
-  tagsCreate,
   tagsCreateTagsCreate,
-  tagsList,
 } from "@/client";
 import { z } from "zod";
 import { setBasePathToAPI } from "./utils";
@@ -27,15 +27,16 @@ export async function getCategories() {
   }
 }
 
-// export async function searchTags(text: string) {
-//   try {
-//     setBasePathToAPI();
-//     const tags = await tagsList({ search: text });
-//     return tags.results;
-//   } catch (error) {
-//     return undefined;
-//   }
-// }
+export async function getJobs(filters: JobsListData) {
+  try {
+    noStore();
+    setBasePathToAPI();
+    const jobsResponse = await jobsList({ ...filters });
+    return jobsResponse;
+  } catch (error) {
+    return undefined;
+  }
+}
 
 export async function createJob(data: z.infer<typeof FormSchema>) {
   try {
@@ -85,15 +86,17 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
           apply_email: data.applyEmail,
           company_email: data.companyEmail,
           pin_on_top: data.pinOnTop,
-          verified: true,
+          verified: false,
         },
       });
-      console.log(job);
       return job;
     }
     console.log("no staff");
     return true;
   } catch (error) {
+    console.log(error);
     return undefined;
+  } finally {
+    revalidatePath("/");
   }
 }

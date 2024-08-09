@@ -6,6 +6,19 @@ export interface LocationOption {
   readonly type: LocationTypeEnum;
 }
 
+export const remoteOptions: readonly LocationOption[] = [
+  {
+    value: "Remote (Worldwide)",
+    label: "Remote (Worldwide)",
+    type: "remote",
+  },
+  {
+    value: "Remote (USA)",
+    label: "Remote (USA)",
+    type: "remote",
+  },
+];
+
 export const regionOptions: readonly LocationOption[] = [
   { value: "Africa", label: "Africa", type: "region" },
   { value: "Asia", label: "Asia", type: "region" },
@@ -259,6 +272,7 @@ export interface GroupedOption {
 }
 
 export const groupedOptions: readonly GroupedOption[] = [
+  { label: "Remote", options: remoteOptions },
   {
     label: "Regions",
     options: regionOptions,
@@ -289,8 +303,8 @@ export const commonTags = [
     label: "Education",
   },
   {
-    value: "Chat GPT",
-    label: "Chat GPT",
+    value: "ChatGPT",
+    label: "ChatGPT",
   },
   {
     value: "Claude",

@@ -1,9 +1,12 @@
+from typing import List
+
 from rest_framework.serializers import (
     CharField,
     IntegerField,
     ListField,
     ModelSerializer,
     Serializer,
+    SerializerMethodField,
 )
 
 from jobs.models import Category, Job, Location, Tag
@@ -56,3 +59,18 @@ class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
+
+
+class JobListSerializer(ModelSerializer):
+    tags = SerializerMethodField()
+    location = SerializerMethodField()
+
+    class Meta:
+        model = Job
+        fields = ["id", "title", "company_name", "tags", "verified", "location"]
+
+    def get_tags(self, obj) -> List[str]:
+        return [tag.text for tag in obj.tags.all()]
+
+    def get_location(self, obj) -> List[str]:
+        return [location.location for location in obj.location.all()]

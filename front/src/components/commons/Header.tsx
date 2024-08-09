@@ -1,27 +1,24 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import Link from "next/link";
 import Image from "next/image";
 import LinkedinLogo from "../../../public/brands/linkedin-logo.png";
 import ZipRecruiterLogo from "../../../public/brands/ziprecruiter-logo.png";
 import IndeedLogo from "../../../public/brands/indeed-logo.png";
-import { CategoriesListResponse, Category } from "@/client";
+import { CategoriesListResponse, JobsListResponse } from "@/client";
 import CategoriesSelect from "./CategoriesSelect";
 import { SubscriptionForm } from "./SubscriptionForm";
+import JobsList from "../jobs/JobsList";
 
 export default function Header({
   title,
   categories,
+  jobs,
+  page,
+  pageSize,
 }: {
   title?: string;
   categories?: CategoriesListResponse;
+  jobs?: JobsListResponse;
+  page: number;
+  pageSize: number;
 }) {
   return (
     <>
@@ -62,11 +59,12 @@ export default function Header({
         <SubscriptionForm />
       </div>
       {categories && (
-        <div className="flex items-center gap-x-2 px-20">
+        <div className="flex items-center gap-x-2 px-5 md:px-20">
           <p className="text-sm">Filter by:</p>
           <CategoriesSelect categories={categories} />
         </div>
       )}
+      {jobs && <JobsList jobs={jobs} page={page} pageSize={pageSize} />}
     </>
   );
 }

@@ -1,4 +1,5 @@
 from django.db import transaction
+from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework import status
 from rest_framework.decorators import action
@@ -8,10 +9,13 @@ from rest_framework.viewsets import ModelViewSet
 
 from jobs.models import Category, Job, Location, Tag
 
+from .filters import JobFilter
+from .pagination import StandardResultsSetPagination
 from .serializers import (
     CategorySerializer,
     CreateMultipleLocationsSerializer,
     CreateMultipleTagsSerializer,
+    JobListSerializer,
     JobSerializer,
     LocationIDSerializer,
     LocationSerializer,
@@ -20,9 +24,21 @@ from .serializers import (
 )
 
 
-class JobViewSet(ModelViewSet):
-    queryset = Job.objects.all()
+class JobViewSet(ListAPIView, ModelViewSet):
+    queryset = Job.objects.all().order_by("-updated_at")
     serializer_class = JobSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_class = JobFilter
+    pagination_class = StandardResultsSetPagination
+
+    def get_serializer_class(self):
+        match self.action:
+            case "list":
+                return JobListSerializer
+            case _:
+                return JobSerializer
 
 
 class TagViewSet(ModelViewSet, ListAPIView):
@@ -94,7 +110,6 @@ class LocationViewSet(ModelViewSet):
         with transaction.atomic():
             location_ids = []
             for location_item in locations:
-                print(location_item)
                 location, _ = Location.objects.get_or_create(
                     location=location_item["location"],
                     defaults={
@@ -102,7 +117,6 @@ class LocationViewSet(ModelViewSet):
                         "location_type": location_item["location_type"],
                     },
                 )
-                print(location.id)
                 location_ids.append(location.id)
         print(location_ids)
         response_serializer = TagIDSerializer(
