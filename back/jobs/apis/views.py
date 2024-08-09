@@ -4,6 +4,7 @@ from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -24,14 +25,24 @@ from .serializers import (
 )
 
 
-class JobViewSet(ListAPIView, ModelViewSet):
+class JobListViewSet(ListAPIView):
     queryset = Job.objects.all().order_by("-updated_at")
-    serializer_class = JobSerializer
+    serializer_class = JobListSerializer
     filter_backends = [
         DjangoFilterBackend,
     ]
     filterset_class = JobFilter
     pagination_class = StandardResultsSetPagination
+
+
+class JobViewSet(ModelViewSet):
+    queryset = Job.objects.all().order_by("-updated_at")
+    serializer_class = JobSerializer
+
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.request.user.jobs.all().order_by("-updated_at")
 
     def get_serializer_class(self):
         match self.action:

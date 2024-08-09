@@ -3,16 +3,17 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 
 import {
   CreateLocation,
-  JobsListData,
+  JobsListListData,
   LocationTypeEnum,
   categoriesList,
   jobsCreate,
   jobsList,
+  jobsListList,
   locationsCreateLocationsCreate,
   tagsCreateTagsCreate,
 } from "@/client";
 import { z } from "zod";
-import { setBasePathToAPI } from "./utils";
+import { setBasePathToAPI, setCredentialsToAPI } from "./utils";
 import { FormSchema } from "@/components/hiring/HireForm";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
@@ -27,11 +28,22 @@ export async function getCategories() {
   }
 }
 
-export async function getJobs(filters: JobsListData) {
+export async function getJobs(filters: JobsListListData) {
   try {
     noStore();
     setBasePathToAPI();
-    const jobsResponse = await jobsList({ ...filters });
+    const jobsResponse = await jobsListList({ ...filters });
+    return jobsResponse;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export async function getUserJobs() {
+  try {
+    noStore();
+    await setCredentialsToAPI();
+    const jobsResponse = await jobsList();
     return jobsResponse;
   } catch (error) {
     return undefined;
@@ -40,7 +52,7 @@ export async function getJobs(filters: JobsListData) {
 
 export async function createJob(data: z.infer<typeof FormSchema>) {
   try {
-    setBasePathToAPI();
+    await setCredentialsToAPI();
     const session: any = await getServerSession(authOptions);
     if (session.user.is_staff) {
       const tagNames = data.tags.map((tag) => tag.text);
@@ -69,7 +81,6 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
           ? locationNamesResponse.value.map((item) => item.id)
           : [];
       const categoryIds = data.categories.map((category) => +category.id);
-      console.log(session);
       const job = await jobsCreate({
         // @ts-expect-error
         requestBody: {
@@ -91,7 +102,6 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
       });
       return job;
     }
-    console.log("no staff");
     return true;
   } catch (error) {
     console.log(error);

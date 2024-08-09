@@ -67,7 +67,15 @@ class JobListSerializer(ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ["id", "title", "company_name", "tags", "verified", "location"]
+        fields = [
+            "id",
+            "title",
+            "company_name",
+            "tags",
+            "verified",
+            "location",
+            "slug",
+        ]
 
     def get_tags(self, obj) -> List[str]:
         return [tag.text for tag in obj.tags.all()]

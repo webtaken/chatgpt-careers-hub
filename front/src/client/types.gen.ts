@@ -306,7 +306,15 @@ export type CategoriesDestroyData = {
 
 export type CategoriesDestroyResponse = void;
 
-export type JobsListData = {
+export type JobsListResponse = Array<JobList>;
+
+export type JobsCreateData = {
+    requestBody: Job;
+};
+
+export type JobsCreateResponse = Job;
+
+export type JobsListListData = {
     category?: Array<(number)>;
     categoryText?: string;
     location?: Array<(number)>;
@@ -323,13 +331,7 @@ export type JobsListData = {
     tagsText?: string;
 };
 
-export type JobsListResponse = PaginatedJobListList;
-
-export type JobsCreateData = {
-    requestBody: Job;
-};
-
-export type JobsCreateResponse = Job;
+export type JobsListListResponse = PaginatedJobListList;
 
 export type JobsRetrieveData = {
     /**
@@ -600,15 +602,22 @@ export type $OpenApiTs = {
     };
     '/api/jobs/': {
         get: {
-            req: JobsListData;
             res: {
-                200: PaginatedJobListList;
+                200: Array<JobList>;
             };
         };
         post: {
             req: JobsCreateData;
             res: {
                 201: Job;
+            };
+        };
+    };
+    '/api/jobs-list/': {
+        get: {
+            req: JobsListListData;
+            res: {
+                200: PaginatedJobListList;
             };
         };
     };

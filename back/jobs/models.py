@@ -74,7 +74,7 @@ class Job(TimeStampedModel):
     class Meta:
         db_table = "jobs"
 
-    user = ForeignKey(User, on_delete=CASCADE, null=True)
+    user = ForeignKey(User, related_name="jobs", on_delete=CASCADE, null=True)
     company_name = CharField(max_length=150, verbose_name="Company Name")
     title = CharField(max_length=150, verbose_name="Title", db_index=True)
     slug = SlugField(null=True, blank=True, unique=True, db_index=True)

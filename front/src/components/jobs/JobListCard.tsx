@@ -1,8 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/A2mWqz33pSu
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import {
   Card,
   CardHeader,
@@ -16,7 +11,7 @@ import { JobList } from "@/client";
 import { generateUniqueId } from "@/lib/utils";
 
 export default function JobListCard({ job }: { job: JobList }) {
-  const locationString = job.location.join(",");
+  const locationString = job.location.join(", ");
   return (
     <Card className="w-full px-2 md:flex md:justify-between">
       <CardHeader>

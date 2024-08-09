@@ -13,7 +13,7 @@ export async function setCredentialsToAPI() {
   if (!session) throw Error("set credentials failed");
   // eslint-disable-next-line
   // @ts-ignore
-  OpenAPI.TOKEN = session.django_data.access;
+  OpenAPI.TOKEN = session.access_token;
   OpenAPI.BASE = process.env.BASE_PATH_API!;
 }
 

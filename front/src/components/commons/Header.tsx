@@ -2,7 +2,7 @@ import Image from "next/image";
 import LinkedinLogo from "../../../public/brands/linkedin-logo.png";
 import ZipRecruiterLogo from "../../../public/brands/ziprecruiter-logo.png";
 import IndeedLogo from "../../../public/brands/indeed-logo.png";
-import { CategoriesListResponse, JobsListResponse } from "@/client";
+import { CategoriesListResponse, JobsListListResponse } from "@/client";
 import CategoriesSelect from "./CategoriesSelect";
 import { SubscriptionForm } from "./SubscriptionForm";
 import JobsList from "../jobs/JobsList";
@@ -16,7 +16,7 @@ export default function Header({
 }: {
   title?: string;
   categories?: CategoriesListResponse;
-  jobs?: JobsListResponse;
+  jobs?: JobsListListResponse;
   page: number;
   pageSize: number;
 }) {

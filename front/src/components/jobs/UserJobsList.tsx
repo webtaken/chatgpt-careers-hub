@@ -1,22 +1,13 @@
-import { JobsListListResponse } from "@/client";
+import { JobsListResponse } from "@/client";
 import { TriangleAlertIcon } from "lucide-react";
 import { generateUniqueId } from "@/lib/utils";
 import JobListCard from "./JobListCard";
-import { PaginationWithLinks } from "../ui/pagination-with-links";
 import Link from "next/link";
 
-export default function JobsList({
-  jobs,
-  page,
-  pageSize,
-}: {
-  jobs: JobsListListResponse;
-  page?: number;
-  pageSize?: number;
-}) {
+export default function UserJobsList({ jobs }: { jobs: JobsListResponse }) {
   return (
     <div className="flex flex-col py-4 px-2 sm:px-5 md:px-20 space-y-2">
-      {jobs.count === 0 && (
+      {jobs.length === 0 && (
         <div className="flex my-10 flex-col items-center justify-center bg-background px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-md text-center">
             <TriangleAlertIcon className="mx-auto h-12 w-12 text-primary" />
@@ -39,16 +30,9 @@ export default function JobsList({
           </div>
         </div>
       )}
-      {jobs.results.map((job) => (
+      {jobs.map((job) => (
         <JobListCard key={generateUniqueId()} job={job} />
       ))}
-      {jobs.count > 0 && (
-        <PaginationWithLinks
-          page={page || 1}
-          pageSize={pageSize || 10}
-          totalCount={jobs.count}
-        />
-      )}
     </div>
   );
 }

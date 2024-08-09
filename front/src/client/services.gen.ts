@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListData, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse } from './types.gen';
+import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsListListData, JobsListListResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse } from './types.gen';
 
 /**
  * class used for social authentications
@@ -271,31 +271,12 @@ export const categoriesDestroy = (data: CategoriesDestroyData): CancelablePromis
 }); };
 
 /**
- * @param data The data for the request.
- * @param data.category
- * @param data.categoryText
- * @param data.location
- * @param data.locationLocation
- * @param data.page A page number within the paginated result set.
- * @param data.pageSize Number of results to return per page.
- * @param data.tags
- * @param data.tagsText
- * @returns PaginatedJobListList
+ * @returns JobList
  * @throws ApiError
  */
-export const jobsList = (data: JobsListData = {}): CancelablePromise<JobsListResponse> => { return __request(OpenAPI, {
+export const jobsList = (): CancelablePromise<JobsListResponse> => { return __request(OpenAPI, {
     method: 'GET',
-    url: '/api/jobs/',
-    query: {
-        category: data.category,
-        category__text: data.categoryText,
-        location: data.location,
-        location__location: data.locationLocation,
-        page: data.page,
-        page_size: data.pageSize,
-        tags: data.tags,
-        tags__text: data.tagsText
-    }
+    url: '/api/jobs/'
 }); };
 
 /**
@@ -309,6 +290,34 @@ export const jobsCreate = (data: JobsCreateData): CancelablePromise<JobsCreateRe
     url: '/api/jobs/',
     body: data.requestBody,
     mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.category
+ * @param data.categoryText
+ * @param data.location
+ * @param data.locationLocation
+ * @param data.page A page number within the paginated result set.
+ * @param data.pageSize Number of results to return per page.
+ * @param data.tags
+ * @param data.tagsText
+ * @returns PaginatedJobListList
+ * @throws ApiError
+ */
+export const jobsListList = (data: JobsListListData = {}): CancelablePromise<JobsListListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/jobs-list/',
+    query: {
+        category: data.category,
+        category__text: data.categoryText,
+        location: data.location,
+        location__location: data.locationLocation,
+        page: data.page,
+        page_size: data.pageSize,
+        tags: data.tags,
+        tags__text: data.tagsText
+    }
 }); };
 
 /**

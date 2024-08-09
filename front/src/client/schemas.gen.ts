@@ -160,7 +160,7 @@ export const $Job = {
             type: 'string',
             format: 'uri',
             nullable: true,
-            maxLength: 200
+            maxLength: 2048
         },
         apply_by_email: {
             type: 'boolean'
@@ -436,7 +436,7 @@ export const $PatchedJob = {
             type: 'string',
             format: 'uri',
             nullable: true,
-            maxLength: 200
+            maxLength: 2048
         },
         apply_by_email: {
             type: 'boolean'
