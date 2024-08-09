@@ -22,6 +22,86 @@ export const $Category = {
     required: ['id', 'text']
 } as const;
 
+export const $CreateLocation = {
+    type: 'object',
+    properties: {
+        location: {
+            type: 'string',
+            maxLength: 200
+        },
+        location_type: {
+            type: 'string',
+            maxLength: 200
+        }
+    },
+    required: ['location', 'location_type']
+} as const;
+
+export const $CreateMultipleLocations = {
+    type: 'object',
+    properties: {
+        locations: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/CreateLocation'
+            }
+        }
+    },
+    required: ['locations']
+} as const;
+
+export const $CreateMultipleTags = {
+    type: 'object',
+    properties: {
+        tags: {
+            type: 'array',
+            items: {
+                type: 'string',
+                maxLength: 150
+            }
+        }
+    },
+    required: ['tags']
+} as const;
+
+export const $CustomUserDetails = {
+    type: 'object',
+    description: 'User model w/o password',
+    properties: {
+        pk: {
+            type: 'integer',
+            readOnly: true,
+            title: 'ID'
+        },
+        is_staff: {
+            type: 'boolean',
+            title: 'Staff status',
+            description: 'Designates whether the user can log into this admin site.'
+        },
+        username: {
+            type: 'string',
+            description: 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
+            pattern: '^[\\w.@+-]+$',
+            maxLength: 150
+        },
+        email: {
+            type: 'string',
+            format: 'email',
+            readOnly: true,
+            title: 'Email address'
+        },
+        first_name: {
+            type: 'string',
+            maxLength: 150
+        },
+        last_name: {
+            type: 'string',
+            maxLength: 150
+        }
+    },
+    required: ['email', 'pk', 'username']
+} as const;
+
 export const $JWT = {
     type: 'object',
     description: 'Serializer for JWT authentication.',
@@ -33,7 +113,7 @@ export const $JWT = {
             type: 'string'
         },
         user: {
-            '$ref': '#/components/schemas/UserDetails'
+            '$ref': '#/components/schemas/CustomUserDetails'
         }
     },
     required: ['access', 'refresh', 'user']
@@ -156,6 +236,16 @@ export const $Location = {
     required: ['id', 'location', 'location_type']
 } as const;
 
+export const $LocationID = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer'
+        }
+    },
+    required: ['id']
+} as const;
+
 export const $LocationTypeEnum = {
     enum: ['region', 'country', 'city'],
     type: 'string',
@@ -198,6 +288,43 @@ export const $PatchedCategory = {
             nullable: true,
             maxLength: 50,
             pattern: '^[-a-zA-Z0-9_]+$'
+        }
+    }
+} as const;
+
+export const $PatchedCustomUserDetails = {
+    type: 'object',
+    description: 'User model w/o password',
+    properties: {
+        pk: {
+            type: 'integer',
+            readOnly: true,
+            title: 'ID'
+        },
+        is_staff: {
+            type: 'boolean',
+            title: 'Staff status',
+            description: 'Designates whether the user can log into this admin site.'
+        },
+        username: {
+            type: 'string',
+            description: 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
+            pattern: '^[\\w.@+-]+$',
+            maxLength: 150
+        },
+        email: {
+            type: 'string',
+            format: 'email',
+            readOnly: true,
+            title: 'Email address'
+        },
+        first_name: {
+            type: 'string',
+            maxLength: 150
+        },
+        last_name: {
+            type: 'string',
+            maxLength: 150
         }
     }
 } as const;
@@ -332,38 +459,6 @@ export const $PatchedTag = {
     }
 } as const;
 
-export const $PatchedUserDetails = {
-    type: 'object',
-    description: 'User model w/o password',
-    properties: {
-        pk: {
-            type: 'integer',
-            readOnly: true,
-            title: 'ID'
-        },
-        username: {
-            type: 'string',
-            description: 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
-            pattern: '^[\\w.@+-]+$',
-            maxLength: 150
-        },
-        email: {
-            type: 'string',
-            format: 'email',
-            readOnly: true,
-            title: 'Email address'
-        },
-        first_name: {
-            type: 'string',
-            maxLength: 150
-        },
-        last_name: {
-            type: 'string',
-            maxLength: 150
-        }
-    }
-} as const;
-
 export const $Register = {
     type: 'object',
     properties: {
@@ -441,6 +536,16 @@ export const $Tag = {
     required: ['id', 'text']
 } as const;
 
+export const $TagID = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer'
+        }
+    },
+    required: ['id']
+} as const;
+
 export const $TokenRefresh = {
     type: 'object',
     properties: {
@@ -465,39 +570,6 @@ export const $TokenVerify = {
         }
     },
     required: ['token']
-} as const;
-
-export const $UserDetails = {
-    type: 'object',
-    description: 'User model w/o password',
-    properties: {
-        pk: {
-            type: 'integer',
-            readOnly: true,
-            title: 'ID'
-        },
-        username: {
-            type: 'string',
-            description: 'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
-            pattern: '^[\\w.@+-]+$',
-            maxLength: 150
-        },
-        email: {
-            type: 'string',
-            format: 'email',
-            readOnly: true,
-            title: 'Email address'
-        },
-        first_name: {
-            type: 'string',
-            maxLength: 150
-        },
-        last_name: {
-            type: 'string',
-            maxLength: 150
-        }
-    },
-    required: ['email', 'pk', 'username']
 } as const;
 
 export const $VerifyEmail = {

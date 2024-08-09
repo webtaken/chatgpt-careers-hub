@@ -55,7 +55,7 @@ export function SubscriptionForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-6 w-1/4 mx-auto gap-2"
+        className="grid grid-cols-6 w-1/4 mx-auto gap-2 min-w-60"
       >
         <FormField
           control={form.control}
@@ -64,7 +64,7 @@ export function SubscriptionForm() {
             <FormItem className="col-span-4">
               <FormControl>
                 <Input
-                  placeholder="email@example.com"
+                  placeholder="Get jobs in your inbox!"
                   aria-label="email"
                   {...field}
                 />

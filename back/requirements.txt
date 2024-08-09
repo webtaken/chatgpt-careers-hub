@@ -17,6 +17,7 @@ Django==5.0.6
 django-allauth==0.61.1
 django-cors-headers==4.4.0
 django-environ==0.11.2
+django-filter==24.2
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
 docopt==0.6.2

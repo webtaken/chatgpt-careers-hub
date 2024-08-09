@@ -29,7 +29,7 @@ class Location(Model):
         ("country", "Country"),
         ("city", "City"),
     ]
-    location = CharField(max_length=200, verbose_name="Location")
+    location = CharField(max_length=200, unique=True, verbose_name="Location")
     location_type = CharField(
         max_length=20, choices=LOCATION_TYPE_CHOICES, verbose_name="Location Type"
     )
@@ -44,7 +44,7 @@ class Category(Model):
     class Meta:
         db_table = "categories"
 
-    text = CharField(max_length=150, verbose_name="Category")
+    text = CharField(max_length=150, unique=True, verbose_name="Category")
     slug = SlugField(null=True, blank=True, unique=True, db_index=True)
 
     def __str__(self):
@@ -63,7 +63,7 @@ class Tag(Model):
             Index(fields=["text"], name="text_tag_idx"),
         ]
 
-    text = CharField(max_length=150, verbose_name="Tag")
+    text = CharField(max_length=150, unique=True, verbose_name="Tag")
 
     def __str__(self):
         return self.text
@@ -91,8 +91,3 @@ class Job(TimeStampedModel):
 
     def __str__(self):
         return f"{self.title}"
-
-    def save(self, *args, **kwargs):
-        if not self.slug or self.slug == "":
-            self.slug = slugify(f"{self.title} {self.company_name} {self.pk}")
-        return super().save(*args, **kwargs)

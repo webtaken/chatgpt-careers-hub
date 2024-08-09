@@ -17,7 +17,7 @@ class JobAdminForm(ModelForm):
 
 class JobAdmin(admin.ModelAdmin):
     form = JobAdminForm
-    list_display = ("title", "company_name", "verified")
+    list_display = ("title", "company_name", "slug", "verified", "created_at")
 
 
 class CategoryAdmin(admin.ModelAdmin):

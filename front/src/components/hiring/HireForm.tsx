@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Editor from "./Editor";
 import { Button } from "@/components/ui/button";
+import { UseFormSetValue } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -19,21 +20,72 @@ import { toast } from "@/components/ui/use-toast";
 import { Switch } from "../ui/switch";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
+import { TagsSelector } from "./TagsSelector";
+import { LocationSelector } from "./LocationSelector";
+import { createJob } from "@/lib/job-actions";
+import { CategorySelector } from "./CategorySelector";
 
-const FormSchema = z.object({
+export type HireFormSetValueSchema = UseFormSetValue<{
+  companyName: string;
+  title: string;
+  description: string;
+  tags: {
+    id: string;
+    text: string;
+  }[];
+  categories: {
+    id: string;
+    text: string;
+  }[];
+  applyURL: string;
+  applyEmail: string;
+  companyEmail: string;
+  remote?: boolean | undefined;
+  applyByEmail?: boolean | undefined;
+  pinOnTop?: boolean | undefined;
+  locations: {
+    id: string;
+    name: string;
+    type: string;
+  }[];
+}>;
+
+export const FormSchema = z.object({
   companyName: z.string().min(1, {
     message: "Company name must not be empty.",
   }),
   title: z.string().min(8, {
     message: "Job title must be at least 8 characters.",
   }),
-  remote: z.boolean().default(false).optional(),
   description: z.string().min(1, {
     message: "Job description must not be empty.",
   }),
-  applyURL: z.string().min(1, {
-    message: "Apply URL must not be empty.",
-  }),
+  tags: z.array(
+    z.object({
+      id: z.string(),
+      text: z.string(),
+    })
+  ),
+  categories: z.array(
+    z.object({
+      id: z.string(),
+      text: z.string(),
+    })
+  ),
+  locations: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      type: z.string(),
+    })
+  ),
+  remote: z.boolean().default(false).optional(),
+  applyURL: z
+    .string()
+    .min(1, {
+      message: "Apply URL must not be empty.",
+    })
+    .url("Enter a valid URL"),
   applyByEmail: z.boolean().default(false).optional(),
   applyEmail: z.string(),
   companyEmail: z.string().min(1, {
@@ -48,6 +100,10 @@ export function HireForm() {
     defaultValues: {
       companyName: "",
       title: "",
+      tags: [],
+      categories: [],
+      locations: [],
+      description: "",
       remote: false,
       applyURL: "",
       applyByEmail: false,
@@ -55,17 +111,37 @@ export function HireForm() {
       companyEmail: "",
       pinOnTop: false,
     },
+    // For testing purposes
+    // defaultValues: {
+    //   companyName: "test",
+    //   title: "Machine Learning Engineer",
+    //   tags: [],
+    //   categories: [],
+    //   locations: [],
+    //   description: "This is my description",
+    //   remote: false,
+    //   applyURL: "https://google.com",
+    //   applyByEmail: false,
+    //   applyEmail: "",
+    //   companyEmail: "company@email.com",
+    //   pinOnTop: false,
+    // },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  const { setValue } = form;
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const response = await createJob(data);
+    if (response) {
+      toast({
+        title: "Nuevo trabajo publicado",
+      });
+    } else {
+      toast({
+        title: "Error al crear el trabajo",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
@@ -117,6 +193,60 @@ export function HireForm() {
 
         <FormField
           control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tags, Keywords, or Stack</FormLabel>
+              <FormControl>
+                <TagsSelector setValue={setValue} />
+              </FormControl>
+              <FormDescription>
+                Short tags are preferred. Use tags like industry and tech stack.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="locations"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location</FormLabel>
+              <FormControl>
+                <LocationSelector setValue={setValue} />
+              </FormControl>
+              <FormDescription>
+                If you&apos;d only like to hire people from a specific location
+                or timezone this job is restricted to (e.g. Europe, United
+                States or Japan). If not restricted, please leave it as
+                &quot;Worldwide&quot;.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="categories"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
+                <CategorySelector setValue={setValue} />
+              </FormControl>
+              <FormDescription>
+                Set a category to filter your job by industry.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="remote"
           render={({ field }) => (
             <FormItem className="flex items-center gap-x-2">
@@ -143,7 +273,7 @@ export function HireForm() {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <div className="w-full h-auto">
-                  <Editor content={field.value} setValue={form.setValue} />
+                  <Editor content={field.value} setValue={setValue} />
                 </div>
               </FormControl>
               <FormMessage />
@@ -270,7 +400,7 @@ export function HireForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Hire - $100</Button>
       </form>
     </Form>
   );

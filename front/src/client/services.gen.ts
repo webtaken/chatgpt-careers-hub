@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse } from './types.gen';
+import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse } from './types.gen';
 
 /**
  * class used for social authentications
@@ -136,7 +136,7 @@ export const authTokenVerifyCreate = (data: AuthTokenVerifyCreateData): Cancelab
  * Read-only fields: pk, email
  *
  * Returns UserModel fields.
- * @returns UserDetails
+ * @returns CustomUserDetails
  * @throws ApiError
  */
 export const authUserRetrieve = (): CancelablePromise<AuthUserRetrieveResponse> => { return __request(OpenAPI, {
@@ -155,7 +155,7 @@ export const authUserRetrieve = (): CancelablePromise<AuthUserRetrieveResponse> 
  * Returns UserModel fields.
  * @param data The data for the request.
  * @param data.requestBody
- * @returns UserDetails
+ * @returns CustomUserDetails
  * @throws ApiError
  */
 export const authUserUpdate = (data: AuthUserUpdateData): CancelablePromise<AuthUserUpdateResponse> => { return __request(OpenAPI, {
@@ -176,7 +176,7 @@ export const authUserUpdate = (data: AuthUserUpdateData): CancelablePromise<Auth
  * Returns UserModel fields.
  * @param data The data for the request.
  * @param data.requestBody
- * @returns UserDetails
+ * @returns CustomUserDetails
  * @throws ApiError
  */
 export const authUserPartialUpdate = (data: AuthUserPartialUpdateData = {}): CancelablePromise<AuthUserPartialUpdateResponse> => { return __request(OpenAPI, {
@@ -439,6 +439,20 @@ export const locationsDestroy = (data: LocationsDestroyData): CancelablePromise<
 }); };
 
 /**
+ * Create multiple locations if they don't exist, or retrieve their IDs if they do.
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns LocationID
+ * @throws ApiError
+ */
+export const locationsCreateLocationsCreate = (data: LocationsCreateLocationsCreateData): CancelablePromise<LocationsCreateLocationsCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/locations/create_locations/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
  * Subscribe to mailing list
  * Subscribe to the mailing list with an email address.
  * @param data The data for the request.
@@ -538,4 +552,18 @@ export const tagsDestroy = (data: TagsDestroyData): CancelablePromise<TagsDestro
     path: {
         id: data.id
     }
+}); };
+
+/**
+ * Create multiple tags if they don't exist, or retrieve their IDs if they do.
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns TagID
+ * @throws ApiError
+ */
+export const tagsCreateTagsCreate = (data: TagsCreateTagsCreateData): CancelablePromise<TagsCreateTagsCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/tags/create_tags/',
+    body: data.requestBody,
+    mediaType: 'application/json'
 }); };

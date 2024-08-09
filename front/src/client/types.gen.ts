@@ -6,13 +6,44 @@ export type Category = {
     slug?: string | null;
 };
 
+export type CreateLocation = {
+    location: string;
+    location_type: string;
+};
+
+export type CreateMultipleLocations = {
+    locations: Array<CreateLocation>;
+};
+
+export type CreateMultipleTags = {
+    tags: Array<(string)>;
+};
+
+/**
+ * User model w/o password
+ */
+export type CustomUserDetails = {
+    readonly pk: number;
+    /**
+     * Designates whether the user can log into this admin site.
+     */
+    is_staff?: boolean;
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     */
+    username: string;
+    readonly email: string;
+    first_name?: string;
+    last_name?: string;
+};
+
 /**
  * Serializer for JWT authentication.
  */
 export type JWT = {
     access: string;
     refresh: string;
-    user: UserDetails;
+    user: CustomUserDetails;
 };
 
 export type Job = {
@@ -43,6 +74,10 @@ export type Location = {
     rank?: number | null;
 };
 
+export type LocationID = {
+    id: number;
+};
+
 /**
  * * `region` - Region
  * * `country` - Country
@@ -60,6 +95,24 @@ export type PatchedCategory = {
     readonly id?: number;
     text?: string;
     slug?: string | null;
+};
+
+/**
+ * User model w/o password
+ */
+export type PatchedCustomUserDetails = {
+    readonly pk?: number;
+    /**
+     * Designates whether the user can log into this admin site.
+     */
+    is_staff?: boolean;
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     */
+    username?: string;
+    readonly email?: string;
+    first_name?: string;
+    last_name?: string;
 };
 
 export type PatchedJob = {
@@ -95,20 +148,6 @@ export type PatchedTag = {
     text?: string;
 };
 
-/**
- * User model w/o password
- */
-export type PatchedUserDetails = {
-    readonly pk?: number;
-    /**
-     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-     */
-    username?: string;
-    readonly email?: string;
-    first_name?: string;
-    last_name?: string;
-};
-
 export type Register = {
     username: string;
     email: string;
@@ -135,6 +174,10 @@ export type Tag = {
     text: string;
 };
 
+export type TagID = {
+    id: number;
+};
+
 export type TokenRefresh = {
     readonly access: string;
     refresh: string;
@@ -142,20 +185,6 @@ export type TokenRefresh = {
 
 export type TokenVerify = {
     token: string;
-};
-
-/**
- * User model w/o password
- */
-export type UserDetails = {
-    readonly pk: number;
-    /**
-     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-     */
-    username: string;
-    readonly email: string;
-    first_name?: string;
-    last_name?: string;
 };
 
 export type VerifyEmail = {
@@ -200,19 +229,19 @@ export type AuthTokenVerifyCreateData = {
 
 export type AuthTokenVerifyCreateResponse = TokenVerify;
 
-export type AuthUserRetrieveResponse = UserDetails;
+export type AuthUserRetrieveResponse = CustomUserDetails;
 
 export type AuthUserUpdateData = {
-    requestBody: UserDetails;
+    requestBody: CustomUserDetails;
 };
 
-export type AuthUserUpdateResponse = UserDetails;
+export type AuthUserUpdateResponse = CustomUserDetails;
 
 export type AuthUserPartialUpdateData = {
-    requestBody?: PatchedUserDetails;
+    requestBody?: PatchedCustomUserDetails;
 };
 
-export type AuthUserPartialUpdateResponse = UserDetails;
+export type AuthUserPartialUpdateResponse = CustomUserDetails;
 
 export type CategoriesListResponse = Array<Category>;
 
@@ -352,6 +381,12 @@ export type LocationsDestroyData = {
 
 export type LocationsDestroyResponse = void;
 
+export type LocationsCreateLocationsCreateData = {
+    requestBody: CreateMultipleLocations;
+};
+
+export type LocationsCreateLocationsCreateResponse = Array<LocationID>;
+
 export type SubscriptionsSubscribeCreateData = {
     requestBody: Subscribe;
 };
@@ -405,6 +440,12 @@ export type TagsDestroyData = {
 };
 
 export type TagsDestroyResponse = void;
+
+export type TagsCreateTagsCreateData = {
+    requestBody: CreateMultipleTags;
+};
+
+export type TagsCreateTagsCreateResponse = Array<TagID>;
 
 export type $OpenApiTs = {
     '/api/auth/google/': {
@@ -465,19 +506,19 @@ export type $OpenApiTs = {
     '/api/auth/user/': {
         get: {
             res: {
-                200: UserDetails;
+                200: CustomUserDetails;
             };
         };
         put: {
             req: AuthUserUpdateData;
             res: {
-                200: UserDetails;
+                200: CustomUserDetails;
             };
         };
         patch: {
             req: AuthUserPartialUpdateData;
             res: {
-                200: UserDetails;
+                200: CustomUserDetails;
             };
         };
     };
@@ -607,6 +648,14 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/locations/create_locations/': {
+        post: {
+            req: LocationsCreateLocationsCreateData;
+            res: {
+                201: Array<LocationID>;
+            };
+        };
+    };
     '/api/subscriptions/subscribe/': {
         post: {
             req: SubscriptionsSubscribeCreateData;
@@ -659,6 +708,14 @@ export type $OpenApiTs = {
                  * No response body
                  */
                 204: void;
+            };
+        };
+    };
+    '/api/tags/create_tags/': {
+        post: {
+            req: TagsCreateTagsCreateData;
+            res: {
+                201: Array<TagID>;
             };
         };
     };

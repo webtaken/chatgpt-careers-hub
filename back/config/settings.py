@@ -89,6 +89,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount.providers.google",
     "dj_rest_auth",
     "dj_rest_auth.registration",
+    "django_filters",
 ]
 
 LOCAL_APPS = ["users", "authentication", "core", "jobs"]
@@ -207,6 +208,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
 # DRF_SPECTACULAR settings
@@ -260,4 +262,5 @@ SOCIALACCOUNT_PROVIDERS = {
 REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_HTTPONLY": False,
+    "USER_DETAILS_SERIALIZER": "authentication.serializers.CustomUserDetailsSerializer",
 }

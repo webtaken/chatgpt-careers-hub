@@ -7,20 +7,11 @@ import React from "react";
 import EditorControls from "./EditorControls";
 import "./styles.css";
 import { UseFormSetValue } from "react-hook-form";
+import { HireFormSetValueSchema } from "./HireForm";
 
 interface EditorProps {
   content?: Content;
-  setValue: UseFormSetValue<{
-    companyName: string;
-    title: string;
-    description: string;
-    applyURL: string;
-    applyEmail: string;
-    companyEmail: string;
-    remote?: boolean | undefined;
-    applyByEmail?: boolean | undefined;
-    pinOnTop?: boolean | undefined;
-  }>;
+  setValue: HireFormSetValueSchema;
 }
 
 export default function Editor({ content, setValue }: EditorProps) {
