@@ -78,7 +78,7 @@ class Job(TimeStampedModel):
     company_name = CharField(max_length=150, verbose_name="Company Name")
     title = CharField(max_length=150, verbose_name="Title", db_index=True)
     slug = SlugField(null=True, blank=True, unique=True, db_index=True)
-    description = TextField(verbose_name="Description", db_index=True)
+    description = TextField(verbose_name="Description")
     tags = ManyToManyField(Tag)
     location = ManyToManyField(Location)
     category = ManyToManyField(Category)
