@@ -77,7 +77,7 @@ class Job(TimeStampedModel):
     user = ForeignKey(User, related_name="jobs", on_delete=CASCADE, null=True)
     company_name = CharField(max_length=150, verbose_name="Company Name")
     title = CharField(max_length=150, verbose_name="Title", db_index=True)
-    slug = SlugField(null=True, blank=True, unique=True, db_index=True)
+    slug = SlugField(null=True, blank=True, unique=True, max_length=255, db_index=True)
     description = TextField(verbose_name="Description")
     tags = ManyToManyField(Tag)
     location = ManyToManyField(Location)

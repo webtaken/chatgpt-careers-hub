@@ -24,6 +24,7 @@ import { TagsSelector } from "./TagsSelector";
 import { LocationSelector } from "./LocationSelector";
 import { createJob } from "@/lib/job-actions";
 import { CategorySelector } from "./CategorySelector";
+import { useState } from "react";
 
 export type HireFormSetValueSchema = UseFormSetValue<{
   companyName: string;
@@ -95,6 +96,8 @@ export const FormSchema = z.object({
 });
 
 export function HireForm() {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -131,7 +134,9 @@ export function HireForm() {
   const { setValue } = form;
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
     const response = await createJob(data);
+    setLoading(false);
     if (response) {
       toast({
         title: "Nuevo trabajo publicado",
@@ -400,7 +405,9 @@ export function HireForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Hire - $100</Button>
+        <Button disabled={loading} type="submit">
+          Hire - $100
+        </Button>
       </form>
     </Form>
   );
