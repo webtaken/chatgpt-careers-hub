@@ -10,9 +10,25 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
+const baseURL = process.env.NEXTAUTH_URL;
+
 export const metadata: Metadata = {
-  title: "chatgpt-careers-hub",
-  description: "A portal to find the best ChatGPT and LLMs jobs",
+  metadataBase: new URL(baseURL || "https://chatgpt-jobs.com"),
+  title: {
+    default: "ChatGPT Jobs",
+    template: "%s - ChatGPT Jobs",
+  },
+  description:
+    "A portal to find the best ChatGPT and LLMs jobs, niche for experts",
+  keywords: ["jobs", "chatgpt", "large language models", "LLMs"],
+  openGraph: {
+    description:
+      "A portal to find the best ChatGPT and LLMs jobs, niche for experts",
+    images: [`${baseURL}/brand-icon.png`],
+  },
+  alternates: {
+    canonical: baseURL,
+  },
 };
 
 export default function RootLayout({
