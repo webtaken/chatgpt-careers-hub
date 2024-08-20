@@ -1,10 +1,12 @@
+from commons.permissions import CustomJobAuthenticationPermission
 from django.db import transaction
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -17,6 +19,7 @@ from .serializers import (
     CreateMultipleLocationsSerializer,
     CreateMultipleTagsSerializer,
     JobListSerializer,
+    JobRetrieveSerializer,
     JobSerializer,
     LocationIDSerializer,
     LocationSerializer,
@@ -39,7 +42,7 @@ class JobViewSet(ModelViewSet):
     queryset = Job.objects.all().order_by("-updated_at")
     serializer_class = JobSerializer
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [CustomJobAuthenticationPermission]
 
     def get_queryset(self):
         return self.request.user.jobs.all().order_by("-updated_at")
@@ -48,8 +51,24 @@ class JobViewSet(ModelViewSet):
         match self.action:
             case "list":
                 return JobListSerializer
+            case "retrieve":
+                return JobRetrieveSerializer
+            case "retrieve_by_slug":
+                return JobRetrieveSerializer
             case _:
                 return JobSerializer
+
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="by-slug/(?P<slug>[-\w]+)",
+        url_name="retrieve_by_slug",
+        permission_classes=[AllowAny],
+    )
+    def retrieve_by_slug(self, request, slug=None):
+        job = get_object_or_404(Job, slug=slug)
+        serializer = self.get_serializer(job)
+        return Response(serializer.data)
 
 
 class TagViewSet(ModelViewSet, ListAPIView):

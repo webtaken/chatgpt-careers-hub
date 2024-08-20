@@ -18,6 +18,21 @@ class JobSerializer(ModelSerializer):
         fields = "__all__"
 
 
+class JobRetrieveSerializer(ModelSerializer):
+    tags = SerializerMethodField()
+    location = SerializerMethodField()
+
+    class Meta:
+        model = Job
+        fields = "__all__"
+
+    def get_tags(self, obj) -> List[str]:
+        return [tag.text for tag in obj.tags.all()]
+
+    def get_location(self, obj) -> List[str]:
+        return [location.location for location in obj.location.all()]
+
+
 class TagSerializer(ModelSerializer):
     class Meta:
         model = Tag

@@ -44,9 +44,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <Toaster />
         <Navbar />
         {children}
-        <Toaster />
       </body>
     </html>
   );

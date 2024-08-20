@@ -74,6 +74,28 @@ export type JobList = {
     readonly tags: Array<(string)>;
     verified?: boolean;
     readonly location: Array<(string)>;
+    slug?: string | null;
+};
+
+export type JobRetrieve = {
+    readonly id: number;
+    readonly tags: Array<(string)>;
+    readonly location: Array<(string)>;
+    readonly created_at: string;
+    readonly updated_at: string;
+    company_name: string;
+    title: string;
+    slug?: string | null;
+    description: string;
+    remote?: boolean;
+    apply_url?: string | null;
+    apply_by_email?: boolean;
+    apply_email?: string | null;
+    company_email: string;
+    pin_on_top?: boolean;
+    verified?: boolean;
+    user?: number | null;
+    category: Array<(number)>;
 };
 
 export type Location = {
@@ -327,6 +349,8 @@ export type JobsListListData = {
      * Number of results to return per page.
      */
     pageSize?: number;
+    slug?: string;
+    slugText?: string;
     tags?: Array<(number)>;
     tagsText?: string;
 };
@@ -340,7 +364,7 @@ export type JobsRetrieveData = {
     id: number;
 };
 
-export type JobsRetrieveResponse = Job;
+export type JobsRetrieveResponse = JobRetrieve;
 
 export type JobsUpdateData = {
     /**
@@ -370,6 +394,12 @@ export type JobsDestroyData = {
 };
 
 export type JobsDestroyResponse = void;
+
+export type JobsBySlugRetrieveData = {
+    slug: string;
+};
+
+export type JobsBySlugRetrieveResponse = JobRetrieve;
 
 export type LocationsListResponse = Array<Location>;
 
@@ -625,7 +655,7 @@ export type $OpenApiTs = {
         get: {
             req: JobsRetrieveData;
             res: {
-                200: Job;
+                200: JobRetrieve;
             };
         };
         put: {
@@ -647,6 +677,14 @@ export type $OpenApiTs = {
                  * No response body
                  */
                 204: void;
+            };
+        };
+    };
+    '/api/jobs/by-slug/{slug}/': {
+        get: {
+            req: JobsBySlugRetrieveData;
+            res: {
+                200: JobRetrieve;
             };
         };
     };

@@ -93,9 +93,10 @@ export const FormSchema = z.object({
     message: "Company email must not be empty.",
   }),
   pinOnTop: z.boolean().default(false).optional(),
+  verified: z.boolean().default(false).optional(),
 });
 
-export function HireForm() {
+export function HireForm({ session }: { session?: any }) {
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -113,6 +114,7 @@ export function HireForm() {
       applyEmail: "",
       companyEmail: "",
       pinOnTop: false,
+      verified: false,
     },
     // For testing purposes
     // defaultValues: {
@@ -130,7 +132,6 @@ export function HireForm() {
     //   pinOnTop: false,
     // },
   });
-
   const { setValue } = form;
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -397,7 +398,7 @@ export function HireForm() {
                     htmlFor="pinOnTop"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    Pin on top for 30 days (+$99)
+                    Pin on top for 30 days (+$50)
                   </label>
                 </div>
               </FormControl>
@@ -405,6 +406,32 @@ export function HireForm() {
             </FormItem>
           )}
         />
+        {session && session.user?.is_staff && (
+          <FormField
+            control={form.control}
+            name="verified"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="verifiedCheck"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <label
+                      htmlFor="verifiedCheck"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      Verified (only for staff members)
+                    </label>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <Button disabled={loading} type="submit">
           Hire - $100
         </Button>

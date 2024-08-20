@@ -6,6 +6,7 @@ import {
   JobsListListData,
   LocationTypeEnum,
   categoriesList,
+  jobsBySlugRetrieve,
   jobsCreate,
   jobsList,
   jobsListList,
@@ -84,7 +85,7 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
       const job = await jobsCreate({
         // @ts-expect-error
         requestBody: {
-          user: session.user.pk,
+          user: session.user.pk as number,
           company_name: data.companyName,
           title: data.title,
           description: data.description,
@@ -97,7 +98,7 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
           apply_email: data.applyEmail,
           company_email: data.companyEmail,
           pin_on_top: data.pinOnTop,
-          verified: false,
+          verified: data.verified,
         },
       });
       return job;
@@ -108,5 +109,14 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
     return undefined;
   } finally {
     revalidatePath("/");
+  }
+}
+
+export async function getJobBySlug(slug: string) {
+  try {
+    const job = await jobsBySlugRetrieve({ slug: slug });
+    return job;
+  } catch (error) {
+    return undefined;
   }
 }

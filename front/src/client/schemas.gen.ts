@@ -147,7 +147,7 @@ export const $Job = {
         slug: {
             type: 'string',
             nullable: true,
-            maxLength: 50,
+            maxLength: 255,
             pattern: '^[-a-zA-Z0-9_]+$'
         },
         description: {
@@ -242,9 +242,109 @@ export const $JobList = {
                 type: 'string'
             },
             readOnly: true
+        },
+        slug: {
+            type: 'string',
+            nullable: true,
+            maxLength: 255,
+            pattern: '^[-a-zA-Z0-9_]+$'
         }
     },
     required: ['company_name', 'id', 'location', 'tags', 'title']
+} as const;
+
+export const $JobRetrieve = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        tags: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            readOnly: true
+        },
+        location: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            readOnly: true
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        updated_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        company_name: {
+            type: 'string',
+            maxLength: 150
+        },
+        title: {
+            type: 'string',
+            maxLength: 150
+        },
+        slug: {
+            type: 'string',
+            nullable: true,
+            maxLength: 255,
+            pattern: '^[-a-zA-Z0-9_]+$'
+        },
+        description: {
+            type: 'string'
+        },
+        remote: {
+            type: 'boolean'
+        },
+        apply_url: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            maxLength: 2048
+        },
+        apply_by_email: {
+            type: 'boolean'
+        },
+        apply_email: {
+            type: 'string',
+            format: 'email',
+            nullable: true,
+            title: 'Apply E-mail',
+            maxLength: 254
+        },
+        company_email: {
+            type: 'string',
+            format: 'email',
+            title: 'Company Email (For Invoice)',
+            maxLength: 254
+        },
+        pin_on_top: {
+            type: 'boolean',
+            title: 'Pin on top (30 days)'
+        },
+        verified: {
+            type: 'boolean'
+        },
+        user: {
+            type: 'integer',
+            nullable: true
+        },
+        category: {
+            type: 'array',
+            items: {
+                type: 'integer'
+            }
+        }
+    },
+    required: ['category', 'company_email', 'company_name', 'created_at', 'description', 'id', 'location', 'tags', 'title', 'updated_at']
 } as const;
 
 export const $Location = {
@@ -423,7 +523,7 @@ export const $PatchedJob = {
         slug: {
             type: 'string',
             nullable: true,
-            maxLength: 50,
+            maxLength: 255,
             pattern: '^[-a-zA-Z0-9_]+$'
         },
         description: {
