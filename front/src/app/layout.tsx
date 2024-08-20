@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/commons/Navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { CSPostHogProvider } from "./provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,16 +39,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <Toaster />
-        <Navbar />
-        {children}
-      </body>
+      <CSPostHogProvider>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+          <Toaster />
+          <Navbar />
+          {children}
+        </body>
+      </CSPostHogProvider>
     </html>
   );
 }
