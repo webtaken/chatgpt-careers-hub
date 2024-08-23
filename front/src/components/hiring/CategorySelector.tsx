@@ -8,8 +8,10 @@ import { getCategories } from "@/lib/job-actions";
 
 export function CategorySelector({
   setValue,
+  defaultValue,
 }: {
   setValue: HireFormSetValueSchema;
+  defaultValue?: { value: string; label: string }[];
 }) {
   const [categories, setCategories] = useState<CategoriesListResponse>([]);
 
@@ -42,6 +44,7 @@ export function CategorySelector({
 
   return (
     <Select
+      defaultValue={defaultValue}
       options={categories.map((category) => {
         return {
           value: String(category.id),

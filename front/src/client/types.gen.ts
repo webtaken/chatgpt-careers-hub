@@ -71,16 +71,18 @@ export type JobList = {
     readonly id: number;
     title: string;
     company_name: string;
-    readonly tags: Array<(string)>;
+    tags: Array<Tag>;
     verified?: boolean;
-    readonly location: Array<(string)>;
+    location: Array<Location>;
+    category: Array<Category>;
     slug?: string | null;
 };
 
 export type JobRetrieve = {
     readonly id: number;
-    readonly tags: Array<(string)>;
-    readonly location: Array<(string)>;
+    tags: Array<Tag>;
+    location: Array<Location>;
+    category: Array<Category>;
     readonly created_at: string;
     readonly updated_at: string;
     company_name: string;
@@ -95,7 +97,6 @@ export type JobRetrieve = {
     pin_on_top?: boolean;
     verified?: boolean;
     user?: number | null;
-    category: Array<(number)>;
 };
 
 export type Location = {

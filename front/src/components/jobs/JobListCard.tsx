@@ -12,7 +12,10 @@ import { generateUniqueId } from "@/lib/utils";
 import Link from "next/link";
 
 export default function JobListCard({ job }: { job: JobList }) {
-  const locationString = job.location.join(", ");
+  const locationString = job.location
+    .map((location) => location.location)
+    .join(", ");
+
   return (
     <Link href={`/job/${job.slug}`}>
       <Card className="w-full px-2 md:flex md:justify-between">
@@ -39,7 +42,7 @@ export default function JobListCard({ job }: { job: JobList }) {
               variant="default"
               className="bg-gray-200 text-gray-800"
             >
-              {tag}
+              {tag.text}
             </Badge>
           ))}
         </CardContent>

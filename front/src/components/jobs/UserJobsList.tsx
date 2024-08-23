@@ -1,8 +1,8 @@
 import { JobsListResponse } from "@/client";
 import { TriangleAlertIcon } from "lucide-react";
 import { generateUniqueId } from "@/lib/utils";
-import JobListCard from "./JobListCard";
 import Link from "next/link";
+import JobListUserCard from "./JobListUserCard";
 
 export default function UserJobsList({ jobs }: { jobs: JobsListResponse }) {
   return (
@@ -31,7 +31,7 @@ export default function UserJobsList({ jobs }: { jobs: JobsListResponse }) {
         </div>
       )}
       {jobs.map((job) => (
-        <JobListCard key={generateUniqueId()} job={job} />
+        <JobListUserCard key={generateUniqueId()} job={job} />
       ))}
     </div>
   );

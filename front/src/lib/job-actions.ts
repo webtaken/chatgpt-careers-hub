@@ -10,6 +10,8 @@ import {
   jobsCreate,
   jobsList,
   jobsListList,
+  jobsPartialUpdate,
+  jobsUpdate,
   locationsCreateLocationsCreate,
   tagsCreateTagsCreate,
 } from "@/client";
@@ -104,6 +106,60 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
       return job;
     }
     return true;
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  } finally {
+    revalidatePath("/");
+  }
+}
+
+export async function updateJob(id: number, data: z.infer<typeof FormSchema>) {
+  try {
+    await setCredentialsToAPI();
+    const tagNames = data.tags.map((tag) => tag.text);
+    const locationNames: CreateLocation[] = data.locations.map((location) => ({
+      location: location.name,
+      location_type: location.type as LocationTypeEnum,
+    }));
+    let promises = [
+      tagsCreateTagsCreate({ requestBody: { tags: tagNames } }),
+      locationsCreateLocationsCreate({
+        requestBody: { locations: locationNames },
+      }),
+    ];
+
+    const [tagNamesResponse, locationNamesResponse] = await Promise.allSettled(
+      promises
+    );
+
+    const tagIds =
+      tagNamesResponse.status === "fulfilled"
+        ? tagNamesResponse.value.map((item) => item.id)
+        : [];
+    const locationIds =
+      locationNamesResponse.status === "fulfilled"
+        ? locationNamesResponse.value.map((item) => item.id)
+        : [];
+    const categoryIds = data.categories.map((category) => +category.id);
+    const job = await jobsPartialUpdate({
+      id: id,
+      requestBody: {
+        company_name: data.companyName,
+        title: data.title,
+        description: data.description,
+        tags: tagIds,
+        location: locationIds,
+        category: categoryIds,
+        remote: data.remote,
+        apply_url: data.applyURL,
+        apply_by_email: data.applyByEmail,
+        apply_email: data.applyEmail,
+        company_email: data.companyEmail,
+        verified: data.verified,
+      },
+    });
+    return job;
   } catch (error) {
     console.log(error);
     return undefined;

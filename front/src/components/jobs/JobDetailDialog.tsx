@@ -16,7 +16,9 @@ import { toast } from "@/components/ui/use-toast";
 
 export function JobDetailDialog({ job }: { job: JobRetrieve }) {
   const router = useRouter();
-  const locationString = job.location.join(", ");
+  const locationString = job.location
+    .map((location) => location.location)
+    .join(", ");
 
   return (
     <Dialog

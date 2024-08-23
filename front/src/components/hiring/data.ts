@@ -1,9 +1,9 @@
 import { LocationTypeEnum } from "@/client";
 
 export interface LocationOption {
-  readonly value: string;
-  readonly label: string;
-  readonly type: LocationTypeEnum;
+  value: string;
+  label: string;
+  type: LocationTypeEnum;
 }
 
 export const remoteOptions: readonly LocationOption[] = [

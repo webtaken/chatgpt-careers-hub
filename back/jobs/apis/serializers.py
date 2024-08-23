@@ -1,36 +1,12 @@
-from typing import List
-
 from rest_framework.serializers import (
     CharField,
     IntegerField,
     ListField,
     ModelSerializer,
     Serializer,
-    SerializerMethodField,
 )
 
 from jobs.models import Category, Job, Location, Tag
-
-
-class JobSerializer(ModelSerializer):
-    class Meta:
-        model = Job
-        fields = "__all__"
-
-
-class JobRetrieveSerializer(ModelSerializer):
-    tags = SerializerMethodField()
-    location = SerializerMethodField()
-
-    class Meta:
-        model = Job
-        fields = "__all__"
-
-    def get_tags(self, obj) -> List[str]:
-        return [tag.text for tag in obj.tags.all()]
-
-    def get_location(self, obj) -> List[str]:
-        return [location.location for location in obj.location.all()]
 
 
 class TagSerializer(ModelSerializer):
@@ -77,8 +53,9 @@ class CategorySerializer(ModelSerializer):
 
 
 class JobListSerializer(ModelSerializer):
-    tags = SerializerMethodField()
-    location = SerializerMethodField()
+    tags = TagSerializer(many=True)
+    location = LocationSerializer(many=True)
+    category = CategorySerializer(many=True)
 
     class Meta:
         model = Job
@@ -89,11 +66,22 @@ class JobListSerializer(ModelSerializer):
             "tags",
             "verified",
             "location",
+            "category",
             "slug",
         ]
 
-    def get_tags(self, obj) -> List[str]:
-        return [tag.text for tag in obj.tags.all()]
 
-    def get_location(self, obj) -> List[str]:
-        return [location.location for location in obj.location.all()]
+class JobSerializer(ModelSerializer):
+    class Meta:
+        model = Job
+        fields = "__all__"
+
+
+class JobRetrieveSerializer(ModelSerializer):
+    tags = TagSerializer(many=True)
+    location = LocationSerializer(many=True)
+    category = CategorySerializer(many=True)
+
+    class Meta:
+        model = Job
+        fields = "__all__"

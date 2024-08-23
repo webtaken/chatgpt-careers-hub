@@ -1,5 +1,5 @@
 "use client";
-import { LogOut, LayoutDashboard } from "lucide-react";
+import { LogOut, BriefcaseBusinessIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,8 +50,8 @@ export default function ProfileActions({
             router.push("/dashboard");
           }}
         >
-          <LayoutDashboard className="mr-2 w-4 h-4" />
-          <span>Dashboard</span>
+          <BriefcaseBusinessIcon className="mr-2 w-4 h-4" />
+          <span>My jobs</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

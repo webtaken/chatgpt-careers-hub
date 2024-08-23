@@ -7,8 +7,10 @@ import { commonTags } from "./data";
 
 export function TagsSelector({
   setValue,
+  defaultValue,
 }: {
   setValue: HireFormSetValueSchema;
+  defaultValue?: { value: string; label: string }[];
 }) {
   const onChange = (
     tags: MultiValue<{
@@ -29,6 +31,7 @@ export function TagsSelector({
 
   return (
     <CreatableSelect
+      defaultValue={defaultValue}
       isClearable
       options={commonTags}
       isMulti

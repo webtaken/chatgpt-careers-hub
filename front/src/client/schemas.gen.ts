@@ -229,9 +229,8 @@ export const $JobList = {
         tags: {
             type: 'array',
             items: {
-                type: 'string'
-            },
-            readOnly: true
+                '$ref': '#/components/schemas/Tag'
+            }
         },
         verified: {
             type: 'boolean'
@@ -239,9 +238,14 @@ export const $JobList = {
         location: {
             type: 'array',
             items: {
-                type: 'string'
-            },
-            readOnly: true
+                '$ref': '#/components/schemas/Location'
+            }
+        },
+        category: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Category'
+            }
         },
         slug: {
             type: 'string',
@@ -250,7 +254,7 @@ export const $JobList = {
             pattern: '^[-a-zA-Z0-9_]+$'
         }
     },
-    required: ['company_name', 'id', 'location', 'tags', 'title']
+    required: ['category', 'company_name', 'id', 'location', 'tags', 'title']
 } as const;
 
 export const $JobRetrieve = {
@@ -263,16 +267,20 @@ export const $JobRetrieve = {
         tags: {
             type: 'array',
             items: {
-                type: 'string'
-            },
-            readOnly: true
+                '$ref': '#/components/schemas/Tag'
+            }
         },
         location: {
             type: 'array',
             items: {
-                type: 'string'
-            },
-            readOnly: true
+                '$ref': '#/components/schemas/Location'
+            }
+        },
+        category: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Category'
+            }
         },
         created_at: {
             type: 'string',
@@ -336,12 +344,6 @@ export const $JobRetrieve = {
         user: {
             type: 'integer',
             nullable: true
-        },
-        category: {
-            type: 'array',
-            items: {
-                type: 'integer'
-            }
         }
     },
     required: ['category', 'company_email', 'company_name', 'created_at', 'description', 'id', 'location', 'tags', 'title', 'updated_at']

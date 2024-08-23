@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Editor from "./Editor";
+import Editor from "../hiring/Editor";
 import { Button } from "@/components/ui/button";
 import { UseFormSetValue } from "react-hook-form";
 import {
@@ -20,15 +20,19 @@ import { toast } from "@/components/ui/use-toast";
 import { Switch } from "../ui/switch";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
-import { TagsSelector } from "./TagsSelector";
-import { LocationSelector } from "./LocationSelector";
-import { createJob } from "@/lib/job-actions";
-import { CategorySelector } from "./CategorySelector";
+import { TagsSelector } from "../hiring/TagsSelector";
+import { LocationSelector } from "../hiring/LocationSelector";
+import { createJob, updateJob } from "@/lib/job-actions";
+import { CategorySelector } from "../hiring/CategorySelector";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { JobRetrieve } from "@/client";
+import { FormSchema } from "../hiring/HireForm";
+import { PropsValue } from "react-select";
+import { LocationOption } from "../hiring/data";
 import { Loader2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export type HireFormSetValueSchema = UseFormSetValue<{
+export type EditJobFormSetValueSchema = UseFormSetValue<{
   companyName: string;
   title: string;
   description: string;
@@ -53,106 +57,91 @@ export type HireFormSetValueSchema = UseFormSetValue<{
   }[];
 }>;
 
-export const FormSchema = z.object({
-  companyName: z.string().min(1, {
-    message: "Company name must not be empty.",
-  }),
-  title: z.string().min(8, {
-    message: "Job title must be at least 8 characters.",
-  }),
-  description: z.string().min(1, {
-    message: "Job description must not be empty.",
-  }),
-  tags: z.array(
-    z.object({
-      id: z.string(),
-      text: z.string(),
-    })
-  ),
-  categories: z.array(
-    z.object({
-      id: z.string(),
-      text: z.string(),
-    })
-  ),
-  locations: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      type: z.string(),
-    })
-  ),
-  remote: z.boolean().default(false).optional(),
-  applyURL: z
-    .string()
-    .min(1, {
-      message: "Apply URL must not be empty.",
-    })
-    .url("Enter a valid URL"),
-  applyByEmail: z.boolean().default(false).optional(),
-  applyEmail: z.string(),
-  companyEmail: z.string().min(1, {
-    message: "Company email must not be empty.",
-  }),
-  pinOnTop: z.boolean().default(false).optional(),
-  verified: z.boolean().default(false).optional(),
-});
-
-export function HireForm({ session }: { session?: any }) {
+export function EditJobForm({
+  session,
+  job,
+}: {
+  session?: any;
+  job: JobRetrieve;
+}) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      companyName: "",
-      title: "",
-      tags: [],
-      categories: [],
-      locations: [],
-      description: "",
-      remote: false,
-      applyURL: "",
-      applyByEmail: false,
-      applyEmail: "",
-      companyEmail: "",
-      pinOnTop: false,
-      verified: false,
+      companyName: job.company_name,
+      title: job.title,
+      tags: job.tags.map((tag) => {
+        return {
+          id: String(tag.id),
+          text: tag.text,
+        };
+      }),
+      categories: job.category.map((cat) => {
+        return {
+          id: String(cat.id),
+          text: cat.text,
+        };
+      }),
+      locations: job.location.map((loc) => {
+        return {
+          id: String(loc.id),
+          name: loc.location,
+          type: loc.location_type,
+        };
+      }),
+      description: job.description,
+      remote: job.remote,
+      applyURL: job.apply_url!,
+      applyByEmail: job.apply_by_email,
+      applyEmail: job.apply_email || "",
+      companyEmail: job.company_email,
+      pinOnTop: job.pin_on_top,
+      verified: job.verified,
     },
-    // For testing purposes
-    // defaultValues: {
-    //   companyName: "test",
-    //   title: "Machine Learning Engineer",
-    //   tags: [],
-    //   categories: [],
-    //   locations: [],
-    //   description: "This is my description",
-    //   remote: false,
-    //   applyURL: "https://google.com",
-    //   applyByEmail: false,
-    //   applyEmail: "",
-    //   companyEmail: "company@email.com",
-    //   pinOnTop: false,
-    //   verified: false,
-    // },
   });
   const { setValue } = form;
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setLoading(true);
-    const response = await createJob(data);
+    const response = await updateJob(job.id, data);
     setLoading(false);
     if (response) {
       toast({
-        title: "Nuevo trabajo publicado",
+        title: "Trabajo editado",
       });
-      typeof response !== "boolean" && router.push(`/job/${response.slug}`);
+      router.push(`/job/${job.slug}`);
     } else {
       toast({
-        title: "Error al crear el trabajo",
+        title: "Error al editar el trabajo",
         variant: "destructive",
       });
     }
   }
+
+  const defaultTags = job.tags.map((tag) => {
+    return {
+      value: tag.text,
+      label: tag.text,
+    };
+  });
+
+  const defaultLocations: PropsValue<LocationOption> = job.location.map(
+    (loc) => {
+      return {
+        label: loc.location,
+        value: loc.location,
+        type: loc.location_type,
+      };
+    }
+  );
+
+  const defaultCategories = job.category.map((cat) => {
+    return {
+      value: cat.slug || cat.text,
+      label: cat.text,
+    };
+  });
 
   return (
     <Form {...form}>
@@ -208,7 +197,7 @@ export function HireForm({ session }: { session?: any }) {
             <FormItem>
               <FormLabel>Tags, Keywords, or Stack</FormLabel>
               <FormControl>
-                <TagsSelector setValue={setValue} />
+                <TagsSelector setValue={setValue} defaultValue={defaultTags} />
               </FormControl>
               <FormDescription>
                 Short tags are preferred. Use tags like industry and tech stack.
@@ -225,7 +214,10 @@ export function HireForm({ session }: { session?: any }) {
             <FormItem>
               <FormLabel>Location</FormLabel>
               <FormControl>
-                <LocationSelector setValue={setValue} />
+                <LocationSelector
+                  setValue={setValue}
+                  defaultValue={defaultLocations}
+                />
               </FormControl>
               <FormDescription>
                 If you&apos;d only like to hire people from a specific location
@@ -245,7 +237,10 @@ export function HireForm({ session }: { session?: any }) {
             <FormItem>
               <FormLabel>Category</FormLabel>
               <FormControl>
-                <CategorySelector setValue={setValue} />
+                <CategorySelector
+                  setValue={setValue}
+                  defaultValue={defaultCategories}
+                />
               </FormControl>
               <FormDescription>
                 Set a category to filter your job by industry.
@@ -386,30 +381,6 @@ export function HireForm({ session }: { session?: any }) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="pinOnTop"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="pinOnTop"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                  <label
-                    htmlFor="pinOnTop"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Pin on top for 30 days (+$50)
-                  </label>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         {session && session.user?.is_staff && (
           <FormField
             control={form.control}
@@ -436,13 +407,8 @@ export function HireForm({ session }: { session?: any }) {
             )}
           />
         )}
-        <Button
-          disabled={loading}
-          type="submit"
-          className="flex items-center gap-x-2"
-        >
-          {loading && <Loader2Icon className="w-3 h-3 animate-spin" />} Hire -
-          $100
+        <Button disabled={loading} type="submit">
+          {loading && <Loader2Icon className="w-3 h-3 animate-spin" />} Update
         </Button>
       </form>
     </Form>
