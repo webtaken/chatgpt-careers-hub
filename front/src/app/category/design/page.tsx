@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Header from "@/components/commons/Header";
 import { getCategories, getJobs } from "@/lib/job-actions";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${process.env.NEXTAUTH_URL}/category/design`,
+  },
+};
 
 export default async function Page({
   searchParams,
