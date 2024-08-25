@@ -283,16 +283,6 @@ export const groupedOptions: readonly GroupedOption[] = [
   },
 ];
 
-// export interface CategoryOption {
-//   readonly id: string;
-//   readonly text: string;
-//   readonly slug: LocationTypeEnum;
-// }
-
-// export interface CategoryOption {
-//   readonly options: readonly LocationOption[];
-// }
-
 export const commonTags = [
   {
     value: "Marketing",

@@ -6,6 +6,9 @@ import { CategoriesListResponse, JobsListListResponse } from "@/client";
 import CategoriesSelect from "./CategoriesSelect";
 import { SubscriptionForm } from "./SubscriptionForm";
 import JobsList from "../jobs/JobsList";
+import { JobFilters } from "./JobFilters";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function Header({
   title,
@@ -55,13 +58,32 @@ export default function Header({
           />
         </div>
       </div>
+      <div className="flex items-center justify-center">
+        <p className="text-center text-sm text-foreground">
+          Find us on our social media 👉
+        </p>
+        <Button variant="link" asChild className="px-1">
+          <Link
+            href="https://www.linkedin.com/company/chatgpt-jobs-all"
+            target="_blank"
+          >
+            Linkedin
+          </Link>
+        </Button>
+      </div>
+
       <div className="my-4">
         <SubscriptionForm />
       </div>
       {categories && (
-        <div className="flex items-center gap-x-2 px-5 md:px-20">
-          <p className="text-sm">Filter by:</p>
-          <CategoriesSelect categories={categories} />
+        <div className="flex justify-between">
+          <div className="flex items-center gap-x-2 px-5 md:px-20">
+            <p className="text-sm">Filter:</p>
+            <CategoriesSelect categories={categories} />
+          </div>
+          <div className="px-5 md:px-20">
+            <JobFilters />
+          </div>
         </div>
       )}
       {jobs && <JobsList jobs={jobs} page={page} pageSize={pageSize} />}

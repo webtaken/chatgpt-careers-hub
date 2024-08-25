@@ -4,13 +4,18 @@ import { getCategories, getJobs } from "@/lib/job-actions";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { page: string; pageSize: string };
+  searchParams: PagesParams;
 }) {
   const page = parseInt(searchParams.page || "1");
   const pageSize = parseInt(searchParams.pageSize || "10");
 
   const categories = await getCategories();
-  const jobs = await getJobs({ page, pageSize, categoryText: "research" });
+  const jobs = await getJobs({
+    page,
+    pageSize,
+    locationLocation: searchParams.location,
+    categoryText: "research",
+  });
 
   return (
     <main>

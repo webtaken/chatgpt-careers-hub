@@ -78,7 +78,7 @@ export function SubscriptionForm() {
           className="w-full col-span-2"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Subscribing..." : "Subscribe"}
+          {isSubmitting ? "Subscribing..." : "Subscribe!"}
         </Button>
       </form>
     </Form>

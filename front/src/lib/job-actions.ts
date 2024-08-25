@@ -11,7 +11,6 @@ import {
   jobsList,
   jobsListList,
   jobsPartialUpdate,
-  jobsUpdate,
   locationsCreateLocationsCreate,
   tagsCreateTagsCreate,
 } from "@/client";
