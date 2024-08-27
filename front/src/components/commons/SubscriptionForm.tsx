@@ -64,7 +64,7 @@ export function SubscriptionForm() {
             <FormItem className="col-span-4">
               <FormControl>
                 <Input
-                  placeholder="Get jobs in your inbox!"
+                  placeholder="Get updates in your inbox!"
                   aria-label="email"
                   {...field}
                 />

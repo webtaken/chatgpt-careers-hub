@@ -22,7 +22,9 @@ export default async function Navbar() {
       </Link>
       <div className="flex items-center gap-x-2">
         <Button asChild>
-          <Link href={session ? "/hiring" : "/signin"}>Post a Job - $100</Link>
+          <Link href={session ? "/hiring" : "/signin"}>
+            Start Hiring - $100
+          </Link>
         </Button>
         {session && <ProfileActions size="medium" session={session} />}
       </div>
