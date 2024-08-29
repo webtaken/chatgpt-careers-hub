@@ -17,7 +17,38 @@ class JobAdminForm(ModelForm):
 
 class JobAdmin(admin.ModelAdmin):
     form = JobAdminForm
-    list_display = ("title", "company_name", "slug", "verified", "created_at")
+    list_display = [
+        "title",
+        "company_name",
+        "get_tags",
+        "get_locations",
+        "get_categories",
+        "remote",
+        "verified",
+    ]
+    list_filter = ["remote", "verified", "tags", "location", "category"]
+    search_fields = [
+        "title",
+        "company_name",
+        "tags__text",
+        "location__location",
+        "category__text",
+    ]
+
+    def get_tags(self, obj):
+        return ", ".join([tag.text for tag in obj.tags.all()])
+
+    get_tags.short_description = "Tags"
+
+    def get_locations(self, obj):
+        return ", ".join([location.location for location in obj.location.all()])
+
+    get_locations.short_description = "Locations"
+
+    def get_categories(self, obj):
+        return ", ".join([category.text for category in obj.category.all()])
+
+    get_categories.short_description = "Categories"
 
 
 class CategoryAdmin(admin.ModelAdmin):
