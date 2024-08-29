@@ -26,10 +26,10 @@ export default function Header({
   return (
     <>
       <h1 className="text-center text-3xl font-semibold mt-10">
-        {title ?? "Enhance your hirings with AI"}
+        {title ?? "FIND THE BEST ChatGPT JOBS"}
       </h1>
       <p className="text-center text-sm font-medium">
-        Take advantage of the AI Hype and enhance your hirings with AI.
+        Take advantage of the AI Hype and search the best ChatGPT related jobs.
       </p>
       <div className="flex items-center justify-center my-4 gap-x-4">
         <p className="text-sm">As seen in:</p>
@@ -74,9 +74,7 @@ export default function Header({
       <div className="my-4">
         <SubscriptionForm />
       </div>
-      <div className="px-5 md:px-20">
-        <p className="text-sm text-foreground ">Our results using the tool</p>
-      </div>
+
       {categories && (
         <div className="flex justify-between">
           <div className="flex items-center gap-x-2 px-5 md:px-20">
