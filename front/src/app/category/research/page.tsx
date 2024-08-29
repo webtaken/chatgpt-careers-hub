@@ -3,6 +3,7 @@ import Header from "@/components/commons/Header";
 import { getCategories, getJobs } from "@/lib/job-actions";
 
 export const metadata: Metadata = {
+  title: "Research",
   alternates: {
     canonical: `${process.env.NEXTAUTH_URL}/category/research`,
   },
