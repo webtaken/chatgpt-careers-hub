@@ -148,7 +148,6 @@ class LocationViewSet(ModelViewSet):
                     },
                 )
                 location_ids.append(location.id)
-        print(location_ids)
         response_serializer = TagIDSerializer(
             data=[{"id": id} for id in location_ids], many=True
         )
