@@ -45,13 +45,14 @@ class SubscriptionViewSet(ViewSet):
         serializer = SubscribeSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data["email"]
-            new_subscription, _ = Subscription.objects.get_or_create(email=email)
-            new_subscription.save()
-            send_email(
-                get_html_string("jobs/emails/welcome_email.html"),
-                "Welcome to ChatGPT jobs",
-                email,
-            )
+            _, created = Subscription.objects.get_or_create(email=email)
+            # We send an email only in cases we create a new subscription
+            if created:
+                send_email(
+                    get_html_string("jobs/emails/welcome_email.html"),
+                    "Welcome to ChatGPT jobs",
+                    email,
+                )
             return Response({"status": "Subscribed!"}, status=HTTP_200_OK)
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
