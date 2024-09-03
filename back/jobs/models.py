@@ -91,6 +91,7 @@ class Job(TimeStampedModel):
     company_email = EmailField(verbose_name="Company Email (For Invoice)")
     pin_on_top = BooleanField(default=False, verbose_name="Pin on top (30 days)")
     verified = BooleanField(default=False, verbose_name="Verified")
+    visible = BooleanField(default=True, verbose_name="Visible")
 
     def __str__(self):
         return f"{self.title}"

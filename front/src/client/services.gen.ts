@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsListListData, JobsListListResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, JobsBySlugRetrieveData, JobsBySlugRetrieveResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse } from './types.gen';
+import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, BillingWebhookCreateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsListListData, JobsListListResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, JobsBySlugRetrieveData, JobsBySlugRetrieveResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, OrderRetrieveData, OrderRetrieveResponse, OrderGetCustomerReceiptRetrieveData, OrderGetCustomerReceiptRetrieveResponse, OrderGetCheckoutUrlCreateData, OrderGetCheckoutUrlCreateResponse, OrderGetUserOrderRetrieveData, OrderGetUserOrderRetrieveResponse, OrderUserHasAccessRetrieveResponse, PlansListResponse, PlansRetrieveData, PlansRetrieveResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse } from './types.gen';
 
 /**
  * class used for social authentications
@@ -184,6 +184,16 @@ export const authUserPartialUpdate = (data: AuthUserPartialUpdateData = {}): Can
     url: '/api/auth/user/',
     body: data.requestBody,
     mediaType: 'application/json'
+}); };
+
+/**
+ * Handle events happening on lemonsqueezy (subscription created and updated).
+ * @returns unknown No response body
+ * @throws ApiError
+ */
+export const billingWebhookCreate = (): CancelablePromise<BillingWebhookCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/billing/webhook'
 }); };
 
 /**
@@ -496,6 +506,96 @@ export const locationsCreateLocationsCreate = (data: LocationsCreateLocationsCre
     url: '/api/locations/create_locations/',
     body: data.requestBody,
     mediaType: 'application/json'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this order.
+ * @returns Order
+ * @throws ApiError
+ */
+export const orderRetrieve = (data: OrderRetrieveData): CancelablePromise<OrderRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/order/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * Retrieves the customer receipt url of an order
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this order.
+ * @returns CustomerPortalURL
+ * @throws ApiError
+ */
+export const orderGetCustomerReceiptRetrieve = (data: OrderGetCustomerReceiptRetrieveData): CancelablePromise<OrderGetCustomerReceiptRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/order/{id}/get_customer_receipt/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns CheckoutURL
+ * @throws ApiError
+ */
+export const orderGetCheckoutUrlCreate = (data: OrderGetCheckoutUrlCreateData): CancelablePromise<OrderGetCheckoutUrlCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/order/get_checkout_url/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * Retrieves the current purchase of the given user_id
+ * @param data The data for the request.
+ * @param data.userId The user id requesting his subscriptions
+ * @returns Order
+ * @throws ApiError
+ */
+export const orderGetUserOrderRetrieve = (data: OrderGetUserOrderRetrieveData): CancelablePromise<OrderGetUserOrderRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/order/get_user_order/',
+    query: {
+        user_id: data.userId
+    }
+}); };
+
+/**
+ * Checks if the user has access depending if he has bought the product
+ * @returns HasAccess
+ * @throws ApiError
+ */
+export const orderUserHasAccessRetrieve = (): CancelablePromise<OrderUserHasAccessRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/order/user_has_access/'
+}); };
+
+/**
+ * @returns Plan
+ * @throws ApiError
+ */
+export const plansList = (): CancelablePromise<PlansListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/plans/'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this plan.
+ * @returns Plan
+ * @throws ApiError
+ */
+export const plansRetrieve = (data: PlansRetrieveData): CancelablePromise<PlansRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/plans/{id}/',
+    path: {
+        id: data.id
+    }
 }); };
 
 /**

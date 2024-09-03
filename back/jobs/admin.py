@@ -25,8 +25,9 @@ class JobAdmin(admin.ModelAdmin):
         "get_categories",
         "remote",
         "verified",
+        "visible",
     ]
-    list_filter = ["remote", "verified", "tags", "location", "category"]
+    list_filter = ["remote", "verified", "visible", "tags", "location", "category"]
     search_fields = [
         "title",
         "company_name",

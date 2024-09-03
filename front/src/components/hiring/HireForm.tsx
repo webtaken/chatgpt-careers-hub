@@ -90,7 +90,7 @@ export const FormSchema = z.object({
     })
     .url("Enter a valid URL"),
   applyByEmail: z.boolean().default(false).optional(),
-  applyEmail: z.string(),
+  applyEmail: z.string().optional(),
   companyEmail: z.string().min(1, {
     message: "Company email must not be empty.",
   }),
@@ -98,7 +98,7 @@ export const FormSchema = z.object({
   verified: z.boolean().default(false).optional(),
 });
 
-export function HireForm({ session }: { session?: any }) {
+export function HireForm({ session }: { session: any }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -120,17 +120,17 @@ export function HireForm({ session }: { session?: any }) {
     },
     // For testing purposes
     // defaultValues: {
-    //   companyName: "test",
-    //   title: "Machine Learning Engineer",
+    //   companyName: "ChatGPT Jos",
+    //   title: "Generative AI Developer",
     //   tags: [],
     //   categories: [],
     //   locations: [],
     //   description: "This is my description",
     //   remote: false,
-    //   applyURL: "https://google.com",
+    //   applyURL: "https://google.com?q=chatgpt-jobs",
     //   applyByEmail: false,
     //   applyEmail: "",
-    //   companyEmail: "company@email.com",
+    //   companyEmail: "jobs@chatgpt-jobs.com",
     //   pinOnTop: false,
     //   verified: false,
     // },
@@ -142,13 +142,25 @@ export function HireForm({ session }: { session?: any }) {
     const response = await createJob(data);
     setLoading(false);
     if (response) {
-      toast({
-        title: "Nuevo trabajo publicado",
-      });
-      typeof response !== "boolean" && router.push(`/job/${response.slug}`);
+      if ("url" in response) {
+        window.open(response.url, "_blank");
+        return;
+      }
+      router.push(`/job/${response.slug}`);
     } else {
       toast({
-        title: "Error al crear el trabajo",
+        title: "Error",
+        description: (
+          <div>
+            <p>Posible errors contact support:</p>
+            <ul>
+              <li>
+                Check tags, locations, & categories fields are not missing
+              </li>
+              <li>Billing errors, contact @node_srojas1 on X</li>
+            </ul>
+          </div>
+        ),
         variant: "destructive",
       });
     }
@@ -386,7 +398,7 @@ export function HireForm({ session }: { session?: any }) {
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
           name="pinOnTop"
           render={({ field }) => (
@@ -409,7 +421,7 @@ export function HireForm({ session }: { session?: any }) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         {session && session.user?.is_staff && (
           <FormField
             control={form.control}

@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 
 export default async function Page() {
-  const session = await getServerSession(authOptions);
+  const session: any = await getServerSession(authOptions);
 
   return (
     <main className="px-2 md:px-10 py-6">

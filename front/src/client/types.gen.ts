@@ -6,6 +6,10 @@ export type Category = {
     slug?: string | null;
 };
 
+export type CheckoutURL = {
+    url: string;
+};
+
 export type CreateLocation = {
     location: string;
     location_type: string;
@@ -17,6 +21,13 @@ export type CreateMultipleLocations = {
 
 export type CreateMultipleTags = {
     tags: Array<(string)>;
+};
+
+export type CustomRegister = {
+    username: string;
+    email: string;
+    password1: string;
+    password2: string;
 };
 
 /**
@@ -35,6 +46,25 @@ export type CustomUserDetails = {
     readonly email: string;
     first_name?: string;
     last_name?: string;
+};
+
+export type CustomerPortalURL = {
+    url: string;
+};
+
+export type GetCheckoutURLRequest = {
+    receipt_button_text?: string;
+    receipt_thank_you_note?: string;
+    redirect_url: string;
+    embed?: boolean;
+    email: string;
+    user_id: number;
+    variant_id: number;
+    job_id: number;
+};
+
+export type HasAccess = {
+    has_access: boolean;
 };
 
 /**
@@ -61,6 +91,7 @@ export type Job = {
     company_email: string;
     pin_on_top?: boolean;
     verified?: boolean;
+    visible?: boolean;
     user?: number | null;
     tags: Array<(number)>;
     location: Array<(number)>;
@@ -96,6 +127,7 @@ export type JobRetrieve = {
     company_email: string;
     pin_on_top?: boolean;
     verified?: boolean;
+    visible?: boolean;
     user?: number | null;
 };
 
@@ -122,6 +154,24 @@ export type Login = {
     username?: string;
     email?: string;
     password: string;
+};
+
+export type Order = {
+    readonly id: number;
+    lemonsqueezy_id: string;
+    order_id: number;
+    order_number: number;
+    name: string;
+    email: string;
+    status: string;
+    status_formatted: string;
+    refunded?: boolean;
+    refunded_at: string;
+    price?: string;
+    receipt?: string | null;
+    order_item_id?: number | null;
+    user?: number | null;
+    plan?: number | null;
 };
 
 export type PaginatedJobListList = {
@@ -170,6 +220,7 @@ export type PatchedJob = {
     company_email?: string;
     pin_on_top?: boolean;
     verified?: boolean;
+    visible?: boolean;
     user?: number | null;
     tags?: Array<(number)>;
     location?: Array<(number)>;
@@ -188,11 +239,21 @@ export type PatchedTag = {
     text?: string;
 };
 
-export type Register = {
-    username: string;
-    email: string;
-    password1: string;
-    password2: string;
+export type Plan = {
+    readonly id: number;
+    product_id: number;
+    product_name: string;
+    variant_id: number;
+    category: string;
+    name: string;
+    description: string;
+    price: string;
+    is_usage_based?: boolean;
+    interval: string;
+    interval_count: number;
+    trial_interval?: string | null;
+    trial_interval_count?: number | null;
+    sort: number;
 };
 
 export type RestAuthDetail = {
@@ -246,7 +307,7 @@ export type AuthLoginCreateResponse = JWT;
 export type AuthLogoutCreateResponse = RestAuthDetail;
 
 export type AuthRegisterCreateData = {
-    requestBody: Register;
+    requestBody: CustomRegister;
 };
 
 export type AuthRegisterCreateResponse = JWT;
@@ -282,6 +343,8 @@ export type AuthUserPartialUpdateData = {
 };
 
 export type AuthUserPartialUpdateResponse = CustomUserDetails;
+
+export type BillingWebhookCreateResponse = unknown;
 
 export type CategoriesListResponse = Array<Category>;
 
@@ -454,6 +517,52 @@ export type LocationsCreateLocationsCreateData = {
 
 export type LocationsCreateLocationsCreateResponse = Array<LocationID>;
 
+export type OrderRetrieveData = {
+    /**
+     * A unique integer value identifying this order.
+     */
+    id: number;
+};
+
+export type OrderRetrieveResponse = Order;
+
+export type OrderGetCustomerReceiptRetrieveData = {
+    /**
+     * A unique integer value identifying this order.
+     */
+    id: number;
+};
+
+export type OrderGetCustomerReceiptRetrieveResponse = CustomerPortalURL;
+
+export type OrderGetCheckoutUrlCreateData = {
+    requestBody: GetCheckoutURLRequest;
+};
+
+export type OrderGetCheckoutUrlCreateResponse = CheckoutURL;
+
+export type OrderGetUserOrderRetrieveData = {
+    /**
+     * The user id requesting his subscriptions
+     */
+    userId: number;
+};
+
+export type OrderGetUserOrderRetrieveResponse = Order;
+
+export type OrderUserHasAccessRetrieveResponse = HasAccess;
+
+export type PlansListResponse = Array<Plan>;
+
+export type PlansRetrieveData = {
+    /**
+     * A unique integer value identifying this plan.
+     */
+    id: number;
+};
+
+export type PlansRetrieveResponse = Plan;
+
 export type SubscriptionsSubscribeCreateData = {
     requestBody: Subscribe;
 };
@@ -586,6 +695,16 @@ export type $OpenApiTs = {
             req: AuthUserPartialUpdateData;
             res: {
                 200: CustomUserDetails;
+            };
+        };
+    };
+    '/api/billing/webhook': {
+        post: {
+            res: {
+                /**
+                 * No response body
+                 */
+                200: unknown;
             };
         };
     };
@@ -736,6 +855,60 @@ export type $OpenApiTs = {
             req: LocationsCreateLocationsCreateData;
             res: {
                 201: Array<LocationID>;
+            };
+        };
+    };
+    '/api/order/{id}/': {
+        get: {
+            req: OrderRetrieveData;
+            res: {
+                200: Order;
+            };
+        };
+    };
+    '/api/order/{id}/get_customer_receipt/': {
+        get: {
+            req: OrderGetCustomerReceiptRetrieveData;
+            res: {
+                200: CustomerPortalURL;
+            };
+        };
+    };
+    '/api/order/get_checkout_url/': {
+        post: {
+            req: OrderGetCheckoutUrlCreateData;
+            res: {
+                200: CheckoutURL;
+            };
+        };
+    };
+    '/api/order/get_user_order/': {
+        get: {
+            req: OrderGetUserOrderRetrieveData;
+            res: {
+                200: Order;
+            };
+        };
+    };
+    '/api/order/user_has_access/': {
+        get: {
+            res: {
+                200: HasAccess;
+            };
+        };
+    };
+    '/api/plans/': {
+        get: {
+            res: {
+                200: Array<Plan>;
+            };
+        };
+    };
+    '/api/plans/{id}/': {
+        get: {
+            req: PlansRetrieveData;
+            res: {
+                200: Plan;
             };
         };
     };

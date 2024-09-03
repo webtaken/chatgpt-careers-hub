@@ -1,9 +1,9 @@
 "use server";
 
-import { Register, authRegisterCreate } from "@/client";
+import { CustomRegister, authRegisterCreate } from "@/client";
 import { setBasePathToAPI } from "./utils";
 
-export async function signUp(data: Register) {
+export async function signUp(data: CustomRegister) {
   try {
     setBasePathToAPI();
     await authRegisterCreate({ requestBody: { ...data } });

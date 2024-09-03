@@ -22,6 +22,17 @@ export const $Category = {
     required: ['id', 'text']
 } as const;
 
+export const $CheckoutURL = {
+    type: 'object',
+    properties: {
+        url: {
+            type: 'string',
+            format: 'uri'
+        }
+    },
+    required: ['url']
+} as const;
+
 export const $CreateLocation = {
     type: 'object',
     properties: {
@@ -64,6 +75,30 @@ export const $CreateMultipleTags = {
     required: ['tags']
 } as const;
 
+export const $CustomRegister = {
+    type: 'object',
+    properties: {
+        username: {
+            type: 'string',
+            maxLength: 150,
+            minLength: 1
+        },
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        password1: {
+            type: 'string',
+            writeOnly: true
+        },
+        password2: {
+            type: 'string',
+            writeOnly: true
+        }
+    },
+    required: ['email', 'password1', 'password2', 'username']
+} as const;
+
 export const $CustomUserDetails = {
     type: 'object',
     description: 'User model w/o password',
@@ -100,6 +135,65 @@ export const $CustomUserDetails = {
         }
     },
     required: ['email', 'pk', 'username']
+} as const;
+
+export const $CustomerPortalURL = {
+    type: 'object',
+    properties: {
+        url: {
+            type: 'string',
+            format: 'uri'
+        }
+    },
+    required: ['url']
+} as const;
+
+export const $GetCheckoutURLRequest = {
+    type: 'object',
+    properties: {
+        receipt_button_text: {
+            type: 'string',
+            default: 'Go to Dashboard',
+            maxLength: 100
+        },
+        receipt_thank_you_note: {
+            type: 'string',
+            default: 'Thank you for sign up to the plan!',
+            maxLength: 500
+        },
+        redirect_url: {
+            type: 'string',
+            format: 'uri'
+        },
+        embed: {
+            type: 'boolean',
+            default: false
+        },
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        user_id: {
+            type: 'integer'
+        },
+        variant_id: {
+            type: 'integer'
+        },
+        job_id: {
+            type: 'integer'
+        }
+    },
+    required: ['email', 'job_id', 'redirect_url', 'user_id', 'variant_id']
+} as const;
+
+export const $HasAccess = {
+    type: 'object',
+    properties: {
+        has_access: {
+            type: 'boolean'
+        }
+    },
+    required: ['has_access']
 } as const;
 
 export const $JWT = {
@@ -183,6 +277,9 @@ export const $Job = {
             title: 'Pin on top (30 days)'
         },
         verified: {
+            type: 'boolean'
+        },
+        visible: {
             type: 'boolean'
         },
         user: {
@@ -341,6 +438,9 @@ export const $JobRetrieve = {
         verified: {
             type: 'boolean'
         },
+        visible: {
+            type: 'boolean'
+        },
         user: {
             type: 'integer',
             nullable: true
@@ -408,6 +508,81 @@ export const $Login = {
         }
     },
     required: ['password']
+} as const;
+
+export const $Order = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        lemonsqueezy_id: {
+            type: 'string',
+            title: 'Lemon Squeezy Id',
+            maxLength: 255
+        },
+        order_id: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
+        },
+        order_number: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
+        },
+        name: {
+            type: 'string',
+            maxLength: 255
+        },
+        email: {
+            type: 'string',
+            maxLength: 255
+        },
+        status: {
+            type: 'string',
+            maxLength: 50
+        },
+        status_formatted: {
+            type: 'string',
+            maxLength: 100
+        },
+        refunded: {
+            type: 'boolean'
+        },
+        refunded_at: {
+            type: 'string',
+            maxLength: 100
+        },
+        price: {
+            type: 'string',
+            maxLength: 30
+        },
+        receipt: {
+            type: 'string',
+            nullable: true,
+            maxLength: 500
+        },
+        order_item_id: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64',
+            nullable: true
+        },
+        user: {
+            type: 'integer',
+            nullable: true
+        },
+        plan: {
+            type: 'integer',
+            nullable: true
+        }
+    },
+    required: ['email', 'id', 'lemonsqueezy_id', 'name', 'order_id', 'order_number', 'refunded_at', 'status', 'status_formatted']
 } as const;
 
 export const $PaginatedJobListList = {
@@ -563,6 +738,9 @@ export const $PatchedJob = {
         verified: {
             type: 'boolean'
         },
+        visible: {
+            type: 'boolean'
+        },
         user: {
             type: 'integer',
             nullable: true
@@ -627,28 +805,78 @@ export const $PatchedTag = {
     }
 } as const;
 
-export const $Register = {
+export const $Plan = {
     type: 'object',
     properties: {
-        username: {
-            type: 'string',
-            maxLength: 150,
-            minLength: 1
+        id: {
+            type: 'integer',
+            readOnly: true
         },
-        email: {
-            type: 'string',
-            format: 'email'
+        product_id: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         },
-        password1: {
+        product_name: {
             type: 'string',
-            writeOnly: true
+            maxLength: 255
         },
-        password2: {
+        variant_id: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
+        },
+        category: {
             type: 'string',
-            writeOnly: true
+            maxLength: 30
+        },
+        name: {
+            type: 'string',
+            maxLength: 255
+        },
+        description: {
+            type: 'string',
+            title: 'Variant description'
+        },
+        price: {
+            type: 'string',
+            maxLength: 30
+        },
+        is_usage_based: {
+            type: 'boolean'
+        },
+        interval: {
+            type: 'string',
+            maxLength: 10
+        },
+        interval_count: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
+        },
+        trial_interval: {
+            type: 'string',
+            nullable: true,
+            maxLength: 10
+        },
+        trial_interval_count: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64',
+            nullable: true
+        },
+        sort: {
+            type: 'integer',
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         }
     },
-    required: ['email', 'password1', 'password2', 'username']
+    required: ['category', 'description', 'id', 'interval', 'interval_count', 'name', 'price', 'product_id', 'product_name', 'sort', 'variant_id']
 } as const;
 
 export const $RestAuthDetail = {

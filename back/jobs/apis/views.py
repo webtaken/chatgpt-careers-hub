@@ -29,7 +29,7 @@ from .serializers import (
 
 
 class JobListViewSet(ListAPIView):
-    queryset = Job.objects.all().order_by("-updated_at")
+    queryset = Job.objects.filter(visible=True).order_by("-verified", "-updated_at")
     serializer_class = JobListSerializer
     filter_backends = [
         DjangoFilterBackend,
@@ -39,7 +39,7 @@ class JobListViewSet(ListAPIView):
 
 
 class JobViewSet(ModelViewSet):
-    queryset = Job.objects.all().order_by("-updated_at")
+    queryset = Job.objects.filter(visible=True).order_by("-verified", "-updated_at")
     serializer_class = JobSerializer
 
     permission_classes = [CustomJobAuthenticationPermission]
