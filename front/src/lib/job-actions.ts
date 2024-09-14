@@ -15,6 +15,7 @@ import {
   locationsCreateLocationsCreate,
   orderGetCheckoutUrlCreate,
   tagsCreateTagsCreate,
+  tagsListList,
 } from "@/client";
 import { z } from "zod";
 import { setBasePathToAPI, setCredentialsToAPI } from "./utils";
@@ -220,6 +221,15 @@ export async function getJobBySlug(slug: string) {
   try {
     const job = await jobsBySlugRetrieve({ slug: slug });
     return job;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export async function getTags(text: string) {
+  try {
+    const tags = await tagsListList({ text: text });
+    return tags.results;
   } catch (error) {
     return undefined;
   }

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -46,6 +46,47 @@ export function JobFilters() {
     params.set("location", currentValue);
     replace(`${pathname}?${params.toString()}`);
   };
+
+  // return (
+  //   <Dialog open={open} onOpenChange={setOpen}>
+  //     <DialogTrigger asChild>
+  //       <Button variant="outline">More Filters</Button>
+  //     </DialogTrigger>
+  //     <DialogContent className="sm:max-w-[425px]">
+  //       <DialogHeader>
+  //         <DialogTitle>More Filters</DialogTitle>
+  //       </DialogHeader>
+  //       <div className="grid gap-4 py-4">
+  //         <MultipleSelector
+  //           onSearch={async (value) => {
+  //             const res = await mockSearch(value);
+  //             return res;
+  //           }}
+  //           defaultOptions={[]}
+  //           creatable
+  //           groupBy="group"
+  //           placeholder="trying to search 'a' to get more options..."
+  //           loadingIndicator={
+  //             <p className="py-2 text-center text-lg leading-10 text-muted-foreground">
+  //               searching...
+  //             </p>
+  //           }
+  //           emptyIndicator={
+  //             <p className="w-full text-center text-lg leading-10 text-muted-foreground">
+  //               no tags found.
+  //             </p>
+  //           }
+  //         />
+  //       </div>
+  //       <Button
+  //         className="w-full bg-green-500 hover:bg-green-600"
+  //         onClick={() => setOpen(false)}
+  //       >
+  //         Apply
+  //       </Button>
+  //     </DialogContent>
+  //   </Dialog>
+  // );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

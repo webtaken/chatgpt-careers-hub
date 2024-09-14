@@ -614,6 +614,64 @@ export const $PaginatedJobListList = {
     }
 } as const;
 
+export const $PaginatedLocationList = {
+    type: 'object',
+    required: ['count', 'results'],
+    properties: {
+        count: {
+            type: 'integer',
+            example: 123
+        },
+        next: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=4'
+        },
+        previous: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=2'
+        },
+        results: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Location'
+            }
+        }
+    }
+} as const;
+
+export const $PaginatedTagList = {
+    type: 'object',
+    required: ['count', 'results'],
+    properties: {
+        count: {
+            type: 'integer',
+            example: 123
+        },
+        next: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=4'
+        },
+        previous: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=2'
+        },
+        results: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Tag'
+            }
+        }
+    }
+} as const;
+
 export const $PatchedCategory = {
     type: 'object',
     properties: {

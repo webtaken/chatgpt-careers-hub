@@ -5,6 +5,7 @@ import { HireFormSetValueSchema } from "./HireForm";
 import Select, { MultiValue } from "react-select";
 import { useEffect, useState } from "react";
 import { getCategories } from "@/lib/job-actions";
+import { defaultCategories } from "@/data/constants";
 
 export function CategorySelector({
   setValue,
@@ -20,6 +21,13 @@ export function CategorySelector({
       const categories = await getCategories();
       if (categories) {
         setCategories(categories);
+      } else {
+        setCategories(
+          defaultCategories.map((category) => ({
+            id: +category.value,
+            text: category.label,
+          }))
+        );
       }
     }
     getCategoriesFromServer();

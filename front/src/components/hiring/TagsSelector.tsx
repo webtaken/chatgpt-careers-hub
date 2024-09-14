@@ -1,41 +1,62 @@
 "use client";
 
-import CreatableSelect from "react-select/creatable";
-import { MultiValue } from "react-select";
 import { HireFormSetValueSchema } from "./HireForm";
+import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 import { commonTags } from "./data";
+import { getTags } from "@/lib/job-actions";
 
 export function TagsSelector({
   setValue,
   defaultValue,
 }: {
-  setValue: HireFormSetValueSchema;
+  setValue?: HireFormSetValueSchema;
   defaultValue?: { value: string; label: string }[];
 }) {
-  const onChange = (
-    tags: MultiValue<{
-      value: string;
-      label: string;
-    }>
-  ) => {
-    setValue(
-      "tags",
-      tags.map((tag) => {
-        return {
-          id: tag.value,
-          text: tag.label,
-        };
-      })
-    );
+  const onChange = (options: Option[]) => {
+    setValue &&
+      setValue(
+        "tags",
+        options.map((option) => {
+          return {
+            id: option.value,
+            text: option.label,
+          };
+        })
+      );
+  };
+
+  const mockSearch = async (value: string): Promise<Option[]> => {
+    const results = await getTags(value);
+    if (!results) {
+      return [];
+    }
+    return results.map((tag) => {
+      return {
+        value: String(tag.id),
+        label: tag.text,
+      };
+    });
   };
 
   return (
-    <CreatableSelect
-      defaultValue={defaultValue}
-      isClearable
-      options={commonTags}
-      isMulti
+    <MultipleSelector
+      onSearch={async (value) => {
+        const res = await mockSearch(value);
+        return res;
+      }}
+      defaultOptions={commonTags}
+      creatable
+      groupBy="group"
       onChange={onChange}
+      placeholder="Type to search tag..."
+      loadingIndicator={
+        <p className="py-2 text-center text-muted-foreground">searching...</p>
+      }
+      emptyIndicator={
+        <p className="w-full text-center text-muted-foreground">
+          no tags found.
+        </p>
+      }
     />
   );
 }

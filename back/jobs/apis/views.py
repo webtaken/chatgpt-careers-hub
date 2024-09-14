@@ -12,7 +12,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from jobs.models import Category, Job, Location, Tag
 
-from .filters import JobFilter
+from .filters import JobFilter, LocationFilter, TagFilter
 from .pagination import StandardResultsSetPagination
 from .serializers import (
     CategorySerializer,
@@ -71,6 +71,16 @@ class JobViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
+class TagListViewSet(ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_class = TagFilter
+    pagination_class = StandardResultsSetPagination
+
+
 class TagViewSet(ModelViewSet, ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
@@ -106,6 +116,16 @@ class TagViewSet(ModelViewSet, ListAPIView):
         response_serializer.is_valid()
 
         return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+
+
+class LocationListViewSet(ListAPIView):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_class = LocationFilter
+    pagination_class = StandardResultsSetPagination
 
 
 class LocationViewSet(ModelViewSet):

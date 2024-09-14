@@ -181,6 +181,20 @@ export type PaginatedJobListList = {
     results: Array<JobList>;
 };
 
+export type PaginatedLocationList = {
+    count: number;
+    next?: string | null;
+    previous?: string | null;
+    results: Array<Location>;
+};
+
+export type PaginatedTagList = {
+    count: number;
+    next?: string | null;
+    previous?: string | null;
+    results: Array<Tag>;
+};
+
 export type PatchedCategory = {
     readonly id?: number;
     text?: string;
@@ -473,6 +487,20 @@ export type LocationsCreateData = {
 
 export type LocationsCreateResponse = Location;
 
+export type LocationsListListData = {
+    location?: string;
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number;
+};
+
+export type LocationsListListResponse = PaginatedLocationList;
+
 export type LocationsRetrieveData = {
     /**
      * A unique integer value identifying this location.
@@ -578,6 +606,20 @@ export type TagsCreateData = {
 };
 
 export type TagsCreateResponse = Tag;
+
+export type TagsListListData = {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number;
+    text?: string;
+};
+
+export type TagsListListResponse = PaginatedTagList;
 
 export type TagsRetrieveData = {
     /**
@@ -821,6 +863,14 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/locations-list/': {
+        get: {
+            req: LocationsListListData;
+            res: {
+                200: PaginatedLocationList;
+            };
+        };
+    };
     '/api/locations/{id}/': {
         get: {
             req: LocationsRetrieveData;
@@ -935,6 +985,14 @@ export type $OpenApiTs = {
             req: TagsCreateData;
             res: {
                 201: Tag;
+            };
+        };
+    };
+    '/api/tags-list/': {
+        get: {
+            req: TagsListListData;
+            res: {
+                200: PaginatedTagList;
             };
         };
     };

@@ -63,25 +63,31 @@ export const FormSchema = z.object({
   description: z.string().min(1, {
     message: "Job description must not be empty.",
   }),
-  tags: z.array(
-    z.object({
-      id: z.string(),
-      text: z.string(),
-    })
-  ),
-  categories: z.array(
-    z.object({
-      id: z.string(),
-      text: z.string(),
-    })
-  ),
-  locations: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      type: z.string(),
-    })
-  ),
+  tags: z
+    .array(
+      z.object({
+        id: z.string(),
+        text: z.string(),
+      })
+    )
+    .min(1, { message: "Select at least one tag." }),
+  categories: z
+    .array(
+      z.object({
+        id: z.string(),
+        text: z.string(),
+      })
+    )
+    .min(1, { message: "Select at least one category." }),
+  locations: z
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        type: z.string(),
+      })
+    )
+    .min(1, { message: "Select at least one location." }),
   remote: z.boolean().default(false).optional(),
   applyURL: z
     .string()
