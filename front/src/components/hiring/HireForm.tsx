@@ -126,7 +126,7 @@ export function HireForm({ session }: { session: any }) {
     },
     // For testing purposes
     // defaultValues: {
-    //   companyName: "ChatGPT Jos",
+    //   companyName: "ChatGPT Jobs",
     //   title: "Generative AI Developer",
     //   tags: [],
     //   categories: [],

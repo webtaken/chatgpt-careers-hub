@@ -22,15 +22,14 @@ import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { TagsSelector } from "../hiring/TagsSelector";
 import { LocationSelector } from "../hiring/LocationSelector";
-import { createJob, updateJob } from "@/lib/job-actions";
+import { updateJob } from "@/lib/job-actions";
 import { CategorySelector } from "../hiring/CategorySelector";
 import { useState } from "react";
 import { JobRetrieve } from "@/client";
 import { FormSchema } from "../hiring/HireForm";
-import { PropsValue } from "react-select";
-import { LocationOption } from "../hiring/data";
 import { Loader2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Option } from "../ui/multiple-selector";
 
 export type EditJobFormSetValueSchema = UseFormSetValue<{
   companyName: string;
@@ -126,15 +125,13 @@ export function EditJobForm({
     };
   });
 
-  const defaultLocations: PropsValue<LocationOption> = job.location.map(
-    (loc) => {
-      return {
-        label: loc.location,
-        value: loc.location,
-        type: loc.location_type,
-      };
-    }
-  );
+  const defaultLocations: Option[] = job.location.map((loc) => {
+    return {
+      label: loc.location,
+      value: loc.location,
+      group: loc.location_type,
+    };
+  });
 
   const defaultCategories = job.category.map((cat) => {
     return {
@@ -407,7 +404,11 @@ export function EditJobForm({
             )}
           />
         )}
-        <Button disabled={loading} type="submit">
+        <Button
+          disabled={loading}
+          type="submit"
+          className="flex items-center gap-x-2"
+        >
           {loading && <Loader2Icon className="w-3 h-3 animate-spin" />} Update
         </Button>
       </form>

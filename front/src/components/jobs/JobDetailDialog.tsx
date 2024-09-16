@@ -39,7 +39,10 @@ export function JobDetailDialog({ job }: { job: JobRetrieve }) {
               <button
                 className="rounded-full p-1 hover:bg-accent"
                 onClick={() => {
-                  toast({ title: "Link copied!" });
+                  navigator.clipboard.writeText(
+                    window.location.origin + window.location.pathname
+                  );
+                  toast({ title: "Job link copied!" });
                 }}
               >
                 <LinkIcon className="w-3.5 h-3.5 rounded-full" />

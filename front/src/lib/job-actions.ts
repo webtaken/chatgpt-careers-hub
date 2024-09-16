@@ -13,6 +13,7 @@ import {
   jobsListList,
   jobsPartialUpdate,
   locationsCreateLocationsCreate,
+  locationsListList,
   orderGetCheckoutUrlCreate,
   tagsCreateTagsCreate,
   tagsListList,
@@ -230,6 +231,15 @@ export async function getTags(text: string) {
   try {
     const tags = await tagsListList({ text: text });
     return tags.results;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export async function getLocations(text: string) {
+  try {
+    const locations = await locationsListList({ location: text });
+    return locations.results;
   } catch (error) {
     return undefined;
   }

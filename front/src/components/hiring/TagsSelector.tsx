@@ -10,7 +10,7 @@ export function TagsSelector({
   defaultValue,
 }: {
   setValue?: HireFormSetValueSchema;
-  defaultValue?: { value: string; label: string }[];
+  defaultValue?: Option[];
 }) {
   const onChange = (options: Option[]) => {
     setValue &&
@@ -47,6 +47,7 @@ export function TagsSelector({
       defaultOptions={commonTags}
       creatable
       groupBy="group"
+      value={defaultValue}
       onChange={onChange}
       placeholder="Type to search tag..."
       loadingIndicator={

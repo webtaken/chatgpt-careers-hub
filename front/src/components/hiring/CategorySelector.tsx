@@ -1,66 +1,62 @@
 "use client";
 
-import { CategoriesListResponse, Category } from "@/client";
 import { HireFormSetValueSchema } from "./HireForm";
-import Select, { MultiValue } from "react-select";
-import { useEffect, useState } from "react";
-import { getCategories } from "@/lib/job-actions";
 import { defaultCategories } from "@/data/constants";
+import MultipleSelector, { Option } from "../ui/multiple-selector";
 
 export function CategorySelector({
   setValue,
   defaultValue,
 }: {
-  setValue: HireFormSetValueSchema;
-  defaultValue?: { value: string; label: string }[];
+  setValue?: HireFormSetValueSchema;
+  defaultValue?: Option[];
 }) {
-  const [categories, setCategories] = useState<CategoriesListResponse>([]);
+  // const [categories, setCategories] = useState<CategoriesListResponse>([]);
 
-  useEffect(() => {
-    async function getCategoriesFromServer() {
-      const categories = await getCategories();
-      if (categories) {
-        setCategories(categories);
-      } else {
-        setCategories(
-          defaultCategories.map((category) => ({
-            id: +category.value,
-            text: category.label,
-          }))
-        );
-      }
-    }
-    getCategoriesFromServer();
-  }, []);
-
-  const onChange = (
-    categories: MultiValue<{
-      value: string;
-      label: string;
-    }>
-  ) => {
-    setValue(
-      "categories",
-      categories.map((category) => {
-        return {
-          id: category.value,
-          text: category.label,
-        };
-      })
-    );
+  // useEffect(() => {
+  //   async function getCategoriesFromServer() {
+  //     const categories = await getCategories();
+  //     if (categories) {
+  //       setCategories(categories);
+  //     } else {
+  //       setCategories(
+  //         defaultCategories.map((category) => ({
+  //           id: +category.value,
+  //           text: category.label,
+  //         }))
+  //       );
+  //     }
+  //   }
+  //   getCategoriesFromServer();
+  // }, []);
+  const onChange = (options: Option[]) => {
+    setValue &&
+      setValue(
+        "categories",
+        options.map((option) => {
+          return {
+            id: option.id as string,
+            text: option.label,
+          };
+        })
+      );
   };
 
   return (
-    <Select
-      defaultValue={defaultValue}
-      options={categories.map((category) => {
-        return {
-          value: String(category.id),
-          label: category.text,
-        };
-      })}
+    <MultipleSelector
       onChange={onChange}
-      isMulti
+      defaultOptions={defaultCategories.map((category) => ({
+        value: category.label,
+        label: category.label,
+        id: category.value,
+      }))}
+      value={defaultValue}
+      placeholder="Select categories you like..."
+      emptyIndicator={
+        <p className="w-full text-center text-muted-foreground">
+          no categories found.
+        </p>
+      }
     />
   );
 }

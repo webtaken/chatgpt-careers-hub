@@ -35,6 +35,8 @@ class JobAdmin(admin.ModelAdmin):
         "location__location",
         "category__text",
     ]
+    list_per_page = 50
+    list_max_show_all = 200
 
     def get_tags(self, obj):
         return ", ".join([tag.text for tag in obj.tags.all()])
