@@ -1,13 +1,13 @@
-import { authOptions } from "@/auth";
 import { getJobBySlug } from "@/lib/job-actions";
 import { notFound } from "next/navigation";
 
-import { getServerSession } from "next-auth";
 import React from "react";
 import { JobDetailDialog } from "@/components/jobs/JobDetailDialog";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "default-no-store";
+
 export default async function Page({ params }: { params: { slug: string } }) {
-  const session = await getServerSession(authOptions);
   const job = await getJobBySlug(params.slug);
 
   if (!job) {

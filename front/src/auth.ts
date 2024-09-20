@@ -73,7 +73,7 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile, email, credentials }) {
       if (account) {
         if (!SIGN_IN_PROVIDERS.includes(account.provider)) return false;
-        if (account.provider == "google") {
+        if (account.provider === "google") {
           try {
             setBasePathToAPI();
             const response = await authGoogleCreate({

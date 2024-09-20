@@ -1,8 +1,10 @@
 "use client";
-
+import { useEffect, useState } from "react";
 import { HireFormSetValueSchema } from "./HireForm";
 import { defaultCategories } from "@/data/constants";
 import MultipleSelector, { Option } from "../ui/multiple-selector";
+import { getCategories } from "@/lib/job-actions";
+import { CategoriesListResponse } from "@/client";
 
 export function CategorySelector({
   setValue,
@@ -11,24 +13,25 @@ export function CategorySelector({
   setValue?: HireFormSetValueSchema;
   defaultValue?: Option[];
 }) {
-  // const [categories, setCategories] = useState<CategoriesListResponse>([]);
+  const [categories, setCategories] = useState<CategoriesListResponse>([]);
 
-  // useEffect(() => {
-  //   async function getCategoriesFromServer() {
-  //     const categories = await getCategories();
-  //     if (categories) {
-  //       setCategories(categories);
-  //     } else {
-  //       setCategories(
-  //         defaultCategories.map((category) => ({
-  //           id: +category.value,
-  //           text: category.label,
-  //         }))
-  //       );
-  //     }
-  //   }
-  //   getCategoriesFromServer();
-  // }, []);
+  useEffect(() => {
+    async function getCategoriesFromServer() {
+      const categories = await getCategories();
+      if (categories) {
+        setCategories(categories);
+      } else {
+        setCategories(
+          defaultCategories.map((category) => ({
+            id: +category.value,
+            text: category.label,
+          }))
+        );
+      }
+    }
+    getCategoriesFromServer();
+  }, []);
+
   const onChange = (options: Option[]) => {
     setValue &&
       setValue(

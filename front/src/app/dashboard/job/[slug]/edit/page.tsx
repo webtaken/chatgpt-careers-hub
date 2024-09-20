@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import { notFound } from "next/navigation";
 
-import React from "react";
+export const dynamic = "force-dynamic";
+export const fetchCache = "default-no-store";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const session = await getServerSession(authOptions);

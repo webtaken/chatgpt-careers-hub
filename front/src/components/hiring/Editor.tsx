@@ -6,7 +6,6 @@ import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 import EditorControls from "./EditorControls";
 import "./styles.css";
-import { UseFormSetValue } from "react-hook-form";
 import { HireFormSetValueSchema } from "./HireForm";
 
 interface EditorProps {

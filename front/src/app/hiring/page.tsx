@@ -2,7 +2,9 @@ import { authOptions } from "@/auth";
 import { HireForm } from "@/components/hiring/HireForm";
 
 import { getServerSession } from "next-auth";
-import React from "react";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "default-no-store";
 
 export default async function Page() {
   const session: any = await getServerSession(authOptions);

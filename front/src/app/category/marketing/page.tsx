@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Header from "@/components/commons/Header";
 import { getCategories, getJobs } from "@/lib/job-actions";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "default-no-store";
+
 export const metadata: Metadata = {
   title: "Marketing",
   alternates: {

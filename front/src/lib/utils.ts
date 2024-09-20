@@ -26,3 +26,8 @@ export function generateUniqueId(): string {
   const randomStr = Math.random().toString(36).substring(2, 7);
   return `${timestamp}-${randomStr}`;
 }
+
+export function prettyPrintUnixTimestamp(unixTimestamp: number): string {
+  const date = new Date(unixTimestamp * 1000);
+  return date.toLocaleString();
+}
