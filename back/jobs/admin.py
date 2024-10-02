@@ -58,7 +58,11 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ("text", "slug")
 
 
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ("location", "location_type")
+
+
 admin.site.register(Job, JobAdmin)
 admin.site.register(Tag)
-admin.site.register(Location)
+admin.site.register(Location, LocationAdmin)
 admin.site.register(Category, CategoryAdmin)
