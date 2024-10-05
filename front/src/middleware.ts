@@ -1,8 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { authTokenVerifyCreate } from "./client";
-import { setBasePathToAPI } from "./lib/utils";
+import { authTokenVerifyCreate, OpenAPI } from "./client";
 
 // API Paths to be restricted.
 const protectedRoutes = ["/hiring", "/dashboard"];
@@ -24,7 +23,7 @@ export default async function middleware(request: NextRequest) {
       if (!tokenBack) {
         return NextResponse.redirect(url);
       }
-      setBasePathToAPI();
+      OpenAPI.BASE = process.env.BASE_PATH_API!;
       const response = await authTokenVerifyCreate({
         requestBody: { token: tokenBack as string },
       });
