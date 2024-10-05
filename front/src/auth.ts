@@ -59,7 +59,7 @@ export const authOptions: NextAuthOptions = {
           const data = response;
           if (data) return data;
         } catch (error: any) {
-          console.error("Credentials error: ", error.toJSON());
+          console.error("Credentials error: ", error);
         }
         return null;
       },

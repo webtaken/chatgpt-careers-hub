@@ -24,11 +24,12 @@ export default async function middleware(request: NextRequest) {
         return NextResponse.redirect(url);
       }
       OpenAPI.BASE = process.env.BASE_PATH_API!;
-      const response = await authTokenVerifyCreate({
-        requestBody: { token: tokenBack as string },
-      });
-      // @ts-expect-error
-      if (response.code && response.code === "token_not_valid") {
+      try {
+        await authTokenVerifyCreate({
+          requestBody: { token: tokenBack as string },
+        });
+      } catch (error) {
+        console.log("Token verify error:", error);
         return NextResponse.redirect(url);
       }
       return res;
