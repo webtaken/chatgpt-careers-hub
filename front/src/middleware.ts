@@ -12,6 +12,7 @@ export default async function middleware(request: NextRequest) {
     const token = await getToken({
       req: request,
     });
+    console.log(token);
     // check not logged in.
     if (!token) {
       const url = new URL("/signin", request.url);
