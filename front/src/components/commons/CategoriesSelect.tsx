@@ -20,19 +20,26 @@ export default function CategoriesSelect({
   const router = useRouter();
 
   return (
-    <Select onValueChange={(value) => router.push(`/category/${value}/`)}>
-      <SelectTrigger className="w-[180px]">
+    <Select
+      onValueChange={(value) => {
+        if (value === "all") {
+          router.push("/");
+        } else router.push(`/category/${value}/`);
+      }}
+    >
+      <SelectTrigger className="w-full">
         <SelectValue placeholder="Select a category" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Categories</SelectLabel>
+          <SelectItem value="all">All</SelectItem>
           {categories.map((category, index) => (
             <SelectItem
               key={`${category.slug}-${index}`}
               value={`${category.slug}`}
             >
-              <Link href={`/category/${category.slug}`}>{category.text}</Link>
+              {category.text}
             </SelectItem>
           ))}
         </SelectGroup>

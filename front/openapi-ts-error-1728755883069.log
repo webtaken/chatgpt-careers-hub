@@ -1,0 +1,6 @@
+Error downloading http://127.0.0.1:8000/api/schema 
+fetch failed
+JSONParserError: Error downloading http://127.0.0.1:8000/api/schema 
+fetch failed
+    at download (/home/saul/Desktop/sideProjects/chatgpt-careers-hub/front/node_modules/.pnpm/@apidevtools+json-schema-ref-parser@11.6.4/node_modules/@apidevtools/json-schema-ref-parser/dist/lib/resolvers/http.js:113:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

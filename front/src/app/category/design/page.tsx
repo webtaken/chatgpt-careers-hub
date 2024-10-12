@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/commons/Header";
 import { getCategories, getJobs } from "@/lib/job-actions";
+import { handlePaginationParams, parseNumbersList } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
@@ -17,15 +18,14 @@ export default async function Page({
 }: {
   searchParams: PagesParams;
 }) {
-  const page = parseInt(searchParams.page || "1");
-  const pageSize = parseInt(searchParams.pageSize || "10");
-
+  const { page, pageSize } = handlePaginationParams(searchParams);
   const categories = await getCategories();
   const jobs = await getJobs({
     page,
     pageSize,
-    locationLocation: searchParams.location,
-    categoryText: "design",
+    title: searchParams.title,
+    tags: parseNumbersList(searchParams.tags),
+    location: parseNumbersList(searchParams.locations),
   });
 
   return (

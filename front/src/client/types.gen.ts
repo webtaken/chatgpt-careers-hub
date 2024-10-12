@@ -428,9 +428,9 @@ export type JobsListListData = {
      */
     pageSize?: number;
     slug?: string;
-    slugText?: string;
     tags?: Array<(number)>;
     tagsText?: string;
+    title?: string;
 };
 
 export type JobsListListResponse = PaginatedJobListList;
@@ -500,6 +500,26 @@ export type LocationsListListData = {
 };
 
 export type LocationsListListResponse = PaginatedLocationList;
+
+export type LocationsListBulkRetrieveCreateData = {
+    location?: string;
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number;
+    requestBody?: {
+        /**
+         * List of tag IDs to retrieve
+         */
+        ids: Array<(number)>;
+    };
+};
+
+export type LocationsListBulkRetrieveCreateResponse = PaginatedLocationList;
 
 export type LocationsRetrieveData = {
     /**
@@ -620,6 +640,26 @@ export type TagsListListData = {
 };
 
 export type TagsListListResponse = PaginatedTagList;
+
+export type TagsListBulkRetrieveCreateData = {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number;
+    requestBody?: {
+        /**
+         * List of tag IDs to retrieve
+         */
+        ids: Array<(number)>;
+    };
+    text?: string;
+};
+
+export type TagsListBulkRetrieveCreateResponse = PaginatedTagList;
 
 export type TagsRetrieveData = {
     /**
@@ -871,6 +911,14 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/locations-list/bulk-retrieve/': {
+        post: {
+            req: LocationsListBulkRetrieveCreateData;
+            res: {
+                200: PaginatedLocationList;
+            };
+        };
+    };
     '/api/locations/{id}/': {
         get: {
             req: LocationsRetrieveData;
@@ -991,6 +1039,14 @@ export type $OpenApiTs = {
     '/api/tags-list/': {
         get: {
             req: TagsListListData;
+            res: {
+                200: PaginatedTagList;
+            };
+        };
+    };
+    '/api/tags-list/bulk-retrieve/': {
+        post: {
+            req: TagsListBulkRetrieveCreateData;
             res: {
                 200: PaginatedTagList;
             };

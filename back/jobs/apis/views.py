@@ -6,9 +6,10 @@ from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
+from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from jobs.models import Category, Job, Location, Tag
 
@@ -71,7 +72,7 @@ class JobViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-class TagListViewSet(ListAPIView):
+class TagListViewSet(ListModelMixin, GenericViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     filter_backends = [
@@ -79,6 +80,53 @@ class TagListViewSet(ListAPIView):
     ]
     filterset_class = TagFilter
     pagination_class = StandardResultsSetPagination
+
+    @extend_schema(
+        parameters=None,
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "ids": {
+                        "type": "array",
+                        "items": {"type": "integer"},
+                        "description": "List of tag IDs to retrieve",
+                    },
+                },
+                "required": ["ids"],
+            }
+        },
+        responses={200: TagSerializer(many=True)},
+        description="Retrieve multiple tags by their IDs",
+        examples=[
+            OpenApiExample(
+                "Example request",
+                value={"ids": [1, 2, 3]},
+                request_only=True,
+            ),
+        ],
+    )
+    @action(detail=False, methods=["post"], url_path="bulk-retrieve")
+    def bulk_retrieve(self, request):
+        tag_ids = request.data.get("ids", [])
+
+        if not isinstance(tag_ids, list):
+            return Response(
+                {"error": "The 'ids' field must be a list of integers."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            tag_ids = [int(id) for id in tag_ids]
+        except ValueError:
+            return Response(
+                {"error": "All IDs must be integers."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        tags = Tag.objects.filter(id__in=tag_ids)
+        serializer = self.get_serializer(tags, many=True)
+        return Response(serializer.data)
 
 
 class TagViewSet(ModelViewSet, ListAPIView):
@@ -118,7 +166,7 @@ class TagViewSet(ModelViewSet, ListAPIView):
         return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
 
-class LocationListViewSet(ListAPIView):
+class LocationListViewSet(ListModelMixin, GenericViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     filter_backends = [
@@ -126,6 +174,53 @@ class LocationListViewSet(ListAPIView):
     ]
     filterset_class = LocationFilter
     pagination_class = StandardResultsSetPagination
+
+    @extend_schema(
+        parameters=None,
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "ids": {
+                        "type": "array",
+                        "items": {"type": "integer"},
+                        "description": "List of tag IDs to retrieve",
+                    },
+                },
+                "required": ["ids"],
+            }
+        },
+        responses={200: LocationSerializer(many=True)},
+        description="Retrieve multiple tags by their IDs",
+        examples=[
+            OpenApiExample(
+                "Example request",
+                value={"ids": [1, 2, 3]},
+                request_only=True,
+            ),
+        ],
+    )
+    @action(detail=False, methods=["post"], url_path="bulk-retrieve")
+    def bulk_retrieve(self, request):
+        tag_ids = request.data.get("ids", [])
+
+        if not isinstance(tag_ids, list):
+            return Response(
+                {"error": "The 'ids' field must be a list of integers."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            tag_ids = [int(id) for id in tag_ids]
+        except ValueError:
+            return Response(
+                {"error": "All IDs must be integers."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        tags = Location.objects.filter(id__in=tag_ids)
+        serializer = self.get_serializer(tags, many=True)
+        return Response(serializer.data)
 
 
 class LocationViewSet(ModelViewSet):

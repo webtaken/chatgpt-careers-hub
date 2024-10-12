@@ -31,3 +31,20 @@ export function prettyPrintUnixTimestamp(unixTimestamp: number): string {
   const date = new Date(unixTimestamp * 1000);
   return date.toLocaleString();
 }
+
+export function isNumeric(str: string) {
+  return Number.isFinite(Number(str));
+}
+
+export function handlePaginationParams(searchParams: PagesParams) {
+  const page = parseInt(searchParams.page || "1");
+  const pageSize = parseInt(searchParams.pageSize || "50");
+  return { page, pageSize };
+}
+
+export function parseNumbersList(list: string | undefined | null) {
+  return list
+    ?.split(",")
+    .filter((id) => isNumeric(id))
+    .map((id) => +id);
+}

@@ -5,12 +5,15 @@ import { defaultCategories } from "@/data/constants";
 import MultipleSelector, { Option } from "../ui/multiple-selector";
 import { getCategories } from "@/lib/job-actions";
 import { CategoriesListResponse } from "@/client";
+import { JobsFilterFormSetValueSchema } from "../jobs/JobsFilterForm";
 
 export function CategorySelector({
   setValue,
+  setValueFilter,
   defaultValue,
 }: {
   setValue?: HireFormSetValueSchema;
+  setValueFilter?: JobsFilterFormSetValueSchema;
   defaultValue?: Option[];
 }) {
   const [categories, setCategories] = useState<CategoriesListResponse>([]);
@@ -35,6 +38,17 @@ export function CategorySelector({
   const onChange = (options: Option[]) => {
     setValue &&
       setValue(
+        "categories",
+        options.map((option) => {
+          return {
+            id: option.id as string,
+            text: option.label,
+          };
+        })
+      );
+
+    setValueFilter &&
+      setValueFilter(
         "categories",
         options.map((option) => {
           return {

@@ -1,5 +1,6 @@
 "use client";
 
+import { JobsFilterFormSetValueSchema } from "../jobs/JobsFilterForm";
 import { HireFormSetValueSchema } from "./HireForm";
 import { commonLocations } from "./data";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
@@ -7,14 +8,30 @@ import { getLocations } from "@/lib/job-actions";
 
 export function LocationSelector({
   setValue,
+  setValueFilter,
   defaultValue,
+  defaultOptions,
 }: {
   setValue?: HireFormSetValueSchema;
+  setValueFilter?: JobsFilterFormSetValueSchema;
   defaultValue?: Option[];
+  defaultOptions?: Option[];
 }) {
   const onChange = (options: Option[]) => {
     setValue &&
       setValue(
+        "locations",
+        options.map((option) => {
+          return {
+            id: option.value,
+            name: option.label,
+            type: option.group ? (option.group as string) : "city",
+          };
+        })
+      );
+
+    setValueFilter &&
+      setValueFilter(
         "locations",
         options.map((option) => {
           return {
@@ -57,9 +74,10 @@ export function LocationSelector({
         }
         return Array.from(uniqueResults.values());
       }}
-      defaultOptions={commonLocations}
+      triggerSearchOnFocus
+      defaultOptions={defaultOptions}
       value={defaultValue}
-      creatable
+      creatable={setValueFilter ? undefined : true}
       groupBy="group"
       onChange={onChange}
       placeholder="Type to search location..."
@@ -68,7 +86,7 @@ export function LocationSelector({
       }
       emptyIndicator={
         <p className="w-full text-center text-muted-foreground">
-          no locations found.
+          No locations found.
         </p>
       }
     />

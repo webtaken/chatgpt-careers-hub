@@ -4,7 +4,8 @@ from jobs.models import Job, Location, Tag
 
 
 class JobFilter(FilterSet):
-    slug__text = CharFilter(lookup_expr="exact")
+    title = CharFilter(lookup_expr="icontains")
+    slug = CharFilter(lookup_expr="exact")
     category__text = CharFilter(lookup_expr="icontains")
     tags__text = CharFilter(lookup_expr="icontains")
     location__location = CharFilter(lookup_expr="icontains")
@@ -12,6 +13,7 @@ class JobFilter(FilterSet):
     class Meta:
         model = Job
         fields = [
+            "title",
             "slug",
             "category",
             "tags",

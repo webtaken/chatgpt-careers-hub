@@ -2,15 +2,20 @@
 
 import { HireFormSetValueSchema } from "./HireForm";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
-import { commonTags } from "./data";
 import { getTags } from "@/lib/job-actions";
+import { JobsFilterFormSetValueSchema } from "../jobs/JobsFilterForm";
+import { useEffect, useState } from "react";
 
 export function TagsSelector({
   setValue,
+  setValueFilter,
   defaultValue,
+  defaultOptions,
 }: {
   setValue?: HireFormSetValueSchema;
+  setValueFilter?: JobsFilterFormSetValueSchema;
   defaultValue?: Option[];
+  defaultOptions?: Option[];
 }) {
   const onChange = (options: Option[]) => {
     setValue &&
@@ -23,10 +28,21 @@ export function TagsSelector({
           };
         })
       );
+
+    setValueFilter &&
+      setValueFilter(
+        "tags",
+        options.map((option) => {
+          return {
+            id: option.value,
+            text: option.label,
+          };
+        })
+      );
   };
 
   const mockSearch = async (value: string): Promise<Option[]> => {
-    const results = await getTags(value);
+    const results = await getTags({ text: value });
     if (!results) {
       return [];
     }
@@ -44,8 +60,9 @@ export function TagsSelector({
         const res = await mockSearch(value);
         return res;
       }}
-      defaultOptions={commonTags}
-      creatable
+      defaultOptions={defaultOptions}
+      triggerSearchOnFocus
+      creatable={setValueFilter ? undefined : true}
       groupBy="group"
       value={defaultValue}
       onChange={onChange}

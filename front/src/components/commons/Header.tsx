@@ -9,6 +9,7 @@ import JobsList from "../jobs/JobsList";
 import { JobFilters } from "./JobFilters";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { JobsFilterForm } from "../jobs/JobsFilterForm";
 
 export default function Header({
   title,
@@ -75,7 +76,7 @@ export default function Header({
         <SubscriptionForm />
       </div>
 
-      {categories && (
+      {/* {categories && (
         <div className="flex justify-between">
           <div className="flex items-center gap-x-2 px-5 md:px-20">
             <p className="text-sm">Filter:</p>
@@ -85,7 +86,13 @@ export default function Header({
             <JobFilters />
           </div>
         </div>
+      )} */}
+      {categories && (
+        <div className="px-8 md:px-20">
+          <JobsFilterForm categories={categories} />
+        </div>
       )}
+
       {jobs && <JobsList jobs={jobs} page={page} pageSize={pageSize} />}
     </>
   );

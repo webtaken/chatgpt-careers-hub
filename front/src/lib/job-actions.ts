@@ -6,6 +6,7 @@ import {
   JobsListListData,
   LocationTypeEnum,
   Plan,
+  TagsListListData,
   categoriesList,
   jobsBySlugRetrieve,
   jobsCreate,
@@ -13,9 +14,11 @@ import {
   jobsListList,
   jobsPartialUpdate,
   locationsCreateLocationsCreate,
+  locationsListBulkRetrieveCreate,
   locationsListList,
   orderGetCheckoutUrlCreate,
   tagsCreateTagsCreate,
+  tagsListBulkRetrieveCreate,
   tagsListList,
 } from "@/client";
 import { z } from "zod";
@@ -227,10 +230,21 @@ export async function getJobBySlug(slug: string) {
   }
 }
 
-export async function getTags(text: string) {
+export async function getTags(data: TagsListListData) {
   try {
-    const tags = await tagsListList({ text: text });
+    const tags = await tagsListList({ ...data });
     return tags.results;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export async function getBulkTags(ids: number[]) {
+  try {
+    const tags = await tagsListBulkRetrieveCreate({
+      requestBody: { ids: ids },
+    });
+    return tags;
   } catch (error) {
     return undefined;
   }
@@ -240,6 +254,17 @@ export async function getLocations(text: string) {
   try {
     const locations = await locationsListList({ location: text });
     return locations.results;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export async function getBulkLocations(ids: number[]) {
+  try {
+    const locations = await locationsListBulkRetrieveCreate({
+      requestBody: { ids: ids },
+    });
+    return locations;
   } catch (error) {
     return undefined;
   }

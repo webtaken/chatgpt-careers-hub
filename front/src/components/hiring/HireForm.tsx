@@ -27,6 +27,7 @@ import { CategorySelector } from "./CategorySelector";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
+import { commonTags } from "./data";
 
 export type HireFormSetValueSchema = UseFormSetValue<{
   companyName: string;
@@ -226,7 +227,7 @@ export function HireForm({ session }: { session: any }) {
             <FormItem>
               <FormLabel>Tags, Keywords, or Stack</FormLabel>
               <FormControl>
-                <TagsSelector setValue={setValue} />
+                <TagsSelector setValue={setValue} defaultOptions={commonTags} />
               </FormControl>
               <FormDescription>
                 Short tags are preferred. Use tags like industry and tech stack.
