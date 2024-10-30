@@ -33,6 +33,16 @@ export const $CheckoutURL = {
     required: ['url']
 } as const;
 
+export const $CountSubscriptions = {
+    type: 'object',
+    properties: {
+        count: {
+            type: 'integer'
+        }
+    },
+    required: ['count']
+} as const;
+
 export const $CreateLocation = {
     type: 'object',
     properties: {

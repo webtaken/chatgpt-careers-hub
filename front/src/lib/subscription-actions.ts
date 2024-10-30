@@ -1,6 +1,9 @@
 "use server";
 
-import { subscriptionsSubscribeCreate } from "@/client";
+import {
+  subscriptionsGetCountSubscriptionsRetrieve,
+  subscriptionsSubscribeCreate,
+} from "@/client";
 import { setBasePathToAPI } from "./utils";
 
 export async function subscribe(email: string) {
@@ -10,6 +13,16 @@ export async function subscribe(email: string) {
       requestBody: { email },
     });
     return status;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export async function getSubscriptionsCount() {
+  try {
+    setBasePathToAPI();
+    const response = await subscriptionsGetCountSubscriptionsRetrieve();
+    return response.count;
   } catch (error) {
     return undefined;
   }

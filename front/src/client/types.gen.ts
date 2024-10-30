@@ -10,6 +10,10 @@ export type CheckoutURL = {
     url: string;
 };
 
+export type CountSubscriptions = {
+    count: number;
+};
+
 export type CreateLocation = {
     location: string;
     location_type: string;
@@ -611,6 +615,8 @@ export type PlansRetrieveData = {
 
 export type PlansRetrieveResponse = Plan;
 
+export type SubscriptionsGetCountSubscriptionsRetrieveResponse = CountSubscriptions;
+
 export type SubscriptionsSubscribeCreateData = {
     requestBody: Subscribe;
 };
@@ -1007,6 +1013,13 @@ export type $OpenApiTs = {
             req: PlansRetrieveData;
             res: {
                 200: Plan;
+            };
+        };
+    };
+    '/api/subscriptions/get_count_subscriptions/': {
+        get: {
+            res: {
+                200: CountSubscriptions;
             };
         };
     };

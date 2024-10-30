@@ -10,6 +10,8 @@ import { JobFilters } from "./JobFilters";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { JobsFilterForm } from "../jobs/JobsFilterForm";
+import { Suspense } from "react";
+import { SubscriptionsCount } from "./SubscriptionsCount";
 
 export default function Header({
   title,
@@ -74,6 +76,9 @@ export default function Header({
 
       <div className="my-4">
         <SubscriptionForm />
+        <Suspense fallback={null}>
+          <SubscriptionsCount />
+        </Suspense>
       </div>
 
       {/* {categories && (

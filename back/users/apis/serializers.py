@@ -1,5 +1,9 @@
-from rest_framework.serializers import EmailField, Serializer
+from rest_framework.serializers import EmailField, IntegerField, Serializer
 
 
 class SubscribeSerializer(Serializer):
     email = EmailField()
+
+
+class CountSubscriptionsSerializer(Serializer):
+    count = IntegerField()

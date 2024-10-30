@@ -2,6 +2,7 @@ from commons.utils import get_html_string, send_email
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -9,10 +10,14 @@ from rest_framework.viewsets import ViewSet
 
 from users.models import Subscription
 
-from .serializers import SubscribeSerializer
+from .serializers import CountSubscriptionsSerializer, SubscribeSerializer
 
 
 class SubscriptionViewSet(ViewSet):
+    permission_classes = [
+        AllowAny,
+    ]
+
     @extend_schema(
         request=SubscribeSerializer,
         responses={
@@ -56,3 +61,17 @@ class SubscriptionViewSet(ViewSet):
             return Response({"status": "Subscribed!"}, status=HTTP_200_OK)
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+    @extend_schema(
+        responses={
+            HTTP_200_OK: CountSubscriptionsSerializer(),
+        },
+        summary="Get count of subscriptions",
+    )
+    @action(detail=False, methods=["get"])
+    def get_count_subscriptions(self, request: Request):
+        count = Subscription.objects.count()
+        serializer = CountSubscriptionsSerializer(data={"count": count})
+        if serializer.is_valid():
+            return Response(serializer.data, status=HTTP_200_OK)
+        return Response(serializer.data, status=HTTP_200_OK)
