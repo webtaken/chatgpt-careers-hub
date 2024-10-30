@@ -9,7 +9,7 @@ export async function SubscriptionsCount() {
         Join our community of{" "}
         <span className="font-medium">
           <NumberTicker value={count + 100} />
-        </span>
+        </span>{" "}
         readers!
       </p>
     );
