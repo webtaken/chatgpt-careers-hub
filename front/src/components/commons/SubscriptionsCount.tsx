@@ -8,8 +8,9 @@ export async function SubscriptionsCount() {
       <p className="text-center text-sm my-2">
         Join our community of{" "}
         <span className="font-medium">
-          <NumberTicker value={count + 100} /> AI experts!
+          <NumberTicker value={count + 100} />
         </span>
+        readers!
       </p>
     );
   }
