@@ -35,15 +35,17 @@ def send_weekly_email():
         if not subscriptions:
             break
 
-        emails = [subscription.email for subscription in subscriptions]
-        send_email(
-            get_html_string(
-                "jobs/emails/weekly_jobs_email.html",
-                {"jobs_list": week_jobs},
-            ),
-            "Weekly jobs alert",
-            [{"email": email} for email in emails],
-        )
+        for sub in subscriptions:
+            if sub.email:
+                response = send_email(
+                    get_html_string(
+                        "jobs/emails/weekly_jobs_email.html",
+                        {"jobs_list": week_jobs},
+                    ),
+                    "Weekly jobs alert",
+                    [{"email": sub.email}],
+                )
+                print(str(response))
         page += 1
 
 
