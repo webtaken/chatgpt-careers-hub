@@ -47,15 +47,6 @@ def send_weekly_email():
         page += 1
 
 
-def hello():
-    today = timezone.now()
-    # Returns jobs from the same week number
-    jobs = Job.objects.filter(
-        updated_at__year=today.year, updated_at__week=today.isocalendar()[1]
-    )
-    print("weekly jobs number", jobs.count())
-
-
 # The `close_old_connections` decorator ensures that database connections, that have become
 # unusable or are obsolete, are closed before and after your job has run. You should use it
 # to wrap any jobs that you schedule that access the Django database in any way.
@@ -87,15 +78,6 @@ class Command(BaseCommand):
             replace_existing=True,
         )
         print("Added job 'send_weekly_email'.")
-
-        scheduler.add_job(
-            hello,
-            trigger=CronTrigger(second="*/10"),
-            id="hello",
-            max_instances=1,
-            replace_existing=True,
-        )
-        print("Added job 'hello'.")
 
         scheduler.add_job(
             delete_old_job_executions,
