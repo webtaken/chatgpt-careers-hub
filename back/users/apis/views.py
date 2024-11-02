@@ -53,11 +53,12 @@ class SubscriptionViewSet(ViewSet):
             _, created = Subscription.objects.get_or_create(email=email)
             # We send an email only in cases we create a new subscription
             if created:
-                send_email(
+                response = send_email(
                     get_html_string("jobs/emails/welcome_email.html"),
                     "Welcome to ChatGPT jobs",
-                    email,
+                    [{"email": email}],
                 )
+                print(str(response))
             return Response({"status": "Subscribed!"}, status=HTTP_200_OK)
 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)

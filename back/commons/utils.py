@@ -1,3 +1,5 @@
+from typing import Any
+
 from config.settings import env
 from django.template.loader import render_to_string
 from sib_api_v3_sdk import (
@@ -16,13 +18,11 @@ def get_html_string(template_name, context=None):
     return html_string
 
 
-def send_email(html_content: str, subject: str, to: str):
+def send_email(html_content: str, subject: str, to: Any):
     configuration = Configuration()
     configuration.api_key["api-key"] = env("EMAIL_API_KEY")
     api_instance = TransactionalEmailsApi(ApiClient(configuration))
-    subject = "Welcome to ChatGPT Jobs"
     sender = {"name": "chatgpt-jobs", "email": "luckly083@gmail.com"}
-    to = [{"email": to}]
     reply_to = {"email": "luckly083@gmail.com"}
     send_smtp_email = SendSmtpEmail(
         to=to,
