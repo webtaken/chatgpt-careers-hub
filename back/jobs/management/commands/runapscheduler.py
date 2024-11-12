@@ -74,7 +74,7 @@ class Command(BaseCommand):
 
         scheduler.add_job(
             send_weekly_email,
-            trigger=CronTrigger(minute="00", hour="12", day_of_week="fri"),
+            trigger=CronTrigger(minute="00", hour="16", day_of_week="fri"),
             id="send_weekly_email",
             max_instances=1,
             replace_existing=True,
