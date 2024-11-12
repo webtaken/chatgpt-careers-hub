@@ -24,6 +24,7 @@ export default async function Page({
     page,
     pageSize,
     title: searchParams.title,
+    categoryText: "design",
     tags: parseNumbersList(searchParams.tags),
     location: parseNumbersList(searchParams.locations),
   });
