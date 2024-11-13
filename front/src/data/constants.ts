@@ -1,5 +1,13 @@
 export const defaultCategories = [
   {
+    value: "9",
+    label: "Data Annotation",
+  },
+  {
+    value: "8",
+    label: "Legal",
+  },
+  {
     value: "7",
     label: "Design",
   },
