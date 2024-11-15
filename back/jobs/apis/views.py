@@ -1,5 +1,6 @@
 from commons.permissions import CustomJobAuthenticationPermission
 from django.db import transaction
+from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import OpenApiExample, extend_schema
@@ -12,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from jobs.models import Category, Job, Location, Tag
+from jobs.utils import get_current_week_jobs
 
 from .filters import JobFilter, LocationFilter, TagFilter
 from .pagination import StandardResultsSetPagination
@@ -126,6 +128,24 @@ class TagListViewSet(ListModelMixin, GenericViewSet):
 
         tags = Tag.objects.filter(id__in=tag_ids)
         serializer = self.get_serializer(tags, many=True)
+        return Response(serializer.data)
+
+    @extend_schema(
+        parameters=None,
+        responses={200: TagSerializer(many=True)},
+        description="Retrieve the top tags of all the jobs of the week",
+    )
+    @action(detail=False, methods=["get"], url_path="top-tags")
+    def top_tags(self, request):
+        weekly_jobs = get_current_week_jobs()
+        weekly_jobs_ids = weekly_jobs.values_list("id", flat=True)
+        top_tags = (
+            Tag.objects.filter(job__in=weekly_jobs_ids)
+            .annotate(frequency=Count("job"))  # Count how many jobs use each tag
+            .order_by("-frequency")  # Sort by frequency in descending order
+            .distinct()
+        )
+        serializer = self.get_serializer(top_tags, many=True)
         return Response(serializer.data)
 
 

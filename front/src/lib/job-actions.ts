@@ -5,7 +5,6 @@ import {
   CreateLocation,
   JobsListListData,
   LocationTypeEnum,
-  Plan,
   TagsListListData,
   categoriesList,
   jobsBySlugRetrieve,
@@ -19,7 +18,9 @@ import {
   orderGetCheckoutUrlCreate,
   tagsCreateTagsCreate,
   tagsListBulkRetrieveCreate,
+  tagsListTopTagsList,
   tagsListList,
+  Tag,
 } from "@/client";
 import { z } from "zod";
 import { setBasePathToAPI, setCredentialsToAPI } from "./utils";
@@ -265,6 +266,15 @@ export async function getBulkLocations(ids: number[]) {
       requestBody: { ids: ids },
     });
     return locations;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+export async function getWeeklyTopTags() {
+  try {
+    const tags = await tagsListTopTagsList();
+    return tags as unknown as Tag[];
   } catch (error) {
     return undefined;
   }

@@ -38,7 +38,7 @@ export function isNumeric(str: string) {
 
 export function handlePaginationParams(searchParams: PagesParams) {
   const page = parseInt(searchParams.page || "1");
-  const pageSize = parseInt(searchParams.pageSize || "50");
+  const pageSize = parseInt(searchParams.pageSize || "10");
   return { page, pageSize };
 }
 

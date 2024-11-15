@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, BillingWebhookCreateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsListListData, JobsListListResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, JobsBySlugRetrieveData, JobsBySlugRetrieveResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsListListData, LocationsListListResponse, LocationsListBulkRetrieveCreateData, LocationsListBulkRetrieveCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, OrderRetrieveData, OrderRetrieveResponse, OrderGetCustomerReceiptRetrieveData, OrderGetCustomerReceiptRetrieveResponse, OrderGetCheckoutUrlCreateData, OrderGetCheckoutUrlCreateResponse, OrderGetUserOrderRetrieveData, OrderGetUserOrderRetrieveResponse, OrderUserHasAccessRetrieveResponse, PlansListResponse, PlansRetrieveData, PlansRetrieveResponse, SubscriptionsGetCountSubscriptionsRetrieveResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsListListData, TagsListListResponse, TagsListBulkRetrieveCreateData, TagsListBulkRetrieveCreateResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse } from './types.gen';
+import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, BillingWebhookCreateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsListListData, JobsListListResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, JobsBySlugRetrieveData, JobsBySlugRetrieveResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsListListData, LocationsListListResponse, LocationsListBulkRetrieveCreateData, LocationsListBulkRetrieveCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, OrderRetrieveData, OrderRetrieveResponse, OrderGetCustomerReceiptRetrieveData, OrderGetCustomerReceiptRetrieveResponse, OrderGetCheckoutUrlCreateData, OrderGetCheckoutUrlCreateResponse, OrderGetUserOrderRetrieveData, OrderGetUserOrderRetrieveResponse, OrderUserHasAccessRetrieveResponse, PlansListResponse, PlansRetrieveData, PlansRetrieveResponse, SubscriptionsGetCountSubscriptionsRetrieveResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsListListData, TagsListListResponse, TagsListBulkRetrieveCreateData, TagsListBulkRetrieveCreateResponse, TagsListTopTagsListData, TagsListTopTagsListResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse } from './types.gen';
 
 /**
  * class used for social authentications
@@ -726,6 +726,25 @@ export const tagsListBulkRetrieveCreate = (data: TagsListBulkRetrieveCreateData 
     },
     body: data.requestBody,
     mediaType: 'application/json'
+}); };
+
+/**
+ * Retrieve the top tags of all the jobs of the week
+ * @param data The data for the request.
+ * @param data.page A page number within the paginated result set.
+ * @param data.pageSize Number of results to return per page.
+ * @param data.text
+ * @returns PaginatedTagList
+ * @throws ApiError
+ */
+export const tagsListTopTagsList = (data: TagsListTopTagsListData = {}): CancelablePromise<TagsListTopTagsListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/tags-list/top-tags/',
+    query: {
+        page: data.page,
+        page_size: data.pageSize,
+        text: data.text
+    }
 }); };
 
 /**

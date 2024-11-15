@@ -5,25 +5,17 @@ from apscheduler.triggers.cron import CronTrigger
 from commons.utils import get_html_string, send_email
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from django.utils import timezone
 from django_apscheduler import util
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from users.models import Subscription
 
-from jobs.models import Job
+from jobs.utils import get_current_week_jobs
 
 logger = logging.getLogger(__name__)
 
 
 def send_weekly_email():
-    def get_current_week_jobs():
-        today = timezone.now()
-        # Returns jobs from the same week number
-        return Job.objects.filter(
-            updated_at__year=today.year, updated_at__week=today.isocalendar()[1]
-        )
-
     week_jobs = get_current_week_jobs()
     page = 1
     size = 100

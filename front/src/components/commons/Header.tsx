@@ -10,6 +10,7 @@ import Link from "next/link";
 import { JobsFilterForm } from "../jobs/JobsFilterForm";
 import { Suspense } from "react";
 import { SubscriptionsCount } from "./SubscriptionsCount";
+import { TopTags, TopTagsSkeleton } from "./TopTags";
 
 export default function Header({
   title,
@@ -79,22 +80,17 @@ export default function Header({
         </Suspense>
       </div>
 
-      {/* {categories && (
-        <div className="flex justify-between">
-          <div className="flex items-center gap-x-2 px-5 md:px-20">
-            <p className="text-sm">Filter:</p>
-            <CategoriesSelect categories={categories} />
-          </div>
-          <div className="px-5 md:px-20">
-            <JobFilters />
-          </div>
-        </div>
-      )} */}
       {categories && (
         <div className="px-8 md:px-20">
           <JobsFilterForm categories={categories} />
         </div>
       )}
+
+      <div className="px-8 md:px-20">
+        <Suspense fallback={<TopTagsSkeleton />}>
+          <TopTags />
+        </Suspense>
+      </div>
 
       {jobs && <JobsList jobs={jobs} page={page} pageSize={pageSize} />}
     </>

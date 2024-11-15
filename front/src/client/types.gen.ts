@@ -667,6 +667,20 @@ export type TagsListBulkRetrieveCreateData = {
 
 export type TagsListBulkRetrieveCreateResponse = PaginatedTagList;
 
+export type TagsListTopTagsListData = {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number;
+    text?: string;
+};
+
+export type TagsListTopTagsListResponse = PaginatedTagList;
+
 export type TagsRetrieveData = {
     /**
      * A unique integer value identifying this tag.
@@ -1060,6 +1074,14 @@ export type $OpenApiTs = {
     '/api/tags-list/bulk-retrieve/': {
         post: {
             req: TagsListBulkRetrieveCreateData;
+            res: {
+                200: PaginatedTagList;
+            };
+        };
+    };
+    '/api/tags-list/top-tags/': {
+        get: {
+            req: TagsListTopTagsListData;
             res: {
                 200: PaginatedTagList;
             };
