@@ -10,7 +10,16 @@ export function ClickableTag({ tag }: { tag: Tag }) {
 
   const onSelectTag = () => {
     const params = new URLSearchParams(searchParams);
-    params.set("tags", tag.id.toString());
+    const tagsString = params.get("tags");
+    let tags: string[] = [];
+    if (tagsString) {
+      tags = tagsString
+        .split(",")
+        .filter((tempTag) => tempTag !== "" && tempTag !== tag.id.toString());
+    }
+    tags.push(tag.id.toString());
+    params.delete("tags");
+    params.set("tags", tags.join(","));
     replace(`${pathname}?${params.toString()}`);
   };
 

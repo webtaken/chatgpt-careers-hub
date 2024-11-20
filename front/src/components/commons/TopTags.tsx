@@ -1,5 +1,4 @@
 import { getWeeklyTopTags } from "@/lib/job-actions";
-import { Badge } from "../ui/badge";
 import { Skeleton } from "../ui/skeleton";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ClickableTag } from "./ClickableTag";
