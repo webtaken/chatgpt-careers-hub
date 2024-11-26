@@ -78,8 +78,8 @@ dependencies:
     specifier: ^4.24.7
     version: 4.24.7(next@14.2.13)(react-dom@18.3.1)(react@18.3.1)
   posthog-js:
-    specifier: ^1.167.0
-    version: 1.167.0
+    specifier: ^1.188.1
+    version: 1.188.1
   react:
     specifier: ^18.3.1
     version: 18.3.1
@@ -2533,6 +2533,11 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /core-js@3.39.0:
+    resolution: {integrity: sha512-raM0ew0/jJUqkJ0E6e8UDtl+y/7ktFivgWvqw8dNSQeNWoSDLvQ1H/RN3aPXB9tBd4/FhyR4RDPGhsNIMsAn7g==}
+    requiresBuild: true
+    dev: false
+
   /crelt@1.0.6:
     resolution: {integrity: sha512-VQ2MBenTq1fWZUH9DJNGti7kKv6EeAuYr3cLwxUWhIu1baTaXh4Ib5W2CqHVqib4/MqbYGJqiL3Zb8GJZr3l4g==}
     dev: false
@@ -4435,9 +4440,10 @@ packages:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  /posthog-js@1.167.0:
-    resolution: {integrity: sha512-/zXQ6tuJgiF1d4mgg3UsAi/uoyg7UnfFNQtikuALmaE53xFExpcAKbMfHPG/f54QgTvLxSHyGL1kFl/1uspkGg==}
+  /posthog-js@1.188.1:
+    resolution: {integrity: sha512-kLhhEi8QY8yOuI1AGB4A7c434VzpxM5IczMD/3dv9wnYTWV5EDClkLvtib8hL5UvAeD43Q7XOmQocCvPoPcnnQ==}
     dependencies:
+      core-js: 3.39.0
       fflate: 0.4.8
       preact: 10.22.1
       web-vitals: 4.2.3
