@@ -1,5 +1,9 @@
 export const defaultCategories = [
   {
+    value: "10",
+    label: "Sales",
+  },
+  {
     value: "9",
     label: "Data Annotation",
   },
