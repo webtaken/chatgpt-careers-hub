@@ -9,6 +9,7 @@ class User(AbstractUser):
 
 class Subscription(TimeStampedModel):
     email = EmailField(verbose_name="Subscription Email")
+    name = CharField(max_length=150, verbose_name="Name", null=True, blank=True)
     title = CharField(max_length=150, verbose_name="Title", null=True, blank=True)
     description = TextField(verbose_name="Description", null=True, blank=True)
 

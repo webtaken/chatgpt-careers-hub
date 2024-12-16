@@ -87,6 +87,7 @@ class TallyWebhook(APIView):
 
     def post(self, request: Request, format=None):
         form_response = request.data
+        name = extract_key(form_response["data"]["fields"], "question_OllvZk")
         title = extract_key(form_response["data"]["fields"], "question_dNWL9D")
         description = extract_key(form_response["data"]["fields"], "question_YR5E4z")
         categories_field = extract_key(
@@ -147,17 +148,17 @@ class TallyWebhook(APIView):
         dribbble_link = extract_key(form_response["data"]["fields"], "question_jbadlY")
 
         projects = []
-        first_project_index = 15
+        first_project_index = 16
         for i in range(first_project_index, len(form_response["data"]["fields"])):
             project_info = form_response["data"]["fields"][i]
             if project_info:
                 projects.append(project_info)
 
-        email_id = "question_XrxVyd"
-        email_field = extract_key(form_response["data"]["fields"], email_id)
+        email_field = extract_key(form_response["data"]["fields"], "question_XrxVyd")
         subscription, _ = Subscription.objects.update_or_create(
             email=email_field["value"],
             defaults={
+                "name": name["value"],
                 "title": title["value"],
                 "description": description["value"],
                 "categories": ",".join(categories),
