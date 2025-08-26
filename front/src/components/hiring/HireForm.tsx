@@ -110,37 +110,37 @@ export function HireForm({ session }: { session: any }) {
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      companyName: "",
-      title: "",
-      tags: [],
-      categories: [],
-      locations: [],
-      description: "",
-      remote: false,
-      applyURL: "",
-      applyByEmail: false,
-      applyEmail: "",
-      companyEmail: "",
-      pinOnTop: false,
-      verified: false,
-    },
-    // For testing purposes
     // defaultValues: {
-    //   companyName: "ChatGPT Jobs",
-    //   title: "Generative AI Developer",
+    //   companyName: "",
+    //   title: "",
     //   tags: [],
     //   categories: [],
     //   locations: [],
-    //   description: "This is my description",
+    //   description: "",
     //   remote: false,
-    //   applyURL: "https://google.com?q=chatgpt-jobs",
+    //   applyURL: "",
     //   applyByEmail: false,
     //   applyEmail: "",
-    //   companyEmail: "jobs@chatgpt-jobs.com",
+    //   companyEmail: "",
     //   pinOnTop: false,
     //   verified: false,
     // },
+    // For testing purposes
+    defaultValues: {
+      companyName: "ChatGPT Jobs",
+      title: "Generative AI Developer",
+      tags: [],
+      categories: [],
+      locations: [],
+      description: "This is my description",
+      remote: false,
+      applyURL: "https://google.com?q=chatgpt-jobs",
+      applyByEmail: false,
+      applyEmail: "",
+      companyEmail: "jobs@chatgpt-jobs.com",
+      pinOnTop: false,
+      verified: false,
+    },
   });
   const { setValue } = form;
 

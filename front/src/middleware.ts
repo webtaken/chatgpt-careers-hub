@@ -1,27 +1,27 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 import { authTokenVerifyCreate, OpenAPI } from "./client";
 
-// API Paths to be restricted.
+import { auth } from "@/auth";
+
+// // API Paths to be restricted.
 const protectedRoutes = ["/hiring", "/dashboard"];
 
-export default async function middleware(request: NextRequest) {
+export default auth(async (req) => {
   const res = NextResponse.next();
-  const pathname = request.nextUrl.pathname;
-  if (protectedRoutes.some((path) => pathname.startsWith(path))) {
+  const pathname = req.nextUrl.pathname;
+  if (!req.auth && protectedRoutes.some((path) => pathname.startsWith(path))) {
     const token = await getToken({
-      req: request,
+      req: req,
     });
-
-    let url = new URL("/signin", request.url);
+    let url = new URL("/signin", req.url);
     // check not logged in.
     if (!token) {
-      return NextResponse.redirect(url);
+      return Response.redirect(url);
     } else {
       const tokenBack = token["access_token"];
       if (!tokenBack) {
-        return NextResponse.redirect(url);
+        return Response.redirect(url);
       }
       OpenAPI.BASE = process.env.BASE_PATH_API!;
       try {
@@ -30,10 +30,10 @@ export default async function middleware(request: NextRequest) {
         });
       } catch (error) {
         console.log("Token verify error:", error);
-        return NextResponse.redirect(url);
+        return Response.redirect(url);
       }
       return res;
     }
   }
   return res;
-}
+});

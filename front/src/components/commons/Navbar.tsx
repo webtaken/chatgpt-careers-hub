@@ -2,11 +2,10 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import ProfileActions from "../auth/ProfileActions";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
+import { auth } from "@/auth";
 
 export default async function Navbar() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return (
     <nav className="flex items-center justify-between px-4 pt-3">

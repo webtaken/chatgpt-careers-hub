@@ -1,6 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import {
   authLoginCreate,
   authGoogleCreate,
@@ -22,7 +22,7 @@ const getCurrentEpochTime = () => {
 
 const SIGN_IN_PROVIDERS = ["google", "credentials"];
 
-export const authOptions: NextAuthOptions = {
+export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/signin",
   },
@@ -52,7 +52,9 @@ export const authOptions: NextAuthOptions = {
           setBasePathToAPI();
           const response = await authLoginCreate({
             requestBody: {
+              // @ts-expect-error Expected
               email: credentials?.email,
+              // @ts-expect-error Expected
               password: credentials?.password || "",
             },
           });
@@ -72,6 +74,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (account) {
+        console.log(account);
         if (!SIGN_IN_PROVIDERS.includes(account.provider)) return false;
         if (account.provider === "google") {
           try {
@@ -82,6 +85,7 @@ export const authOptions: NextAuthOptions = {
                 id_token: account["id_token"],
               },
             });
+            // @ts-expect-error Expected
             account["meta"] = response;
             return true;
           } catch (error) {
@@ -93,15 +97,7 @@ export const authOptions: NextAuthOptions = {
       }
       return false;
     },
-    async jwt({
-      user,
-      token,
-      account,
-    }: {
-      user: any;
-      token: any;
-      account: any;
-    }) {
+    async jwt({ user, token, account }) {
       if (user && account) {
         let backendResponse: any =
           account.provider === "credentials" ? user : account.meta;
@@ -113,6 +109,7 @@ export const authOptions: NextAuthOptions = {
       }
 
       // Refresh the backend token if necessary
+      // @ts-expect-error Expected
       if (getCurrentEpochTime() > token["ref"]) {
         try {
           setBasePathToAPI();
@@ -136,10 +133,10 @@ export const authOptions: NextAuthOptions = {
     },
   },
   events: {
-    async signOut({ session, token }) {
+    async signOut() {
       setBasePathToAPI();
       await authLogoutCreate();
       OpenAPI.TOKEN = undefined;
     },
   },
-};
+});

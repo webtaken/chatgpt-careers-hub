@@ -475,8 +475,9 @@ export const $Location = {
         },
         rank: {
             type: 'integer',
-            maximum: 32767,
+            maximum: 9223372036854776000,
             minimum: 0,
+            format: 'int64',
             nullable: true
         }
     },
@@ -533,13 +534,15 @@ export const $Order = {
         },
         order_id: {
             type: 'integer',
-            maximum: 2147483647,
-            minimum: -2147483648
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         },
         order_number: {
             type: 'integer',
-            maximum: 2147483647,
-            minimum: -2147483648
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         },
         name: {
             type: 'string',
@@ -847,8 +850,9 @@ export const $PatchedLocation = {
         },
         rank: {
             type: 'integer',
-            maximum: 32767,
+            maximum: 9223372036854776000,
             minimum: 0,
+            format: 'int64',
             nullable: true
         }
     }
@@ -878,8 +882,9 @@ export const $Plan = {
         },
         product_id: {
             type: 'integer',
-            maximum: 2147483647,
-            minimum: -2147483648
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         },
         product_name: {
             type: 'string',
@@ -887,8 +892,9 @@ export const $Plan = {
         },
         variant_id: {
             type: 'integer',
-            maximum: 2147483647,
-            minimum: -2147483648
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         },
         category: {
             type: 'string',
@@ -915,8 +921,9 @@ export const $Plan = {
         },
         interval_count: {
             type: 'integer',
-            maximum: 2147483647,
-            minimum: -2147483648
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         },
         trial_interval: {
             type: 'string',
@@ -925,14 +932,16 @@ export const $Plan = {
         },
         trial_interval_count: {
             type: 'integer',
-            maximum: 2147483647,
-            minimum: -2147483648,
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64',
             nullable: true
         },
         sort: {
             type: 'integer',
-            maximum: 2147483647,
-            minimum: -2147483648
+            maximum: 9223372036854776000,
+            minimum: -9223372036854776000,
+            format: 'int64'
         }
     },
     required: ['category', 'description', 'id', 'interval', 'interval_count', 'name', 'price', 'product_id', 'product_name', 'sort', 'variant_id']

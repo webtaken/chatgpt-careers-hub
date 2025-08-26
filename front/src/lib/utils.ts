@@ -1,7 +1,6 @@
-import { authOptions } from "@/auth";
+import { auth } from "@/auth";
 import { OpenAPI } from "@/client";
 import { type ClassValue, clsx } from "clsx";
-import { getServerSession } from "next-auth";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -9,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export async function setCredentialsToAPI() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) throw Error("set credentials failed");
   // eslint-disable-next-line
   // @ts-ignore

@@ -25,8 +25,7 @@ import {
 import { z } from "zod";
 import { setBasePathToAPI, setCredentialsToAPI } from "./utils";
 import { FormSchema } from "@/components/hiring/HireForm";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
+import { auth } from "@/auth";
 import { getPlans } from "./billing-actions";
 
 export async function getCategories() {
@@ -92,7 +91,7 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
   };
   try {
     await setCredentialsToAPI();
-    const session: any = await getServerSession(authOptions);
+    const session: any = await auth();
     if (session.user.is_staff) {
       let { tagIds, locationIds } = await createTagsAndLocations();
       let categoryIds = data.categories.map((category) => +category.id);

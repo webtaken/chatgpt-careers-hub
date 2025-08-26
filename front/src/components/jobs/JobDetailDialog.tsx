@@ -31,11 +31,11 @@ export function JobDetailDialog({ job }: { job: JobRetrieve }) {
         <DialogHeader>
           <DialogTitle>{job.title}</DialogTitle>
           <DialogDescription>
-            <p>
+            <span>
               At {job.company_name} • {locationString}
-            </p>
-            <div className="flex items-center my-4 space-x-2">
-              <p>Share:</p>
+            </span>
+            <div className="flex items-center my-3 space-x-2">
+              <span>Share:</span>
               <button
                 className="rounded-full p-1 hover:bg-accent"
                 onClick={() => {

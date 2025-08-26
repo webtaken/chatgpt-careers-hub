@@ -725,6 +725,8 @@ export type TagsCreateTagsCreateData = {
 
 export type TagsCreateTagsCreateResponse = Array<TagID>;
 
+export type UsersWebhookCreateResponse = unknown;
+
 export type $OpenApiTs = {
     '/api/auth/google/': {
         post: {
@@ -1121,6 +1123,16 @@ export type $OpenApiTs = {
             req: TagsCreateTagsCreateData;
             res: {
                 201: Array<TagID>;
+            };
+        };
+    };
+    '/api/users/webhook': {
+        post: {
+            res: {
+                /**
+                 * No response body
+                 */
+                200: unknown;
             };
         };
     };
