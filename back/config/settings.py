@@ -50,7 +50,7 @@ env = Env(
 
 # Take environment variables from env file
 if not os.path.isfile(env("ENV_PATH")):
-    print(f'file env doest exist {env("ENV_PATH")}')
+    print(f"file env doest exist {env('ENV_PATH')}")
 else:
     env.read_env(env("ENV_PATH"))
 
@@ -234,6 +234,7 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 # we are turning off email verification for now
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
