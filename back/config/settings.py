@@ -235,6 +235,7 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 SOCIALACCOUNT_EMAIL_REQUIRED = False
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_ADAPTER = "authentication.adapters.SocialAccountAdapter"
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
