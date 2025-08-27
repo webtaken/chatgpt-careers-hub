@@ -1,13 +1,16 @@
 import { EditJobForm } from "@/components/jobs/EditJobForm";
 import { getJobBySlug } from "@/lib/job-actions";
 import { auth } from "@/auth";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const session = await auth();
+  if (!session) {
+    redirect("/signin");
+  }
   const job = await getJobBySlug(params.slug);
 
   if (!job) {

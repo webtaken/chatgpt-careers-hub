@@ -35,7 +35,12 @@ export default function ProfileActions({
             size === "small" && "w-7 h-7",
             size === "large" && "w-20 h-20"
           )}
-          src={(session.user?.image as string) || "/default_user.jpg"}
+          src={
+            // @ts-expect-error expected
+            session.picture ||
+            (session.user?.image as string) ||
+            "/default_user.jpg"
+          }
           alt="profile image"
         />
       </DropdownMenuTrigger>
@@ -55,15 +60,12 @@ export default function ProfileActions({
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onSelect={() => {
-            async function logout() {
-              await signOut({
-                redirect: true,
-                callbackUrl: "/",
-              });
-            }
-            logout();
-          }}
+          onSelect={() =>
+            signOut({
+              redirect: true,
+              callbackUrl: "/",
+            })
+          }
         >
           <LogOut className="mr-2 w-4 h-4" /> <span>Log out</span>
         </DropdownMenuItem>

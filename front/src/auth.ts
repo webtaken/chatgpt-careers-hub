@@ -74,7 +74,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (account) {
-        console.log(account);
         if (!SIGN_IN_PROVIDERS.includes(account.provider)) return false;
         if (account.provider === "google") {
           try {

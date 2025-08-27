@@ -156,7 +156,7 @@ export function SignUpForm() {
           variant="outline"
           className="w-full"
           type="button"
-          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          onClick={() => signIn("google", { redirectTo: "/dashboard" })}
           disabled={isSubmitting}
         >
           Enter with Google

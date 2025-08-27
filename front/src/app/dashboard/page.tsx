@@ -1,10 +1,16 @@
+import { auth } from "@/auth";
 import UserJobsList from "@/components/jobs/UserJobsList";
 import { getUserJobs } from "@/lib/job-actions";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
 
 export default async function Page() {
+  const session = await auth();
+  if (!session) {
+    redirect("/signin");
+  }
   const jobs = await getUserJobs();
 
   return (
