@@ -40,7 +40,8 @@ def server_status(_request):
 urlpatterns = [
     path("", server_status),
     path("admin/", admin.site.urls),
-    path("api/auth/", include("authentication.urls"), name="socialaccount_signup"),
+    path("api/auth/", include("authentication.urls")),
+    path("accounts/", include("allauth.urls")),
     path("api/", include("jobs.urls")),
     path("api/", include("users.urls")),
     path("api/", include("billing.urls")),
