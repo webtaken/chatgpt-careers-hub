@@ -90,6 +90,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             account["meta"] = response;
             return true;
           } catch (error) {
+            console.log(error);
             return false;
           }
         } else if (account.provider === "credentials") {
