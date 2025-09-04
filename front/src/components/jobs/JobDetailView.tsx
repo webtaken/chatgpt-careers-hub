@@ -139,7 +139,9 @@ export function JobDetailView({ job }: { job: JobRetrieve }) {
                       <p className="text-sm font-medium text-foreground">
                         Job Type
                       </p>
-                      <p className="text-sm text-muted-foreground">Full-time</p>
+                      <p className="text-sm text-muted-foreground">
+                        {job.remote ? "remote" : "hybrid or office"}
+                      </p>
                     </div>
                   </div>
 
@@ -151,18 +153,6 @@ export function JobDetailView({ job }: { job: JobRetrieve }) {
                       </p>
                       <p className="text-sm text-muted-foreground">
                         {formatRelativeTime(job.created_at)}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-3">
-                    <Users className="w-4 h-4 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm font-medium text-foreground">
-                        Experience Level
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Mid to Senior
                       </p>
                     </div>
                   </div>
