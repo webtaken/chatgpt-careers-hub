@@ -19,7 +19,7 @@ export default {
 		const result = await sql.query('SELECT * FROM users_user');
 
 		// Return the result as JSON
-		return new Response(JSON.stringify(`Found: ${result.rows} users`), {
+		return new Response(JSON.stringify(`Found: ${result.rowCount} users`), {
 			headers: {
 				'Content-Type': 'application/json',
 			},
