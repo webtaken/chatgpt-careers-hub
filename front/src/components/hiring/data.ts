@@ -1,4 +1,3 @@
-import { LocationTypeEnum } from "@/client";
 import { Option } from "@/components/ui/multiple-selector";
 
 export const remoteOptions: Option[] = [
