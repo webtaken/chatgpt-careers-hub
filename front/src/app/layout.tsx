@@ -11,7 +11,7 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-const baseURL = process.env.NEXTAUTH_URL;
+const baseURL = process.env.AUTH_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseURL || "https://chatgpt-jobs.com"),
@@ -26,9 +26,38 @@ export const metadata: Metadata = {
     description:
       "A portal to find the best ChatGPT and LLMs jobs, niche for experts",
     images: [`${baseURL}/brand-icon.png`],
+    type: "website",
+    siteName: "ChatGPT Jobs",
+    url: baseURL || "https://www.chatgpt-jobs.com",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ChatGPT Jobs",
+    description:
+      "A portal to find the best ChatGPT and LLMs jobs, niche for experts",
+    images: [`${baseURL}/brand-icon.png`],
+    creator: "@chatgpt_jobs",
   },
   alternates: {
     canonical: baseURL,
+  },
+  authors: [{ name: "ChatGPT Jobs" }],
+  creator: "ChatGPT Jobs",
+  publisher: "ChatGPT Jobs",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
 };
 

@@ -151,7 +151,7 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
       requestBody: {
         receipt_button_text: "Go to Dashboard",
         receipt_thank_you_note: "Thanks for posting on chatgpt-jobs!",
-        redirect_url: `${process.env.NEXTAUTH_URL!}/dashboard`,
+        redirect_url: `${process.env.AUTH_URL!}/dashboard`,
         user_id: session.user.pk as number,
         job_id: job.id,
         email: data.companyEmail,

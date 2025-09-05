@@ -8,6 +8,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SignUpForm } from "@/components/auth/SignUpForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function Page() {
   return (

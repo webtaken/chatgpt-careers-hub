@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
 import {
   Card,
@@ -8,6 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SignInForm } from "@/components/auth/SignInForm";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function Page() {
   return (

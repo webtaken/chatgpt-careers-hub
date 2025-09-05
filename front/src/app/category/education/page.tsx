@@ -8,8 +8,25 @@ export const fetchCache = "default-no-store";
 
 export const metadata: Metadata = {
   title: "Education",
+  description:
+    "Explore ChatGPT and LLM jobs in Education, from curriculum design to tutoring.",
   alternates: {
-    canonical: `${process.env.NEXTAUTH_URL}/category/education`,
+    canonical: `${process.env.AUTH_URL}/category/education`,
+  },
+  openGraph: {
+    title: "Education Jobs - ChatGPT Jobs",
+    description:
+      "Explore ChatGPT and LLM jobs in Education, from curriculum design to tutoring.",
+    type: "website",
+    url: `${
+      process.env.AUTH_URL || "https://www.chatgpt-jobs.com"
+    }/category/education`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Education Jobs - ChatGPT Jobs",
+    description:
+      "Explore ChatGPT and LLM jobs in Education, from curriculum design to tutoring.",
   },
 };
 
@@ -29,8 +46,32 @@ export default async function Page({
     location: parseNumbersList(searchParams.locations),
   });
 
+  const baseUrl = process.env.AUTH_URL || "https://www.chatgpt-jobs.com";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${baseUrl}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Education",
+        item: `${baseUrl}/category/education`,
+      },
+    ],
+  };
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Header
         title="FIND THE BEST ChatGPT JOBS IN EDUCATION"
         categories={categories}

@@ -1,9 +1,9 @@
-import { categoriesList } from "@/client";
+import { categoriesList, jobsListList } from "@/client";
 import { setBasePathToAPI } from "@/lib/utils";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap() {
-  let baseURL = "https://chatgpt-jobs.com";
+  let baseURL = process.env.AUTH_URL || "https://www.chatgpt-jobs.com";
 
   const getCategories = async () => {
     try {
@@ -15,7 +15,32 @@ export default async function sitemap() {
     }
   };
 
-  const categories = await getCategories();
+  const getJobs = async () => {
+    try {
+      setBasePathToAPI();
+      // Pull first 5 pages of jobs for sitemap freshness; adjust as needed
+      const pageSize = 50;
+      const pagesToFetch = 5;
+      let jobUrls: MetadataRoute.Sitemap = [];
+      for (let page = 1; page <= pagesToFetch; page++) {
+        const jobsResponse = await jobsListList({ page, pageSize });
+        const items = jobsResponse?.results || [];
+        jobUrls.push(
+          ...items.map((job) => ({
+            url: `${baseURL}/job/${job.slug}`,
+            lastModified: new Date(),
+          }))
+        );
+        if (!jobsResponse?.next) break;
+      }
+      return jobUrls;
+    } catch (error) {
+      return [] as MetadataRoute.Sitemap;
+    }
+  };
+
+  const [categories, jobUrls] = await Promise.all([getCategories(), getJobs()]);
+
   let categoriesSitemap: MetadataRoute.Sitemap = [];
   if (categories) {
     categoriesSitemap = categories.map((category) => {
@@ -25,11 +50,10 @@ export default async function sitemap() {
       };
     });
   }
-  return [
-    {
-      url: baseURL,
-      lastModified: new Date(),
-    },
-    ...categoriesSitemap,
+
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: `${baseURL}/`, lastModified: new Date() },
   ];
+
+  return [...staticPages, ...categoriesSitemap, ...(jobUrls || [])];
 }

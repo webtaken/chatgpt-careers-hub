@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { EditJobForm } from "@/components/jobs/EditJobForm";
 import { getJobBySlug } from "@/lib/job-actions";
 import { auth } from "@/auth";
 import { notFound, redirect } from "next/navigation";
+
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";

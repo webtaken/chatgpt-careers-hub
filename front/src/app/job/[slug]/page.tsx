@@ -24,18 +24,23 @@ export async function generateMetadata({
     .map((location) => location.location)
     .join(", ");
 
+  const baseUrl = process.env.AUTH_URL || "https://www.chatgpt-jobs.com";
+
   return {
     title: `${job.title} at ${job.company_name} - ${locationString}`,
     description: `Apply for ${job.title} position at ${
       job.company_name
     }. ${job.description.replace(/<[^>]*>/g, "").substring(0, 160)}...`,
+    alternates: {
+      canonical: `${baseUrl}/job/${params.slug}`,
+    },
     openGraph: {
       title: `${job.title} at ${job.company_name}`,
       description: `Apply for ${job.title} position at ${
         job.company_name
       }. ${job.description.replace(/<[^>]*>/g, "").substring(0, 160)}...`,
       type: "website",
-      url: `https://chatgpt-jobs.com/job/${params.slug}`,
+      url: `${baseUrl}/job/${params.slug}`,
     },
     twitter: {
       card: "summary_large_image",
