@@ -105,6 +105,7 @@ export type Job = {
 export type JobList = {
     readonly id: number;
     title: string;
+    description: string;
     company_name: string;
     tags: Array<Tag>;
     verified?: boolean;

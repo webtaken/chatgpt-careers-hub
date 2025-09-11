@@ -62,6 +62,7 @@ class JobListSerializer(ModelSerializer):
         fields = [
             "id",
             "title",
+            "description",
             "company_name",
             "tags",
             "verified",

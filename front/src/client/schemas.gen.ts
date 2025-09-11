@@ -329,6 +329,9 @@ export const $JobList = {
             type: 'string',
             maxLength: 150
         },
+        description: {
+            type: 'string'
+        },
         company_name: {
             type: 'string',
             maxLength: 150
@@ -361,7 +364,7 @@ export const $JobList = {
             pattern: '^[-a-zA-Z0-9_]+$'
         }
     },
-    required: ['category', 'company_name', 'id', 'location', 'tags', 'title']
+    required: ['category', 'company_name', 'description', 'id', 'location', 'tags', 'title']
 } as const;
 
 export const $JobRetrieve = {

@@ -1,11 +1,21 @@
-import Header from "@/components/commons/Header";
+import HeroSection from "@/components/commons/HeroSection";
+import BrandLogos from "@/components/commons/BrandLogos";
+import SocialLinks from "@/components/commons/SocialLinks";
+import SubscriptionSection from "@/components/commons/SubscriptionSection";
+import JobsFiltersSection from "@/components/commons/JobsFiltersSection";
+import JobsList from "@/components/jobs/JobsList";
 import { getCategories, getJobs } from "@/lib/job-actions";
-import {
-  handlePaginationParams,
-  isNumeric,
-  parseNumbersList,
-} from "@/lib/utils";
+import { handlePaginationParams, parseNumbersList } from "@/lib/utils";
 import type { Metadata } from "next";
+
+// Type definition for search params
+interface PagesParams {
+  tags?: string;
+  title?: string;
+  page?: string;
+  pageSize?: string;
+  locations?: string;
+}
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
@@ -66,12 +76,12 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Header
-        categories={categories}
-        jobs={jobs}
-        page={page}
-        pageSize={pageSize}
-      />
+      <HeroSection />
+      <BrandLogos />
+      <SocialLinks />
+      <SubscriptionSection />
+      <JobsFiltersSection categories={categories} />
+      {jobs && <JobsList jobs={jobs} page={page} pageSize={pageSize} />}
     </main>
   );
 }

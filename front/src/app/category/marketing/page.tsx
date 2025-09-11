@@ -1,7 +1,21 @@
 import type { Metadata } from "next";
-import Header from "@/components/commons/Header";
+import HeroSection from "@/components/commons/HeroSection";
+import BrandLogos from "@/components/commons/BrandLogos";
+import SocialLinks from "@/components/commons/SocialLinks";
+import SubscriptionSection from "@/components/commons/SubscriptionSection";
+import JobsFiltersSection from "@/components/commons/JobsFiltersSection";
+import JobsList from "@/components/jobs/JobsList";
 import { getCategories, getJobs } from "@/lib/job-actions";
 import { handlePaginationParams, parseNumbersList } from "@/lib/utils";
+
+// Type definition for search params
+interface PagesParams {
+  tags?: string;
+  title?: string;
+  page?: string;
+  pageSize?: string;
+  locations?: string;
+}
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
@@ -72,13 +86,12 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Header
-        title="FIND THE BEST ChatGPT JOBS IN MARKETING"
-        categories={categories}
-        jobs={jobs}
-        page={page}
-        pageSize={pageSize}
-      />
+      <HeroSection title="FIND THE BEST ChatGPT JOBS IN MARKETING" />
+      <BrandLogos />
+      <SocialLinks />
+      <SubscriptionSection />
+      <JobsFiltersSection categories={categories} />
+      {jobs && <JobsList jobs={jobs} page={page} pageSize={pageSize} />}
     </main>
   );
 }
