@@ -79,7 +79,11 @@ export function SignUpForm() {
         signIn("credentials", {
           email: data.email,
           password: data.password1,
-          callbackUrl: "/",
+          redirectTo:
+            typeof window !== "undefined" &&
+            new URLSearchParams(window.location.search).get("callbackUrl")
+              ? new URLSearchParams(window.location.search).get("callbackUrl")!
+              : "/dashboard",
         });
       }
     } catch (error) {
@@ -156,7 +160,17 @@ export function SignUpForm() {
           variant="outline"
           className="w-full"
           type="button"
-          onClick={() => signIn("google", { redirectTo: "/dashboard" })}
+          onClick={() =>
+            signIn("google", {
+              redirectTo:
+                typeof window !== "undefined" &&
+                new URLSearchParams(window.location.search).get("callbackUrl")
+                  ? new URLSearchParams(window.location.search).get(
+                      "callbackUrl"
+                    )!
+                  : "/dashboard",
+            })
+          }
           disabled={isSubmitting}
         >
           Enter with Google
