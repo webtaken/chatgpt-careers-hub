@@ -1,7 +1,7 @@
 import { getJobBySlug } from "@/lib/job-actions";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-
+import { auth } from "@/auth";
 import React from "react";
 import { JobDetailView } from "@/components/jobs/JobDetailView";
 
@@ -53,7 +53,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: PageProps) {
-  const job = await getJobBySlug(params.slug);
+  const [job, session] = await Promise.all([getJobBySlug(params.slug), auth()]);
 
   if (!job) {
     notFound();
@@ -92,7 +92,7 @@ export default async function Page({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <JobDetailView job={job} />
+      <JobDetailView job={job} session={session} />
     </>
   );
 }

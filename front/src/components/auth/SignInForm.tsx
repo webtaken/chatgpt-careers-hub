@@ -43,7 +43,11 @@ export function SignInForm() {
       await signIn("credentials", {
         email: data.email,
         password: data.password,
-        callbackUrl: "/",
+        redirectTo:
+          typeof window !== "undefined" &&
+          new URLSearchParams(window.location.search).get("callbackUrl")
+            ? new URLSearchParams(window.location.search).get("callbackUrl")!
+            : "/",
       });
     } catch (error) {
       console.error("Sign up error:", error);
@@ -101,7 +105,17 @@ export function SignInForm() {
           variant="outline"
           className="w-full"
           type="button"
-          onClick={() => signIn("google", { redirectTo: "/dashboard" })}
+          onClick={() =>
+            signIn("google", {
+              redirectTo:
+                typeof window !== "undefined" &&
+                new URLSearchParams(window.location.search).get("callbackUrl")
+                  ? new URLSearchParams(window.location.search).get(
+                      "callbackUrl"
+                    )!
+                  : "/dashboard",
+            })
+          }
           disabled={isSubmitting}
         >
           Enter with Google

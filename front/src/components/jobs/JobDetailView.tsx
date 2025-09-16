@@ -7,15 +7,23 @@ import {
   MapPin,
   ExternalLink,
   Clock,
-  Users,
   Briefcase,
+  LogIn,
 } from "lucide-react";
 import Link from "next/link";
 import { JobActions } from "./JobActions";
 import { BackToJobsButton } from "./BackToJobsButton";
 import { formatRelativeTime } from "@/lib/date-utils";
+import { Session } from "next-auth";
+import { signIn } from "@/auth";
 
-export function JobDetailView({ job }: { job: JobRetrieve }) {
+export function JobDetailView({
+  job,
+  session,
+}: {
+  job: JobRetrieve;
+  session: Session | null;
+}) {
   const locationString = job.location
     .map((location) => location.location)
     .join(", ");
@@ -49,7 +57,7 @@ export function JobDetailView({ job }: { job: JobRetrieve }) {
               </div>
 
               {/* Action Buttons */}
-              <JobActions job={job} />
+              <JobActions job={job} session={session} />
             </div>
           </div>
         </div>
@@ -86,16 +94,37 @@ export function JobDetailView({ job }: { job: JobRetrieve }) {
                   This position is open and accepting applications. Click the
                   button below to apply directly on the company&apos;s website.
                 </p>
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground px-8 w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-200"
-                  asChild
-                >
-                  <Link href={job.apply_url!} target="_blank">
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Apply for this Position
-                  </Link>
-                </Button>
+                {session ? (
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground px-8 w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-200"
+                    asChild
+                  >
+                    <Link href={job.apply_url!} target="_blank">
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Apply for this Position
+                    </Link>
+                  </Button>
+                ) : (
+                  <form
+                    action={async () => {
+                      "use server";
+                      await signIn(undefined, {
+                        redirectTo: `/job/${job.slug}`,
+                      });
+                    }}
+                  >
+                    <Button
+                      size="lg"
+                      className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground px-8 w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-200"
+                      type="submit"
+                    >
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Sign in to apply
+                    </Button>
+                  </form>
+                )}
+
                 <p className="text-xs text-muted-foreground mt-3 text-center">
                   Please mention that you found this job on{" "}
                   <a

@@ -74,10 +74,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       if (account) {
-        console.log("A");
         if (!SIGN_IN_PROVIDERS.includes(account.provider)) return false;
         if (account.provider === "google") {
-          console.log("C");
           try {
             setBasePathToAPI();
             const response = await authGoogleCreate({
@@ -97,7 +95,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           return true;
         }
       }
-      console.log("B");
       return false;
     },
     async jwt({ user, token, account }) {

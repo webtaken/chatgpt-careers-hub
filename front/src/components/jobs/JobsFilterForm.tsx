@@ -18,9 +18,7 @@ import { TagsSelector } from "../hiring/TagsSelector";
 import { LocationSelector } from "../hiring/LocationSelector";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
-import { CategoriesListResponse, Tag } from "@/client";
-import { Loader2Icon } from "lucide-react";
-import CategoriesSelect from "../commons/CategoriesSelect";
+import { Loader2Icon, RotateCcwIcon } from "lucide-react";
 import { Option } from "../ui/multiple-selector";
 import { parseNumbersList } from "@/lib/utils";
 import { getBulkLocations, getBulkTags, getTags } from "@/lib/job-actions";
@@ -28,10 +26,6 @@ import { getBulkLocations, getBulkTags, getTags } from "@/lib/job-actions";
 export type JobsFilterFormSetValueSchema = UseFormSetValue<{
   title: string;
   tags: {
-    id: string;
-    text: string;
-  }[];
-  categories: {
     id: string;
     text: string;
   }[];
@@ -50,12 +44,6 @@ export const JobsFilterFormSchema = z.object({
       text: z.string(),
     })
   ),
-  categories: z.array(
-    z.object({
-      id: z.string(),
-      text: z.string(),
-    })
-  ),
   locations: z.array(
     z.object({
       id: z.string(),
@@ -66,9 +54,9 @@ export const JobsFilterFormSchema = z.object({
 });
 
 export function JobsFilterForm({
-  categories,
+  variant = "inline",
 }: {
-  categories: CategoriesListResponse;
+  variant?: "sidebar" | "inline";
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -81,7 +69,6 @@ export function JobsFilterForm({
     defaultValues: {
       title: "",
       tags: [],
-      categories: [],
       locations: [],
     },
   });
@@ -102,7 +89,28 @@ export function JobsFilterForm({
         );
       else params.delete("locations");
 
+      params.delete("page");
+      params.delete("pageSize");
       replace(`${pathname}?${params.toString()}`);
+    });
+  }
+
+  function handleReset() {
+    startLoading(async () => {
+      // Reset form to default values
+      form.reset({
+        title: "",
+        tags: [],
+        locations: [],
+      });
+
+      // Clear URL parameters
+      const params = new URLSearchParams();
+      replace(`${pathname}?${params.toString()}`);
+
+      // Clear default values for tags and locations
+      setDefaultTags([]);
+      setDefaultLocations([]);
     });
   }
 
@@ -138,27 +146,25 @@ export function JobsFilterForm({
     }
   }, [searchParams]);
 
+  const isSidebar = variant === "sidebar";
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 p-4 bg-white shadow rounded-lg mb-8"
+        className={
+          isSidebar
+            ? "space-y-4"
+            : "space-y-4 p-4 bg-white shadow rounded-lg mb-8"
+        }
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <FormField
-            control={form.control}
-            name="categories"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <FormControl>
-                  <CategoriesSelect categories={categories} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
+        <div
+          className={
+            isSidebar
+              ? "grid grid-cols-1 gap-4"
+              : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          }
+        >
           <FormField
             control={form.control}
             name="title"
@@ -210,13 +216,34 @@ export function JobsFilterForm({
           />
         </div>
 
-        <div className="flex justify-end">
+        <div
+          className={
+            isSidebar ? "flex flex-col gap-2" : "flex justify-end gap-2"
+          }
+        >
           <Button
             disabled={loading}
             type="submit"
-            className="flex items-center gap-x-2"
+            className={
+              isSidebar
+                ? "w-full flex items-center justify-center gap-x-2"
+                : "flex items-center gap-x-2"
+            }
           >
             {loading && <Loader2Icon className="w-3 h-3 animate-spin" />} Apply
+          </Button>
+          <Button
+            disabled={loading}
+            type="button"
+            variant="outline"
+            onClick={handleReset}
+            className={
+              isSidebar
+                ? "w-full flex items-center justify-center gap-x-2"
+                : "flex items-center gap-x-2"
+            }
+          >
+            <RotateCcwIcon className="w-3 h-3" /> Reset
           </Button>
         </div>
       </form>

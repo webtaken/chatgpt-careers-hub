@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import HeroSection from "@/components/commons/HeroSection";
-import BrandLogos from "@/components/commons/BrandLogos";
 import SocialLinks from "@/components/commons/SocialLinks";
 import SubscriptionSection from "@/components/commons/SubscriptionSection";
 import JobsFiltersSection from "@/components/commons/JobsFiltersSection";
 import JobsList from "@/components/jobs/JobsList";
 import { getCategories, getJobs } from "@/lib/job-actions";
 import { handlePaginationParams, parseNumbersList } from "@/lib/utils";
+import CategoriesNavigator from "@/components/commons/CategoriesNavigator";
+import { TopTagsBar } from "@/components/commons/TopTags";
 
 // Type definition for search params
 interface PagesParams {
@@ -87,11 +88,32 @@ export default async function Page({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <HeroSection title="FIND THE BEST ChatGPT JOBS IN DATA ANNOTATION" />
-      <BrandLogos />
+      <CategoriesNavigator />
       <SocialLinks />
       <SubscriptionSection />
-      <JobsFiltersSection categories={categories} />
-      {jobs && <JobsList jobs={jobs} page={page} pageSize={pageSize} />}
+      <section className="px-2 sm:px-5 md:px-20 py-6 space-y-6">
+        <TopTagsBar />
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <aside className="md:col-span-4 lg:col-span-3">
+            <div className="sticky top-4 space-y-4">
+              <JobsFiltersSection categories={categories} />
+            </div>
+          </aside>
+          <div className="md:col-span-8 lg:col-span-9">
+            {jobs ? (
+              <JobsList jobs={jobs} page={page} pageSize={pageSize} />
+            ) : (
+              <div className="flex flex-col items-center justify-center py-10">
+                <h2 className="text-2xl font-semibold mb-2">No jobs found</h2>
+                <p className="text-muted-foreground mb-4">
+                  We couldn&apos;t find any jobs for your query. Please try
+                  again with different filters or keywords.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

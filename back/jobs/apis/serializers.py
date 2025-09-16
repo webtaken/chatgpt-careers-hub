@@ -69,6 +69,8 @@ class JobListSerializer(ModelSerializer):
             "location",
             "category",
             "slug",
+            "created_at",
+            "updated_at",
         ]
 
 

@@ -112,6 +112,8 @@ export type JobList = {
     location: Array<Location>;
     category: Array<Category>;
     slug?: string | null;
+    readonly created_at: string;
+    readonly updated_at: string;
 };
 
 export type JobRetrieve = {

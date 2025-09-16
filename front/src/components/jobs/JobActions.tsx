@@ -1,15 +1,24 @@
 "use client";
 import { JobRetrieve } from "@/client";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Share2, Bookmark } from "lucide-react";
-import Link from "next/link";
+import { ExternalLink, Share2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+import { Session } from "next-auth";
+import { signIn } from "next-auth/react";
 
 interface JobActionsProps {
   job: JobRetrieve;
+  session: Session | null;
 }
 
-export function JobActions({ job }: JobActionsProps) {
+export function JobActions({ job, session }: JobActionsProps) {
+  const handleApply = async () => {
+    if (!session) {
+      await signIn(undefined, { redirectTo: `/job/${job.slug}` });
+    }
+    window.open(job.apply_url!, "_blank");
+  };
+
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -37,13 +46,13 @@ export function JobActions({ job }: JobActionsProps) {
     <div className="flex items-center space-x-3">
       <Button
         size="lg"
+        onClick={handleApply}
         className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground px-8 shadow-lg hover:shadow-xl transition-all duration-200"
-        asChild
       >
-        <Link href={job.apply_url!} target="_blank">
+        <>
           <ExternalLink className="w-4 h-4 mr-2" />
           Apply Now
-        </Link>
+        </>
       </Button>
       {/* TODO: Add Save Job functionality later
       <Button variant="outline" size="lg" onClick={handleSave}>

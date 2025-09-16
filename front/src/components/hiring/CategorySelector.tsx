@@ -47,16 +47,16 @@ export function CategorySelector({
         })
       );
 
-    setValueFilter &&
-      setValueFilter(
-        "categories",
-        options.map((option) => {
-          return {
-            id: option.id as string,
-            text: option.label,
-          };
-        })
-      );
+    // setValueFilter &&
+    //   setValueFilter(
+    //     "categories",
+    //     options.map((option) => {
+    //       return {
+    //         id: option.id as string,
+    //         text: option.label,
+    //       };
+    //     })
+    //   );
   };
 
   return (

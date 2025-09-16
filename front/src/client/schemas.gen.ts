@@ -362,9 +362,19 @@ export const $JobList = {
             nullable: true,
             maxLength: 255,
             pattern: '^[-a-zA-Z0-9_]+$'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        updated_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
         }
     },
-    required: ['category', 'company_name', 'description', 'id', 'location', 'tags', 'title']
+    required: ['category', 'company_name', 'created_at', 'description', 'id', 'location', 'tags', 'title', 'updated_at']
 } as const;
 
 export const $JobRetrieve = {

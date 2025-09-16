@@ -1,26 +1,20 @@
-import { Suspense } from "react";
 import { CategoriesListResponse } from "@/client";
 import { JobsFilterForm } from "../jobs/JobsFilterForm";
-import { TopTags, TopTagsSkeleton } from "./TopTags";
 
 interface JobsFiltersSectionProps {
   categories?: CategoriesListResponse;
 }
 
-export default function JobsFiltersSection({ categories }: JobsFiltersSectionProps) {
+export default function JobsFiltersSection({
+  categories,
+}: JobsFiltersSectionProps) {
   return (
-    <>
+    <div className="space-y-4">
       {categories && (
-        <div className="px-8 md:px-20">
-          <JobsFilterForm categories={categories} />
+        <div className="rounded-md border bg-card p-4">
+          <JobsFilterForm variant="sidebar" />
         </div>
       )}
-
-      <div className="px-8 md:px-20">
-        <Suspense fallback={<TopTagsSkeleton />}>
-          <TopTags />
-        </Suspense>
-      </div>
-    </>
+    </div>
   );
 }
