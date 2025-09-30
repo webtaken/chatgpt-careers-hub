@@ -1,16 +1,18 @@
 import logging
+from datetime import timedelta
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 from commons.utils import get_html_string, send_email
 from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 from django_apscheduler import util
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
-from users.models import Subscription
-
+from jobs.models import Job
 from jobs.utils import get_current_week_jobs
+from users.models import Subscription
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +43,12 @@ def send_weekly_email():
         page += 1
 
 
+def remove_old_jobs():
+    today = timezone.now()
+    Job.objects.filter(created_at__lt=today - timedelta(weeks=8)).delete()
+    print("Removed old jobs.")
+
+
 # The `close_old_connections` decorator ensures that database connections, that have become
 # unusable or are obsolete, are closed before and after your job has run. You should use it
 # to wrap any jobs that you schedule that access the Django database in any way.
@@ -63,6 +71,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
         scheduler.add_jobstore(DjangoJobStore(), "default")
+
+        scheduler.add_job(
+            remove_old_jobs,
+            trigger=CronTrigger(minute="00", hour="00", day_of_week="sun"),
+            id="remove_old_jobs",
+            max_instances=1,
+            replace_existing=True,
+        )
+        print("Added job 'remove_old_jobs'.")
 
         scheduler.add_job(
             send_weekly_email,
