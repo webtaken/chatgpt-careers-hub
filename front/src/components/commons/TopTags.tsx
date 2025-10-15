@@ -26,7 +26,7 @@ export function TopTags() {
         const response = await tagsListTopTagsList();
         setTopTags(response.results);
       } catch (error) {
-        console.error("Error fetching top tags:", error);
+        console.error("Error fetching top Tags:", error);
         setTopTags([]);
       } finally {
         setLoading(false);

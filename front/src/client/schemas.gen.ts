@@ -871,6 +871,73 @@ export const $PatchedLocation = {
     }
 } as const;
 
+export const $PatchedPost = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        type: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/TypeEnum'
+                }
+            ],
+            title: 'Post Type'
+        },
+        title: {
+            type: 'string',
+            maxLength: 200
+        },
+        slug: {
+            type: 'string',
+            readOnly: true,
+            nullable: true,
+            pattern: '^[-a-zA-Z0-9_]+$'
+        },
+        body: {
+            type: 'string',
+            title: 'Body (Text Format)'
+        },
+        body_md: {
+            type: 'string',
+            title: 'Body (Markdown Format)'
+        },
+        external_url: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            maxLength: 2048
+        },
+        image_url: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            maxLength: 2048
+        },
+        is_published: {
+            type: 'boolean',
+            title: 'Published'
+        },
+        published_at: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        updated_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        }
+    }
+} as const;
+
 export const $PatchedTag = {
     type: 'object',
     properties: {
@@ -960,6 +1027,74 @@ export const $Plan = {
     required: ['category', 'description', 'id', 'interval', 'interval_count', 'name', 'price', 'product_id', 'product_name', 'sort', 'variant_id']
 } as const;
 
+export const $Post = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        type: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/TypeEnum'
+                }
+            ],
+            title: 'Post Type'
+        },
+        title: {
+            type: 'string',
+            maxLength: 200
+        },
+        slug: {
+            type: 'string',
+            readOnly: true,
+            nullable: true,
+            pattern: '^[-a-zA-Z0-9_]+$'
+        },
+        body: {
+            type: 'string',
+            title: 'Body (Text Format)'
+        },
+        body_md: {
+            type: 'string',
+            title: 'Body (Markdown Format)'
+        },
+        external_url: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            maxLength: 2048
+        },
+        image_url: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            maxLength: 2048
+        },
+        is_published: {
+            type: 'boolean',
+            title: 'Published'
+        },
+        published_at: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        },
+        updated_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        }
+    },
+    required: ['body', 'body_md', 'created_at', 'id', 'slug', 'title', 'type', 'updated_at']
+} as const;
+
 export const $RestAuthDetail = {
     type: 'object',
     properties: {
@@ -995,6 +1130,30 @@ export const $Subscribe = {
         }
     },
     required: ['email']
+} as const;
+
+export const $Subscriber = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 254
+        },
+        is_active: {
+            type: 'boolean'
+        },
+        created_at: {
+            type: 'string',
+            format: 'date-time',
+            readOnly: true
+        }
+    },
+    required: ['created_at', 'email', 'id']
 } as const;
 
 export const $Tag = {
@@ -1047,6 +1206,15 @@ export const $TokenVerify = {
         }
     },
     required: ['token']
+} as const;
+
+export const $TypeEnum = {
+    enum: ['news', 'training', 'promo', 'other'],
+    type: 'string',
+    description: `* \`news\` - News
+* \`training\` - Training
+* \`promo\` - Promo
+* \`other\` - Other`
 } as const;
 
 export const $VerifyEmail = {

@@ -255,6 +255,21 @@ export type PatchedLocation = {
     rank?: number | null;
 };
 
+export type PatchedPost = {
+    readonly id?: number;
+    type?: TypeEnum;
+    title?: string;
+    readonly slug?: string | null;
+    body?: string;
+    body_md?: string;
+    external_url?: string | null;
+    image_url?: string | null;
+    is_published?: boolean;
+    published_at?: string | null;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+};
+
 export type PatchedTag = {
     readonly id?: number;
     text?: string;
@@ -277,6 +292,21 @@ export type Plan = {
     sort: number;
 };
 
+export type Post = {
+    readonly id: number;
+    type: TypeEnum;
+    title: string;
+    readonly slug: string | null;
+    body: string;
+    body_md: string;
+    external_url?: string | null;
+    image_url?: string | null;
+    is_published?: boolean;
+    published_at?: string | null;
+    readonly created_at: string;
+    readonly updated_at: string;
+};
+
 export type RestAuthDetail = {
     readonly detail: string;
 };
@@ -289,6 +319,13 @@ export type SocialLogin = {
 
 export type Subscribe = {
     email: string;
+};
+
+export type Subscriber = {
+    readonly id: number;
+    email: string;
+    is_active?: boolean;
+    readonly created_at: string;
 };
 
 export type Tag = {
@@ -309,82 +346,90 @@ export type TokenVerify = {
     token: string;
 };
 
+/**
+ * * `news` - News
+ * * `training` - Training
+ * * `promo` - Promo
+ * * `other` - Other
+ */
+export type TypeEnum = 'news' | 'training' | 'promo' | 'other';
+
 export type VerifyEmail = {
     key: string;
 };
 
-export type AuthGoogleCreateData = {
+export type ApiAuthGoogleCreateData = {
     requestBody?: SocialLogin;
 };
 
-export type AuthGoogleCreateResponse = SocialLogin;
+export type ApiAuthGoogleCreateResponse = SocialLogin;
 
-export type AuthLoginCreateData = {
+export type ApiAuthLoginCreateData = {
     requestBody: Login;
 };
 
-export type AuthLoginCreateResponse = JWT;
+export type ApiAuthLoginCreateResponse = JWT;
 
-export type AuthLogoutCreateResponse = RestAuthDetail;
+export type ApiAuthLogoutCreateResponse = RestAuthDetail;
 
-export type AuthRegisterCreateData = {
+export type ApiAuthRegisterCreateData = {
     requestBody: CustomRegister;
 };
 
-export type AuthRegisterCreateResponse = JWT;
+export type ApiAuthRegisterCreateResponse = JWT;
 
-export type AuthRegisterVerifyEmailCreateData = {
+export type ApiAuthRegisterVerifyEmailCreateData = {
     requestBody: VerifyEmail;
 };
 
-export type AuthRegisterVerifyEmailCreateResponse = RestAuthDetail;
+export type ApiAuthRegisterVerifyEmailCreateResponse = RestAuthDetail;
 
-export type AuthTokenRefreshCreateData = {
+export type ApiAuthTokenRefreshCreateData = {
     requestBody: TokenRefresh;
 };
 
-export type AuthTokenRefreshCreateResponse = TokenRefresh;
+export type ApiAuthTokenRefreshCreateResponse = TokenRefresh;
 
-export type AuthTokenVerifyCreateData = {
+export type ApiAuthTokenVerifyCreateData = {
     requestBody: TokenVerify;
 };
 
-export type AuthTokenVerifyCreateResponse = TokenVerify;
+export type ApiAuthTokenVerifyCreateResponse = TokenVerify;
 
-export type AuthUserRetrieveResponse = CustomUserDetails;
+export type ApiAuthUserRetrieveResponse = CustomUserDetails;
 
-export type AuthUserUpdateData = {
+export type ApiAuthUserUpdateData = {
     requestBody: CustomUserDetails;
 };
 
-export type AuthUserUpdateResponse = CustomUserDetails;
+export type ApiAuthUserUpdateResponse = CustomUserDetails;
 
-export type AuthUserPartialUpdateData = {
+export type ApiAuthUserPartialUpdateData = {
     requestBody?: PatchedCustomUserDetails;
 };
 
-export type AuthUserPartialUpdateResponse = CustomUserDetails;
+export type ApiAuthUserPartialUpdateResponse = CustomUserDetails;
 
-export type BillingWebhookCreateResponse = unknown;
+export type ApiBillingWebhookCreateResponse = unknown;
 
-export type CategoriesListResponse = Array<Category>;
+export type ApiCategoriesListResponse = Array<Category>;
 
-export type CategoriesCreateData = {
+export type ApiCategoriesCreateData = {
     requestBody: Category;
 };
 
-export type CategoriesCreateResponse = Category;
+export type ApiCategoriesCreateResponse = Category;
 
-export type CategoriesRetrieveData = {
+export type ApiCategoriesRetrieveData = {
     /**
      * A unique integer value identifying this category.
      */
     id: number;
 };
 
-export type CategoriesRetrieveResponse = Category;
+export type ApiCategoriesRetrieveResponse = Category;
 
-export type CategoriesUpdateData = {
+export type ApiCategoriesUpdateData = {
     /**
      * A unique integer value identifying this category.
      */
@@ -392,9 +437,9 @@ export type CategoriesUpdateData = {
     requestBody: Category;
 };
 
-export type CategoriesUpdateResponse = Category;
+export type ApiCategoriesUpdateResponse = Category;
 
-export type CategoriesPartialUpdateData = {
+export type ApiCategoriesPartialUpdateData = {
     /**
      * A unique integer value identifying this category.
      */
@@ -402,26 +447,26 @@ export type CategoriesPartialUpdateData = {
     requestBody?: PatchedCategory;
 };
 
-export type CategoriesPartialUpdateResponse = Category;
+export type ApiCategoriesPartialUpdateResponse = Category;
 
-export type CategoriesDestroyData = {
+export type ApiCategoriesDestroyData = {
     /**
      * A unique integer value identifying this category.
      */
     id: number;
 };
 
-export type CategoriesDestroyResponse = void;
+export type ApiCategoriesDestroyResponse = void;
 
-export type JobsListResponse = Array<JobList>;
+export type ApiJobsListResponse = Array<JobList>;
 
-export type JobsCreateData = {
+export type ApiJobsCreateData = {
     requestBody: Job;
 };
 
-export type JobsCreateResponse = Job;
+export type ApiJobsCreateResponse = Job;
 
-export type JobsListListData = {
+export type ApiJobsListListData = {
     category?: Array<(number)>;
     categoryText?: string;
     location?: Array<(number)>;
@@ -440,18 +485,18 @@ export type JobsListListData = {
     title?: string;
 };
 
-export type JobsListListResponse = PaginatedJobListList;
+export type ApiJobsListListResponse = PaginatedJobListList;
 
-export type JobsRetrieveData = {
+export type ApiJobsRetrieveData = {
     /**
      * A unique integer value identifying this job.
      */
     id: number;
 };
 
-export type JobsRetrieveResponse = JobRetrieve;
+export type ApiJobsRetrieveResponse = JobRetrieve;
 
-export type JobsUpdateData = {
+export type ApiJobsUpdateData = {
     /**
      * A unique integer value identifying this job.
      */
@@ -459,9 +504,9 @@ export type JobsUpdateData = {
     requestBody: Job;
 };
 
-export type JobsUpdateResponse = Job;
+export type ApiJobsUpdateResponse = Job;
 
-export type JobsPartialUpdateData = {
+export type ApiJobsPartialUpdateData = {
     /**
      * A unique integer value identifying this job.
      */
@@ -469,32 +514,32 @@ export type JobsPartialUpdateData = {
     requestBody?: PatchedJob;
 };
 
-export type JobsPartialUpdateResponse = Job;
+export type ApiJobsPartialUpdateResponse = Job;
 
-export type JobsDestroyData = {
+export type ApiJobsDestroyData = {
     /**
      * A unique integer value identifying this job.
      */
     id: number;
 };
 
-export type JobsDestroyResponse = void;
+export type ApiJobsDestroyResponse = void;
 
-export type JobsBySlugRetrieveData = {
+export type ApiJobsBySlugRetrieveData = {
     slug: string;
 };
 
-export type JobsBySlugRetrieveResponse = JobRetrieve;
+export type ApiJobsBySlugRetrieveResponse = JobRetrieve;
 
-export type LocationsListResponse = Array<Location>;
+export type ApiLocationsListResponse = Array<Location>;
 
-export type LocationsCreateData = {
+export type ApiLocationsCreateData = {
     requestBody: Location;
 };
 
-export type LocationsCreateResponse = Location;
+export type ApiLocationsCreateResponse = Location;
 
-export type LocationsListListData = {
+export type ApiLocationsListListData = {
     location?: string;
     /**
      * A page number within the paginated result set.
@@ -506,9 +551,9 @@ export type LocationsListListData = {
     pageSize?: number;
 };
 
-export type LocationsListListResponse = PaginatedLocationList;
+export type ApiLocationsListListResponse = PaginatedLocationList;
 
-export type LocationsListBulkRetrieveCreateData = {
+export type ApiLocationsListBulkRetrieveCreateData = {
     location?: string;
     /**
      * A page number within the paginated result set.
@@ -526,18 +571,18 @@ export type LocationsListBulkRetrieveCreateData = {
     };
 };
 
-export type LocationsListBulkRetrieveCreateResponse = PaginatedLocationList;
+export type ApiLocationsListBulkRetrieveCreateResponse = PaginatedLocationList;
 
-export type LocationsRetrieveData = {
+export type ApiLocationsRetrieveData = {
     /**
      * A unique integer value identifying this location.
      */
     id: number;
 };
 
-export type LocationsRetrieveResponse = Location;
+export type ApiLocationsRetrieveResponse = Location;
 
-export type LocationsUpdateData = {
+export type ApiLocationsUpdateData = {
     /**
      * A unique integer value identifying this location.
      */
@@ -545,9 +590,9 @@ export type LocationsUpdateData = {
     requestBody: Location;
 };
 
-export type LocationsUpdateResponse = Location;
+export type ApiLocationsUpdateResponse = Location;
 
-export type LocationsPartialUpdateData = {
+export type ApiLocationsPartialUpdateData = {
     /**
      * A unique integer value identifying this location.
      */
@@ -555,88 +600,150 @@ export type LocationsPartialUpdateData = {
     requestBody?: PatchedLocation;
 };
 
-export type LocationsPartialUpdateResponse = Location;
+export type ApiLocationsPartialUpdateResponse = Location;
 
-export type LocationsDestroyData = {
+export type ApiLocationsDestroyData = {
     /**
      * A unique integer value identifying this location.
      */
     id: number;
 };
 
-export type LocationsDestroyResponse = void;
+export type ApiLocationsDestroyResponse = void;
 
-export type LocationsCreateLocationsCreateData = {
+export type ApiLocationsCreateLocationsCreateData = {
     requestBody: CreateMultipleLocations;
 };
 
-export type LocationsCreateLocationsCreateResponse = Array<LocationID>;
+export type ApiLocationsCreateLocationsCreateResponse = Array<LocationID>;
 
-export type OrderRetrieveData = {
+export type ApiNewsletterPostsListResponse = Array<Post>;
+
+export type ApiNewsletterPostsCreateData = {
+    requestBody: Post;
+};
+
+export type ApiNewsletterPostsCreateResponse = Post;
+
+export type ApiNewsletterPostsRetrieveData = {
+    /**
+     * A unique integer value identifying this post.
+     */
+    id: number;
+};
+
+export type ApiNewsletterPostsRetrieveResponse = Post;
+
+export type ApiNewsletterPostsUpdateData = {
+    /**
+     * A unique integer value identifying this post.
+     */
+    id: number;
+    requestBody: Post;
+};
+
+export type ApiNewsletterPostsUpdateResponse = Post;
+
+export type ApiNewsletterPostsPartialUpdateData = {
+    /**
+     * A unique integer value identifying this post.
+     */
+    id: number;
+    requestBody?: PatchedPost;
+};
+
+export type ApiNewsletterPostsPartialUpdateResponse = Post;
+
+export type ApiNewsletterPostsDestroyData = {
+    /**
+     * A unique integer value identifying this post.
+     */
+    id: number;
+};
+
+export type ApiNewsletterPostsDestroyResponse = void;
+
+export type ApiNewsletterPostsBySlugRetrieveData = {
+    slug: string;
+};
+
+export type ApiNewsletterPostsBySlugRetrieveResponse = Post;
+
+export type ApiNewsletterPostsPublishedRetrieveResponse = Post;
+
+export type ApiNewsletterSubscribersListResponse = Array<Subscriber>;
+
+export type ApiNewsletterSubscribersCreateData = {
+    requestBody: Subscriber;
+};
+
+export type ApiNewsletterSubscribersCreateResponse = Subscriber;
+
+export type ApiOrderRetrieveData = {
     /**
      * A unique integer value identifying this order.
      */
     id: number;
 };
 
-export type OrderRetrieveResponse = Order;
+export type ApiOrderRetrieveResponse = Order;
 
-export type OrderGetCustomerReceiptRetrieveData = {
+export type ApiOrderGetCustomerReceiptRetrieveData = {
     /**
      * A unique integer value identifying this order.
      */
     id: number;
 };
 
-export type OrderGetCustomerReceiptRetrieveResponse = CustomerPortalURL;
+export type ApiOrderGetCustomerReceiptRetrieveResponse = CustomerPortalURL;
 
-export type OrderGetCheckoutUrlCreateData = {
+export type ApiOrderGetCheckoutUrlCreateData = {
     requestBody: GetCheckoutURLRequest;
 };
 
-export type OrderGetCheckoutUrlCreateResponse = CheckoutURL;
+export type ApiOrderGetCheckoutUrlCreateResponse = CheckoutURL;
 
-export type OrderGetUserOrderRetrieveData = {
+export type ApiOrderGetUserOrderRetrieveData = {
     /**
      * The user id requesting his subscriptions
      */
     userId: number;
 };
 
-export type OrderGetUserOrderRetrieveResponse = Order;
+export type ApiOrderGetUserOrderRetrieveResponse = Order;
 
-export type OrderUserHasAccessRetrieveResponse = HasAccess;
+export type ApiOrderUserHasAccessRetrieveResponse = HasAccess;
 
-export type PlansListResponse = Array<Plan>;
+export type ApiPlansListResponse = Array<Plan>;
 
-export type PlansRetrieveData = {
+export type ApiPlansRetrieveData = {
     /**
      * A unique integer value identifying this plan.
      */
     id: number;
 };
 
-export type PlansRetrieveResponse = Plan;
+export type ApiPlansRetrieveResponse = Plan;
 
-export type SubscriptionsGetCountSubscriptionsRetrieveResponse = CountSubscriptions;
+export type ApiSubscriptionsGetCountSubscriptionsRetrieveResponse = CountSubscriptions;
 
-export type SubscriptionsSubscribeCreateData = {
+export type ApiSubscriptionsSubscribeCreateData = {
     requestBody: Subscribe;
 };
 
-export type SubscriptionsSubscribeCreateResponse = {
+export type ApiSubscriptionsSubscribeCreateResponse = {
     [key: string]: unknown;
 };
 
-export type TagsListResponse = Array<Tag>;
+export type ApiTagsListResponse = Array<Tag>;
 
-export type TagsCreateData = {
+export type ApiTagsCreateData = {
     requestBody: Tag;
 };
 
-export type TagsCreateResponse = Tag;
+export type ApiTagsCreateResponse = Tag;
 
-export type TagsListListData = {
+export type ApiTagsListListData = {
     /**
      * A page number within the paginated result set.
      */
@@ -648,9 +755,9 @@ export type TagsListListData = {
     text?: string;
 };
 
-export type TagsListListResponse = PaginatedTagList;
+export type ApiTagsListListResponse = PaginatedTagList;
 
-export type TagsListBulkRetrieveCreateData = {
+export type ApiTagsListBulkRetrieveCreateData = {
     /**
      * A page number within the paginated result set.
      */
@@ -668,9 +775,9 @@ export type TagsListBulkRetrieveCreateData = {
     text?: string;
 };
 
-export type TagsListBulkRetrieveCreateResponse = PaginatedTagList;
+export type ApiTagsListBulkRetrieveCreateResponse = PaginatedTagList;
 
-export type TagsListTopTagsListData = {
+export type ApiTagsListTopTagsListData = {
     /**
      * A page number within the paginated result set.
      */
@@ -682,18 +789,18 @@ export type TagsListTopTagsListData = {
     text?: string;
 };
 
-export type TagsListTopTagsListResponse = PaginatedTagList;
+export type ApiTagsListTopTagsListResponse = PaginatedTagList;
 
-export type TagsRetrieveData = {
+export type ApiTagsRetrieveData = {
     /**
      * A unique integer value identifying this tag.
      */
     id: number;
 };
 
-export type TagsRetrieveResponse = Tag;
+export type ApiTagsRetrieveResponse = Tag;
 
-export type TagsUpdateData = {
+export type ApiTagsUpdateData = {
     /**
      * A unique integer value identifying this tag.
      */
@@ -701,9 +808,9 @@ export type TagsUpdateData = {
     requestBody: Tag;
 };
 
-export type TagsUpdateResponse = Tag;
+export type ApiTagsUpdateResponse = Tag;
 
-export type TagsPartialUpdateData = {
+export type ApiTagsPartialUpdateData = {
     /**
      * A unique integer value identifying this tag.
      */
@@ -711,29 +818,29 @@ export type TagsPartialUpdateData = {
     requestBody?: PatchedTag;
 };
 
-export type TagsPartialUpdateResponse = Tag;
+export type ApiTagsPartialUpdateResponse = Tag;
 
-export type TagsDestroyData = {
+export type ApiTagsDestroyData = {
     /**
      * A unique integer value identifying this tag.
      */
     id: number;
 };
 
-export type TagsDestroyResponse = void;
+export type ApiTagsDestroyResponse = void;
 
-export type TagsCreateTagsCreateData = {
+export type ApiTagsCreateTagsCreateData = {
     requestBody: CreateMultipleTags;
 };
 
-export type TagsCreateTagsCreateResponse = Array<TagID>;
+export type ApiTagsCreateTagsCreateResponse = Array<TagID>;
 
-export type UsersWebhookCreateResponse = unknown;
+export type ApiUsersWebhookCreateResponse = unknown;
 
 export type $OpenApiTs = {
     '/api/auth/google/': {
         post: {
-            req: AuthGoogleCreateData;
+            req: ApiAuthGoogleCreateData;
             res: {
                 200: SocialLogin;
             };
@@ -741,7 +848,7 @@ export type $OpenApiTs = {
     };
     '/api/auth/login/': {
         post: {
-            req: AuthLoginCreateData;
+            req: ApiAuthLoginCreateData;
             res: {
                 200: JWT;
             };
@@ -756,7 +863,7 @@ export type $OpenApiTs = {
     };
     '/api/auth/register/': {
         post: {
-            req: AuthRegisterCreateData;
+            req: ApiAuthRegisterCreateData;
             res: {
                 201: JWT;
             };
@@ -764,7 +871,7 @@ export type $OpenApiTs = {
     };
     '/api/auth/register/verify-email': {
         post: {
-            req: AuthRegisterVerifyEmailCreateData;
+            req: ApiAuthRegisterVerifyEmailCreateData;
             res: {
                 200: RestAuthDetail;
             };
@@ -772,7 +879,7 @@ export type $OpenApiTs = {
     };
     '/api/auth/token/refresh/': {
         post: {
-            req: AuthTokenRefreshCreateData;
+            req: ApiAuthTokenRefreshCreateData;
             res: {
                 200: TokenRefresh;
             };
@@ -780,7 +887,7 @@ export type $OpenApiTs = {
     };
     '/api/auth/token/verify/': {
         post: {
-            req: AuthTokenVerifyCreateData;
+            req: ApiAuthTokenVerifyCreateData;
             res: {
                 200: TokenVerify;
             };
@@ -793,13 +900,13 @@ export type $OpenApiTs = {
             };
         };
         put: {
-            req: AuthUserUpdateData;
+            req: ApiAuthUserUpdateData;
             res: {
                 200: CustomUserDetails;
             };
         };
         patch: {
-            req: AuthUserPartialUpdateData;
+            req: ApiAuthUserPartialUpdateData;
             res: {
                 200: CustomUserDetails;
             };
@@ -822,7 +929,7 @@ export type $OpenApiTs = {
             };
         };
         post: {
-            req: CategoriesCreateData;
+            req: ApiCategoriesCreateData;
             res: {
                 201: Category;
             };
@@ -830,25 +937,25 @@ export type $OpenApiTs = {
     };
     '/api/categories/{id}/': {
         get: {
-            req: CategoriesRetrieveData;
+            req: ApiCategoriesRetrieveData;
             res: {
                 200: Category;
             };
         };
         put: {
-            req: CategoriesUpdateData;
+            req: ApiCategoriesUpdateData;
             res: {
                 200: Category;
             };
         };
         patch: {
-            req: CategoriesPartialUpdateData;
+            req: ApiCategoriesPartialUpdateData;
             res: {
                 200: Category;
             };
         };
         delete: {
-            req: CategoriesDestroyData;
+            req: ApiCategoriesDestroyData;
             res: {
                 /**
                  * No response body
@@ -864,7 +971,7 @@ export type $OpenApiTs = {
             };
         };
         post: {
-            req: JobsCreateData;
+            req: ApiJobsCreateData;
             res: {
                 201: Job;
             };
@@ -872,7 +979,7 @@ export type $OpenApiTs = {
     };
     '/api/jobs-list/': {
         get: {
-            req: JobsListListData;
+            req: ApiJobsListListData;
             res: {
                 200: PaginatedJobListList;
             };
@@ -880,25 +987,25 @@ export type $OpenApiTs = {
     };
     '/api/jobs/{id}/': {
         get: {
-            req: JobsRetrieveData;
+            req: ApiJobsRetrieveData;
             res: {
                 200: JobRetrieve;
             };
         };
         put: {
-            req: JobsUpdateData;
+            req: ApiJobsUpdateData;
             res: {
                 200: Job;
             };
         };
         patch: {
-            req: JobsPartialUpdateData;
+            req: ApiJobsPartialUpdateData;
             res: {
                 200: Job;
             };
         };
         delete: {
-            req: JobsDestroyData;
+            req: ApiJobsDestroyData;
             res: {
                 /**
                  * No response body
@@ -909,7 +1016,7 @@ export type $OpenApiTs = {
     };
     '/api/jobs/by-slug/{slug}/': {
         get: {
-            req: JobsBySlugRetrieveData;
+            req: ApiJobsBySlugRetrieveData;
             res: {
                 200: JobRetrieve;
             };
@@ -922,7 +1029,7 @@ export type $OpenApiTs = {
             };
         };
         post: {
-            req: LocationsCreateData;
+            req: ApiLocationsCreateData;
             res: {
                 201: Location;
             };
@@ -930,7 +1037,7 @@ export type $OpenApiTs = {
     };
     '/api/locations-list/': {
         get: {
-            req: LocationsListListData;
+            req: ApiLocationsListListData;
             res: {
                 200: PaginatedLocationList;
             };
@@ -938,7 +1045,7 @@ export type $OpenApiTs = {
     };
     '/api/locations-list/bulk-retrieve/': {
         post: {
-            req: LocationsListBulkRetrieveCreateData;
+            req: ApiLocationsListBulkRetrieveCreateData;
             res: {
                 200: PaginatedLocationList;
             };
@@ -946,25 +1053,25 @@ export type $OpenApiTs = {
     };
     '/api/locations/{id}/': {
         get: {
-            req: LocationsRetrieveData;
+            req: ApiLocationsRetrieveData;
             res: {
                 200: Location;
             };
         };
         put: {
-            req: LocationsUpdateData;
+            req: ApiLocationsUpdateData;
             res: {
                 200: Location;
             };
         };
         patch: {
-            req: LocationsPartialUpdateData;
+            req: ApiLocationsPartialUpdateData;
             res: {
                 200: Location;
             };
         };
         delete: {
-            req: LocationsDestroyData;
+            req: ApiLocationsDestroyData;
             res: {
                 /**
                  * No response body
@@ -975,15 +1082,85 @@ export type $OpenApiTs = {
     };
     '/api/locations/create_locations/': {
         post: {
-            req: LocationsCreateLocationsCreateData;
+            req: ApiLocationsCreateLocationsCreateData;
             res: {
                 201: Array<LocationID>;
             };
         };
     };
+    '/api/newsletter/posts/': {
+        get: {
+            res: {
+                200: Array<Post>;
+            };
+        };
+        post: {
+            req: ApiNewsletterPostsCreateData;
+            res: {
+                201: Post;
+            };
+        };
+    };
+    '/api/newsletter/posts/{id}/': {
+        get: {
+            req: ApiNewsletterPostsRetrieveData;
+            res: {
+                200: Post;
+            };
+        };
+        put: {
+            req: ApiNewsletterPostsUpdateData;
+            res: {
+                200: Post;
+            };
+        };
+        patch: {
+            req: ApiNewsletterPostsPartialUpdateData;
+            res: {
+                200: Post;
+            };
+        };
+        delete: {
+            req: ApiNewsletterPostsDestroyData;
+            res: {
+                /**
+                 * No response body
+                 */
+                204: void;
+            };
+        };
+    };
+    '/api/newsletter/posts/by-slug/{slug}/': {
+        get: {
+            req: ApiNewsletterPostsBySlugRetrieveData;
+            res: {
+                200: Post;
+            };
+        };
+    };
+    '/api/newsletter/posts/published/': {
+        get: {
+            res: {
+                200: Post;
+            };
+        };
+    };
+    '/api/newsletter/subscribers/': {
+        get: {
+            res: {
+                200: Array<Subscriber>;
+            };
+        };
+        post: {
+            req: ApiNewsletterSubscribersCreateData;
+            res: {
+                201: Subscriber;
+            };
+        };
+    };
     '/api/order/{id}/': {
         get: {
-            req: OrderRetrieveData;
+            req: ApiOrderRetrieveData;
             res: {
                 200: Order;
             };
@@ -991,7 +1168,7 @@ export type $OpenApiTs = {
     };
     '/api/order/{id}/get_customer_receipt/': {
         get: {
-            req: OrderGetCustomerReceiptRetrieveData;
+            req: ApiOrderGetCustomerReceiptRetrieveData;
             res: {
                 200: CustomerPortalURL;
             };
@@ -999,7 +1176,7 @@ export type $OpenApiTs = {
     };
     '/api/order/get_checkout_url/': {
         post: {
-            req: OrderGetCheckoutUrlCreateData;
+            req: ApiOrderGetCheckoutUrlCreateData;
             res: {
                 200: CheckoutURL;
             };
@@ -1007,7 +1184,7 @@ export type $OpenApiTs = {
     };
     '/api/order/get_user_order/': {
         get: {
-            req: OrderGetUserOrderRetrieveData;
+            req: ApiOrderGetUserOrderRetrieveData;
             res: {
                 200: Order;
             };
@@ -1029,7 +1206,7 @@ export type $OpenApiTs = {
     };
     '/api/plans/{id}/': {
         get: {
-            req: PlansRetrieveData;
+            req: ApiPlansRetrieveData;
             res: {
                 200: Plan;
             };
@@ -1044,7 +1221,7 @@ export type $OpenApiTs = {
     };
     '/api/subscriptions/subscribe/': {
         post: {
-            req: SubscriptionsSubscribeCreateData;
+            req: ApiSubscriptionsSubscribeCreateData;
             res: {
                 200: {
                     [key: string]: unknown;
@@ -1062,7 +1239,7 @@ export type $OpenApiTs = {
             };
         };
         post: {
-            req: TagsCreateData;
+            req: ApiTagsCreateData;
             res: {
                 201: Tag;
             };
@@ -1070,7 +1247,7 @@ export type $OpenApiTs = {
     };
     '/api/tags-list/': {
         get: {
-            req: TagsListListData;
+            req: ApiTagsListListData;
             res: {
                 200: PaginatedTagList;
             };
@@ -1078,7 +1255,7 @@ export type $OpenApiTs = {
     };
     '/api/tags-list/bulk-retrieve/': {
         post: {
-            req: TagsListBulkRetrieveCreateData;
+            req: ApiTagsListBulkRetrieveCreateData;
             res: {
                 200: PaginatedTagList;
             };
@@ -1086,7 +1263,7 @@ export type $OpenApiTs = {
     };
     '/api/tags-list/top-tags/': {
         get: {
-            req: TagsListTopTagsListData;
+            req: ApiTagsListTopTagsListData;
             res: {
                 200: PaginatedTagList;
             };
@@ -1094,25 +1271,25 @@ export type $OpenApiTs = {
     };
     '/api/tags/{id}/': {
         get: {
-            req: TagsRetrieveData;
+            req: ApiTagsRetrieveData;
             res: {
                 200: Tag;
             };
         };
         put: {
-            req: TagsUpdateData;
+            req: ApiTagsUpdateData;
             res: {
                 200: Tag;
             };
         };
         patch: {
-            req: TagsPartialUpdateData;
+            req: ApiTagsPartialUpdateData;
             res: {
                 200: Tag;
             };
         };
         delete: {
-            req: TagsDestroyData;
+            req: ApiTagsDestroyData;
             res: {
                 /**
                  * No response body
@@ -1123,7 +1300,7 @@ export type $OpenApiTs = {
     };
     '/api/tags/create_tags/': {
         post: {
-            req: TagsCreateTagsCreateData;
+            req: ApiTagsCreateTagsCreateData;
             res: {
                 201: Array<TagID>;
             };

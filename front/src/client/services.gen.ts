@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateData, AuthLoginCreateResponse, AuthLogoutCreateResponse, AuthRegisterCreateData, AuthRegisterCreateResponse, AuthRegisterVerifyEmailCreateData, AuthRegisterVerifyEmailCreateResponse, AuthTokenRefreshCreateData, AuthTokenRefreshCreateResponse, AuthTokenVerifyCreateData, AuthTokenVerifyCreateResponse, AuthUserRetrieveResponse, AuthUserUpdateData, AuthUserUpdateResponse, AuthUserPartialUpdateData, AuthUserPartialUpdateResponse, BillingWebhookCreateResponse, CategoriesListResponse, CategoriesCreateData, CategoriesCreateResponse, CategoriesRetrieveData, CategoriesRetrieveResponse, CategoriesUpdateData, CategoriesUpdateResponse, CategoriesPartialUpdateData, CategoriesPartialUpdateResponse, CategoriesDestroyData, CategoriesDestroyResponse, JobsListResponse, JobsCreateData, JobsCreateResponse, JobsListListData, JobsListListResponse, JobsRetrieveData, JobsRetrieveResponse, JobsUpdateData, JobsUpdateResponse, JobsPartialUpdateData, JobsPartialUpdateResponse, JobsDestroyData, JobsDestroyResponse, JobsBySlugRetrieveData, JobsBySlugRetrieveResponse, LocationsListResponse, LocationsCreateData, LocationsCreateResponse, LocationsListListData, LocationsListListResponse, LocationsListBulkRetrieveCreateData, LocationsListBulkRetrieveCreateResponse, LocationsRetrieveData, LocationsRetrieveResponse, LocationsUpdateData, LocationsUpdateResponse, LocationsPartialUpdateData, LocationsPartialUpdateResponse, LocationsDestroyData, LocationsDestroyResponse, LocationsCreateLocationsCreateData, LocationsCreateLocationsCreateResponse, OrderRetrieveData, OrderRetrieveResponse, OrderGetCustomerReceiptRetrieveData, OrderGetCustomerReceiptRetrieveResponse, OrderGetCheckoutUrlCreateData, OrderGetCheckoutUrlCreateResponse, OrderGetUserOrderRetrieveData, OrderGetUserOrderRetrieveResponse, OrderUserHasAccessRetrieveResponse, PlansListResponse, PlansRetrieveData, PlansRetrieveResponse, SubscriptionsGetCountSubscriptionsRetrieveResponse, SubscriptionsSubscribeCreateData, SubscriptionsSubscribeCreateResponse, TagsListResponse, TagsCreateData, TagsCreateResponse, TagsListListData, TagsListListResponse, TagsListBulkRetrieveCreateData, TagsListBulkRetrieveCreateResponse, TagsListTopTagsListData, TagsListTopTagsListResponse, TagsRetrieveData, TagsRetrieveResponse, TagsUpdateData, TagsUpdateResponse, TagsPartialUpdateData, TagsPartialUpdateResponse, TagsDestroyData, TagsDestroyResponse, TagsCreateTagsCreateData, TagsCreateTagsCreateResponse, UsersWebhookCreateResponse } from './types.gen';
+import type { ApiAuthGoogleCreateData, ApiAuthGoogleCreateResponse, ApiAuthLoginCreateData, ApiAuthLoginCreateResponse, ApiAuthLogoutCreateResponse, ApiAuthRegisterCreateData, ApiAuthRegisterCreateResponse, ApiAuthRegisterVerifyEmailCreateData, ApiAuthRegisterVerifyEmailCreateResponse, ApiAuthTokenRefreshCreateData, ApiAuthTokenRefreshCreateResponse, ApiAuthTokenVerifyCreateData, ApiAuthTokenVerifyCreateResponse, ApiAuthUserRetrieveResponse, ApiAuthUserUpdateData, ApiAuthUserUpdateResponse, ApiAuthUserPartialUpdateData, ApiAuthUserPartialUpdateResponse, ApiBillingWebhookCreateResponse, ApiCategoriesListResponse, ApiCategoriesCreateData, ApiCategoriesCreateResponse, ApiCategoriesRetrieveData, ApiCategoriesRetrieveResponse, ApiCategoriesUpdateData, ApiCategoriesUpdateResponse, ApiCategoriesPartialUpdateData, ApiCategoriesPartialUpdateResponse, ApiCategoriesDestroyData, ApiCategoriesDestroyResponse, ApiJobsListResponse, ApiJobsCreateData, ApiJobsCreateResponse, ApiJobsListListData, ApiJobsListListResponse, ApiJobsRetrieveData, ApiJobsRetrieveResponse, ApiJobsUpdateData, ApiJobsUpdateResponse, ApiJobsPartialUpdateData, ApiJobsPartialUpdateResponse, ApiJobsDestroyData, ApiJobsDestroyResponse, ApiJobsBySlugRetrieveData, ApiJobsBySlugRetrieveResponse, ApiLocationsListResponse, ApiLocationsCreateData, ApiLocationsCreateResponse, ApiLocationsListListData, ApiLocationsListListResponse, ApiLocationsListBulkRetrieveCreateData, ApiLocationsListBulkRetrieveCreateResponse, ApiLocationsRetrieveData, ApiLocationsRetrieveResponse, ApiLocationsUpdateData, ApiLocationsUpdateResponse, ApiLocationsPartialUpdateData, ApiLocationsPartialUpdateResponse, ApiLocationsDestroyData, ApiLocationsDestroyResponse, ApiLocationsCreateLocationsCreateData, ApiLocationsCreateLocationsCreateResponse, ApiNewsletterPostsListResponse, ApiNewsletterPostsCreateData, ApiNewsletterPostsCreateResponse, ApiNewsletterPostsRetrieveData, ApiNewsletterPostsRetrieveResponse, ApiNewsletterPostsUpdateData, ApiNewsletterPostsUpdateResponse, ApiNewsletterPostsPartialUpdateData, ApiNewsletterPostsPartialUpdateResponse, ApiNewsletterPostsDestroyData, ApiNewsletterPostsDestroyResponse, ApiNewsletterPostsBySlugRetrieveData, ApiNewsletterPostsBySlugRetrieveResponse, ApiNewsletterPostsPublishedRetrieveResponse, ApiNewsletterSubscribersListResponse, ApiNewsletterSubscribersCreateData, ApiNewsletterSubscribersCreateResponse, ApiOrderRetrieveData, ApiOrderRetrieveResponse, ApiOrderGetCustomerReceiptRetrieveData, ApiOrderGetCustomerReceiptRetrieveResponse, ApiOrderGetCheckoutUrlCreateData, ApiOrderGetCheckoutUrlCreateResponse, ApiOrderGetUserOrderRetrieveData, ApiOrderGetUserOrderRetrieveResponse, ApiOrderUserHasAccessRetrieveResponse, ApiPlansListResponse, ApiPlansRetrieveData, ApiPlansRetrieveResponse, ApiSubscriptionsGetCountSubscriptionsRetrieveResponse, ApiSubscriptionsSubscribeCreateData, ApiSubscriptionsSubscribeCreateResponse, ApiTagsListResponse, ApiTagsCreateData, ApiTagsCreateResponse, ApiTagsListListData, ApiTagsListListResponse, ApiTagsListBulkRetrieveCreateData, ApiTagsListBulkRetrieveCreateResponse, ApiTagsListTopTagsListData, ApiTagsListTopTagsListResponse, ApiTagsRetrieveData, ApiTagsRetrieveResponse, ApiTagsUpdateData, ApiTagsUpdateResponse, ApiTagsPartialUpdateData, ApiTagsPartialUpdateResponse, ApiTagsDestroyData, ApiTagsDestroyResponse, ApiTagsCreateTagsCreateData, ApiTagsCreateTagsCreateResponse, ApiUsersWebhookCreateResponse } from './types.gen';
 
 /**
  * class used for social authentications
@@ -31,7 +31,7 @@ import type { AuthGoogleCreateData, AuthGoogleCreateResponse, AuthLoginCreateDat
  * @returns SocialLogin
  * @throws ApiError
  */
-export const authGoogleCreate = (data: AuthGoogleCreateData = {}): CancelablePromise<AuthGoogleCreateResponse> => { return __request(OpenAPI, {
+export const apiAuthGoogleCreate = (data: ApiAuthGoogleCreateData = {}): CancelablePromise<ApiAuthGoogleCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/auth/google/',
     body: data.requestBody,
@@ -51,7 +51,7 @@ export const authGoogleCreate = (data: AuthGoogleCreateData = {}): CancelablePro
  * @returns JWT
  * @throws ApiError
  */
-export const authLoginCreate = (data: AuthLoginCreateData): CancelablePromise<AuthLoginCreateResponse> => { return __request(OpenAPI, {
+export const apiAuthLoginCreate = (data: ApiAuthLoginCreateData): CancelablePromise<ApiAuthLoginCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/auth/login/',
     body: data.requestBody,
@@ -66,7 +66,7 @@ export const authLoginCreate = (data: AuthLoginCreateData): CancelablePromise<Au
  * @returns RestAuthDetail
  * @throws ApiError
  */
-export const authLogoutCreate = (): CancelablePromise<AuthLogoutCreateResponse> => { return __request(OpenAPI, {
+export const apiAuthLogoutCreate = (): CancelablePromise<ApiAuthLogoutCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/auth/logout/'
 }); };
@@ -77,7 +77,7 @@ export const authLogoutCreate = (): CancelablePromise<AuthLogoutCreateResponse> 
  * @returns JWT
  * @throws ApiError
  */
-export const authRegisterCreate = (data: AuthRegisterCreateData): CancelablePromise<AuthRegisterCreateResponse> => { return __request(OpenAPI, {
+export const apiAuthRegisterCreate = (data: ApiAuthRegisterCreateData): CancelablePromise<ApiAuthRegisterCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/auth/register/',
     body: data.requestBody,
@@ -90,7 +90,7 @@ export const authRegisterCreate = (data: AuthRegisterCreateData): CancelableProm
  * @returns RestAuthDetail
  * @throws ApiError
  */
-export const authRegisterVerifyEmailCreate = (data: AuthRegisterVerifyEmailCreateData): CancelablePromise<AuthRegisterVerifyEmailCreateResponse> => { return __request(OpenAPI, {
+export const apiAuthRegisterVerifyEmailCreate = (data: ApiAuthRegisterVerifyEmailCreateData): CancelablePromise<ApiAuthRegisterVerifyEmailCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/auth/register/verify-email',
     body: data.requestBody,
@@ -105,7 +105,7 @@ export const authRegisterVerifyEmailCreate = (data: AuthRegisterVerifyEmailCreat
  * @returns TokenRefresh
  * @throws ApiError
  */
-export const authTokenRefreshCreate = (data: AuthTokenRefreshCreateData): CancelablePromise<AuthTokenRefreshCreateResponse> => { return __request(OpenAPI, {
+export const apiAuthTokenRefreshCreate = (data: ApiAuthTokenRefreshCreateData): CancelablePromise<ApiAuthTokenRefreshCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/auth/token/refresh/',
     body: data.requestBody,
@@ -120,7 +120,7 @@ export const authTokenRefreshCreate = (data: AuthTokenRefreshCreateData): Cancel
  * @returns TokenVerify
  * @throws ApiError
  */
-export const authTokenVerifyCreate = (data: AuthTokenVerifyCreateData): CancelablePromise<AuthTokenVerifyCreateResponse> => { return __request(OpenAPI, {
+export const apiAuthTokenVerifyCreate = (data: ApiAuthTokenVerifyCreateData): CancelablePromise<ApiAuthTokenVerifyCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/auth/token/verify/',
     body: data.requestBody,
@@ -139,7 +139,7 @@ export const authTokenVerifyCreate = (data: AuthTokenVerifyCreateData): Cancelab
  * @returns CustomUserDetails
  * @throws ApiError
  */
-export const authUserRetrieve = (): CancelablePromise<AuthUserRetrieveResponse> => { return __request(OpenAPI, {
+export const apiAuthUserRetrieve = (): CancelablePromise<ApiAuthUserRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/auth/user/'
 }); };
@@ -158,7 +158,7 @@ export const authUserRetrieve = (): CancelablePromise<AuthUserRetrieveResponse> 
  * @returns CustomUserDetails
  * @throws ApiError
  */
-export const authUserUpdate = (data: AuthUserUpdateData): CancelablePromise<AuthUserUpdateResponse> => { return __request(OpenAPI, {
+export const apiAuthUserUpdate = (data: ApiAuthUserUpdateData): CancelablePromise<ApiAuthUserUpdateResponse> => { return __request(OpenAPI, {
     method: 'PUT',
     url: '/api/auth/user/',
     body: data.requestBody,
@@ -179,7 +179,7 @@ export const authUserUpdate = (data: AuthUserUpdateData): CancelablePromise<Auth
  * @returns CustomUserDetails
  * @throws ApiError
  */
-export const authUserPartialUpdate = (data: AuthUserPartialUpdateData = {}): CancelablePromise<AuthUserPartialUpdateResponse> => { return __request(OpenAPI, {
+export const apiAuthUserPartialUpdate = (data: ApiAuthUserPartialUpdateData = {}): CancelablePromise<ApiAuthUserPartialUpdateResponse> => { return __request(OpenAPI, {
     method: 'PATCH',
     url: '/api/auth/user/',
     body: data.requestBody,
@@ -191,7 +191,7 @@ export const authUserPartialUpdate = (data: AuthUserPartialUpdateData = {}): Can
  * @returns unknown No response body
  * @throws ApiError
  */
-export const billingWebhookCreate = (): CancelablePromise<BillingWebhookCreateResponse> => { return __request(OpenAPI, {
+export const apiBillingWebhookCreate = (): CancelablePromise<ApiBillingWebhookCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/billing/webhook'
 }); };
@@ -200,7 +200,7 @@ export const billingWebhookCreate = (): CancelablePromise<BillingWebhookCreateRe
  * @returns Category
  * @throws ApiError
  */
-export const categoriesList = (): CancelablePromise<CategoriesListResponse> => { return __request(OpenAPI, {
+export const apiCategoriesList = (): CancelablePromise<ApiCategoriesListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/categories/'
 }); };
@@ -211,7 +211,7 @@ export const categoriesList = (): CancelablePromise<CategoriesListResponse> => {
  * @returns Category
  * @throws ApiError
  */
-export const categoriesCreate = (data: CategoriesCreateData): CancelablePromise<CategoriesCreateResponse> => { return __request(OpenAPI, {
+export const apiCategoriesCreate = (data: ApiCategoriesCreateData): CancelablePromise<ApiCategoriesCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/categories/',
     body: data.requestBody,
@@ -224,7 +224,7 @@ export const categoriesCreate = (data: CategoriesCreateData): CancelablePromise<
  * @returns Category
  * @throws ApiError
  */
-export const categoriesRetrieve = (data: CategoriesRetrieveData): CancelablePromise<CategoriesRetrieveResponse> => { return __request(OpenAPI, {
+export const apiCategoriesRetrieve = (data: ApiCategoriesRetrieveData): CancelablePromise<ApiCategoriesRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/categories/{id}/',
     path: {
@@ -239,7 +239,7 @@ export const categoriesRetrieve = (data: CategoriesRetrieveData): CancelableProm
  * @returns Category
  * @throws ApiError
  */
-export const categoriesUpdate = (data: CategoriesUpdateData): CancelablePromise<CategoriesUpdateResponse> => { return __request(OpenAPI, {
+export const apiCategoriesUpdate = (data: ApiCategoriesUpdateData): CancelablePromise<ApiCategoriesUpdateResponse> => { return __request(OpenAPI, {
     method: 'PUT',
     url: '/api/categories/{id}/',
     path: {
@@ -256,7 +256,7 @@ export const categoriesUpdate = (data: CategoriesUpdateData): CancelablePromise<
  * @returns Category
  * @throws ApiError
  */
-export const categoriesPartialUpdate = (data: CategoriesPartialUpdateData): CancelablePromise<CategoriesPartialUpdateResponse> => { return __request(OpenAPI, {
+export const apiCategoriesPartialUpdate = (data: ApiCategoriesPartialUpdateData): CancelablePromise<ApiCategoriesPartialUpdateResponse> => { return __request(OpenAPI, {
     method: 'PATCH',
     url: '/api/categories/{id}/',
     path: {
@@ -272,7 +272,7 @@ export const categoriesPartialUpdate = (data: CategoriesPartialUpdateData): Canc
  * @returns void No response body
  * @throws ApiError
  */
-export const categoriesDestroy = (data: CategoriesDestroyData): CancelablePromise<CategoriesDestroyResponse> => { return __request(OpenAPI, {
+export const apiCategoriesDestroy = (data: ApiCategoriesDestroyData): CancelablePromise<ApiCategoriesDestroyResponse> => { return __request(OpenAPI, {
     method: 'DELETE',
     url: '/api/categories/{id}/',
     path: {
@@ -284,7 +284,7 @@ export const categoriesDestroy = (data: CategoriesDestroyData): CancelablePromis
  * @returns JobList
  * @throws ApiError
  */
-export const jobsList = (): CancelablePromise<JobsListResponse> => { return __request(OpenAPI, {
+export const apiJobsList = (): CancelablePromise<ApiJobsListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/jobs/'
 }); };
@@ -295,7 +295,7 @@ export const jobsList = (): CancelablePromise<JobsListResponse> => { return __re
  * @returns Job
  * @throws ApiError
  */
-export const jobsCreate = (data: JobsCreateData): CancelablePromise<JobsCreateResponse> => { return __request(OpenAPI, {
+export const apiJobsCreate = (data: ApiJobsCreateData): CancelablePromise<ApiJobsCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/jobs/',
     body: data.requestBody,
@@ -317,7 +317,7 @@ export const jobsCreate = (data: JobsCreateData): CancelablePromise<JobsCreateRe
  * @returns PaginatedJobListList
  * @throws ApiError
  */
-export const jobsListList = (data: JobsListListData = {}): CancelablePromise<JobsListListResponse> => { return __request(OpenAPI, {
+export const apiJobsListList = (data: ApiJobsListListData = {}): CancelablePromise<ApiJobsListListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/jobs-list/',
     query: {
@@ -340,7 +340,7 @@ export const jobsListList = (data: JobsListListData = {}): CancelablePromise<Job
  * @returns JobRetrieve
  * @throws ApiError
  */
-export const jobsRetrieve = (data: JobsRetrieveData): CancelablePromise<JobsRetrieveResponse> => { return __request(OpenAPI, {
+export const apiJobsRetrieve = (data: ApiJobsRetrieveData): CancelablePromise<ApiJobsRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/jobs/{id}/',
     path: {
@@ -355,7 +355,7 @@ export const jobsRetrieve = (data: JobsRetrieveData): CancelablePromise<JobsRetr
  * @returns Job
  * @throws ApiError
  */
-export const jobsUpdate = (data: JobsUpdateData): CancelablePromise<JobsUpdateResponse> => { return __request(OpenAPI, {
+export const apiJobsUpdate = (data: ApiJobsUpdateData): CancelablePromise<ApiJobsUpdateResponse> => { return __request(OpenAPI, {
     method: 'PUT',
     url: '/api/jobs/{id}/',
     path: {
@@ -372,7 +372,7 @@ export const jobsUpdate = (data: JobsUpdateData): CancelablePromise<JobsUpdateRe
  * @returns Job
  * @throws ApiError
  */
-export const jobsPartialUpdate = (data: JobsPartialUpdateData): CancelablePromise<JobsPartialUpdateResponse> => { return __request(OpenAPI, {
+export const apiJobsPartialUpdate = (data: ApiJobsPartialUpdateData): CancelablePromise<ApiJobsPartialUpdateResponse> => { return __request(OpenAPI, {
     method: 'PATCH',
     url: '/api/jobs/{id}/',
     path: {
@@ -388,7 +388,7 @@ export const jobsPartialUpdate = (data: JobsPartialUpdateData): CancelablePromis
  * @returns void No response body
  * @throws ApiError
  */
-export const jobsDestroy = (data: JobsDestroyData): CancelablePromise<JobsDestroyResponse> => { return __request(OpenAPI, {
+export const apiJobsDestroy = (data: ApiJobsDestroyData): CancelablePromise<ApiJobsDestroyResponse> => { return __request(OpenAPI, {
     method: 'DELETE',
     url: '/api/jobs/{id}/',
     path: {
@@ -402,7 +402,7 @@ export const jobsDestroy = (data: JobsDestroyData): CancelablePromise<JobsDestro
  * @returns JobRetrieve
  * @throws ApiError
  */
-export const jobsBySlugRetrieve = (data: JobsBySlugRetrieveData): CancelablePromise<JobsBySlugRetrieveResponse> => { return __request(OpenAPI, {
+export const apiJobsBySlugRetrieve = (data: ApiJobsBySlugRetrieveData): CancelablePromise<ApiJobsBySlugRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/jobs/by-slug/{slug}/',
     path: {
@@ -414,7 +414,7 @@ export const jobsBySlugRetrieve = (data: JobsBySlugRetrieveData): CancelableProm
  * @returns Location
  * @throws ApiError
  */
-export const locationsList = (): CancelablePromise<LocationsListResponse> => { return __request(OpenAPI, {
+export const apiLocationsList = (): CancelablePromise<ApiLocationsListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/locations/'
 }); };
@@ -425,7 +425,7 @@ export const locationsList = (): CancelablePromise<LocationsListResponse> => { r
  * @returns Location
  * @throws ApiError
  */
-export const locationsCreate = (data: LocationsCreateData): CancelablePromise<LocationsCreateResponse> => { return __request(OpenAPI, {
+export const apiLocationsCreate = (data: ApiLocationsCreateData): CancelablePromise<ApiLocationsCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/locations/',
     body: data.requestBody,
@@ -440,7 +440,7 @@ export const locationsCreate = (data: LocationsCreateData): CancelablePromise<Lo
  * @returns PaginatedLocationList
  * @throws ApiError
  */
-export const locationsListList = (data: LocationsListListData = {}): CancelablePromise<LocationsListListResponse> => { return __request(OpenAPI, {
+export const apiLocationsListList = (data: ApiLocationsListListData = {}): CancelablePromise<ApiLocationsListListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/locations-list/',
     query: {
@@ -460,7 +460,7 @@ export const locationsListList = (data: LocationsListListData = {}): CancelableP
  * @returns PaginatedLocationList
  * @throws ApiError
  */
-export const locationsListBulkRetrieveCreate = (data: LocationsListBulkRetrieveCreateData = {}): CancelablePromise<LocationsListBulkRetrieveCreateResponse> => { return __request(OpenAPI, {
+export const apiLocationsListBulkRetrieveCreate = (data: ApiLocationsListBulkRetrieveCreateData = {}): CancelablePromise<ApiLocationsListBulkRetrieveCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/locations-list/bulk-retrieve/',
     query: {
@@ -478,7 +478,7 @@ export const locationsListBulkRetrieveCreate = (data: LocationsListBulkRetrieveC
  * @returns Location
  * @throws ApiError
  */
-export const locationsRetrieve = (data: LocationsRetrieveData): CancelablePromise<LocationsRetrieveResponse> => { return __request(OpenAPI, {
+export const apiLocationsRetrieve = (data: ApiLocationsRetrieveData): CancelablePromise<ApiLocationsRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/locations/{id}/',
     path: {
@@ -493,7 +493,7 @@ export const locationsRetrieve = (data: LocationsRetrieveData): CancelablePromis
  * @returns Location
  * @throws ApiError
  */
-export const locationsUpdate = (data: LocationsUpdateData): CancelablePromise<LocationsUpdateResponse> => { return __request(OpenAPI, {
+export const apiLocationsUpdate = (data: ApiLocationsUpdateData): CancelablePromise<ApiLocationsUpdateResponse> => { return __request(OpenAPI, {
     method: 'PUT',
     url: '/api/locations/{id}/',
     path: {
@@ -510,7 +510,7 @@ export const locationsUpdate = (data: LocationsUpdateData): CancelablePromise<Lo
  * @returns Location
  * @throws ApiError
  */
-export const locationsPartialUpdate = (data: LocationsPartialUpdateData): CancelablePromise<LocationsPartialUpdateResponse> => { return __request(OpenAPI, {
+export const apiLocationsPartialUpdate = (data: ApiLocationsPartialUpdateData): CancelablePromise<ApiLocationsPartialUpdateResponse> => { return __request(OpenAPI, {
     method: 'PATCH',
     url: '/api/locations/{id}/',
     path: {
@@ -526,7 +526,7 @@ export const locationsPartialUpdate = (data: LocationsPartialUpdateData): Cancel
  * @returns void No response body
  * @throws ApiError
  */
-export const locationsDestroy = (data: LocationsDestroyData): CancelablePromise<LocationsDestroyResponse> => { return __request(OpenAPI, {
+export const apiLocationsDestroy = (data: ApiLocationsDestroyData): CancelablePromise<ApiLocationsDestroyResponse> => { return __request(OpenAPI, {
     method: 'DELETE',
     url: '/api/locations/{id}/',
     path: {
@@ -541,9 +541,208 @@ export const locationsDestroy = (data: LocationsDestroyData): CancelablePromise<
  * @returns LocationID
  * @throws ApiError
  */
-export const locationsCreateLocationsCreate = (data: LocationsCreateLocationsCreateData): CancelablePromise<LocationsCreateLocationsCreateResponse> => { return __request(OpenAPI, {
+export const apiLocationsCreateLocationsCreate = (data: ApiLocationsCreateLocationsCreateData): CancelablePromise<ApiLocationsCreateLocationsCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/locations/create_locations/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * ViewSet for managing newsletter posts with full CRUD operations.
+ *
+ * Provides:
+ * - GET /newsletter/posts/ - List all posts
+ * - POST /newsletter/posts/ - Create a new post
+ * - GET /newsletter/posts/{id}/ - Retrieve a specific post
+ * - PUT /newsletter/posts/{id}/ - Update a specific post (full update)
+ * - PATCH /newsletter/posts/{id}/ - Partially update a specific post
+ * - DELETE /newsletter/posts/{id}/ - Delete a specific post
+ * - GET /newsletter/posts/published/ - List only published posts (public)
+ * - GET /newsletter/posts/by-slug/{slug}/ - Retrieve post by slug (public)
+ * @returns Post
+ * @throws ApiError
+ */
+export const apiNewsletterPostsList = (): CancelablePromise<ApiNewsletterPostsListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/newsletter/posts/'
+}); };
+
+/**
+ * ViewSet for managing newsletter posts with full CRUD operations.
+ *
+ * Provides:
+ * - GET /newsletter/posts/ - List all posts
+ * - POST /newsletter/posts/ - Create a new post
+ * - GET /newsletter/posts/{id}/ - Retrieve a specific post
+ * - PUT /newsletter/posts/{id}/ - Update a specific post (full update)
+ * - PATCH /newsletter/posts/{id}/ - Partially update a specific post
+ * - DELETE /newsletter/posts/{id}/ - Delete a specific post
+ * - GET /newsletter/posts/published/ - List only published posts (public)
+ * - GET /newsletter/posts/by-slug/{slug}/ - Retrieve post by slug (public)
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns Post
+ * @throws ApiError
+ */
+export const apiNewsletterPostsCreate = (data: ApiNewsletterPostsCreateData): CancelablePromise<ApiNewsletterPostsCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/newsletter/posts/',
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * ViewSet for managing newsletter posts with full CRUD operations.
+ *
+ * Provides:
+ * - GET /newsletter/posts/ - List all posts
+ * - POST /newsletter/posts/ - Create a new post
+ * - GET /newsletter/posts/{id}/ - Retrieve a specific post
+ * - PUT /newsletter/posts/{id}/ - Update a specific post (full update)
+ * - PATCH /newsletter/posts/{id}/ - Partially update a specific post
+ * - DELETE /newsletter/posts/{id}/ - Delete a specific post
+ * - GET /newsletter/posts/published/ - List only published posts (public)
+ * - GET /newsletter/posts/by-slug/{slug}/ - Retrieve post by slug (public)
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this post.
+ * @returns Post
+ * @throws ApiError
+ */
+export const apiNewsletterPostsRetrieve = (data: ApiNewsletterPostsRetrieveData): CancelablePromise<ApiNewsletterPostsRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/newsletter/posts/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * ViewSet for managing newsletter posts with full CRUD operations.
+ *
+ * Provides:
+ * - GET /newsletter/posts/ - List all posts
+ * - POST /newsletter/posts/ - Create a new post
+ * - GET /newsletter/posts/{id}/ - Retrieve a specific post
+ * - PUT /newsletter/posts/{id}/ - Update a specific post (full update)
+ * - PATCH /newsletter/posts/{id}/ - Partially update a specific post
+ * - DELETE /newsletter/posts/{id}/ - Delete a specific post
+ * - GET /newsletter/posts/published/ - List only published posts (public)
+ * - GET /newsletter/posts/by-slug/{slug}/ - Retrieve post by slug (public)
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this post.
+ * @param data.requestBody
+ * @returns Post
+ * @throws ApiError
+ */
+export const apiNewsletterPostsUpdate = (data: ApiNewsletterPostsUpdateData): CancelablePromise<ApiNewsletterPostsUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PUT',
+    url: '/api/newsletter/posts/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * ViewSet for managing newsletter posts with full CRUD operations.
+ *
+ * Provides:
+ * - GET /newsletter/posts/ - List all posts
+ * - POST /newsletter/posts/ - Create a new post
+ * - GET /newsletter/posts/{id}/ - Retrieve a specific post
+ * - PUT /newsletter/posts/{id}/ - Update a specific post (full update)
+ * - PATCH /newsletter/posts/{id}/ - Partially update a specific post
+ * - DELETE /newsletter/posts/{id}/ - Delete a specific post
+ * - GET /newsletter/posts/published/ - List only published posts (public)
+ * - GET /newsletter/posts/by-slug/{slug}/ - Retrieve post by slug (public)
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this post.
+ * @param data.requestBody
+ * @returns Post
+ * @throws ApiError
+ */
+export const apiNewsletterPostsPartialUpdate = (data: ApiNewsletterPostsPartialUpdateData): CancelablePromise<ApiNewsletterPostsPartialUpdateResponse> => { return __request(OpenAPI, {
+    method: 'PATCH',
+    url: '/api/newsletter/posts/{id}/',
+    path: {
+        id: data.id
+    },
+    body: data.requestBody,
+    mediaType: 'application/json'
+}); };
+
+/**
+ * ViewSet for managing newsletter posts with full CRUD operations.
+ *
+ * Provides:
+ * - GET /newsletter/posts/ - List all posts
+ * - POST /newsletter/posts/ - Create a new post
+ * - GET /newsletter/posts/{id}/ - Retrieve a specific post
+ * - PUT /newsletter/posts/{id}/ - Update a specific post (full update)
+ * - PATCH /newsletter/posts/{id}/ - Partially update a specific post
+ * - DELETE /newsletter/posts/{id}/ - Delete a specific post
+ * - GET /newsletter/posts/published/ - List only published posts (public)
+ * - GET /newsletter/posts/by-slug/{slug}/ - Retrieve post by slug (public)
+ * @param data The data for the request.
+ * @param data.id A unique integer value identifying this post.
+ * @returns void No response body
+ * @throws ApiError
+ */
+export const apiNewsletterPostsDestroy = (data: ApiNewsletterPostsDestroyData): CancelablePromise<ApiNewsletterPostsDestroyResponse> => { return __request(OpenAPI, {
+    method: 'DELETE',
+    url: '/api/newsletter/posts/{id}/',
+    path: {
+        id: data.id
+    }
+}); };
+
+/**
+ * Public endpoint to retrieve a post by its slug.
+ * No authentication required (READ operations don't require permission).
+ * @param data The data for the request.
+ * @param data.slug
+ * @returns Post
+ * @throws ApiError
+ */
+export const apiNewsletterPostsBySlugRetrieve = (data: ApiNewsletterPostsBySlugRetrieveData): CancelablePromise<ApiNewsletterPostsBySlugRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/newsletter/posts/by-slug/{slug}/',
+    path: {
+        slug: data.slug
+    }
+}); };
+
+/**
+ * Public endpoint to retrieve only published posts.
+ * No authentication required.
+ * @returns Post
+ * @throws ApiError
+ */
+export const apiNewsletterPostsPublishedRetrieve = (): CancelablePromise<ApiNewsletterPostsPublishedRetrieveResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/newsletter/posts/published/'
+}); };
+
+/**
+ * @returns Subscriber
+ * @throws ApiError
+ */
+export const apiNewsletterSubscribersList = (): CancelablePromise<ApiNewsletterSubscribersListResponse> => { return __request(OpenAPI, {
+    method: 'GET',
+    url: '/api/newsletter/subscribers/'
+}); };
+
+/**
+ * @param data The data for the request.
+ * @param data.requestBody
+ * @returns Subscriber
+ * @throws ApiError
+ */
+export const apiNewsletterSubscribersCreate = (data: ApiNewsletterSubscribersCreateData): CancelablePromise<ApiNewsletterSubscribersCreateResponse> => { return __request(OpenAPI, {
+    method: 'POST',
+    url: '/api/newsletter/subscribers/',
     body: data.requestBody,
     mediaType: 'application/json'
 }); };
@@ -554,7 +753,7 @@ export const locationsCreateLocationsCreate = (data: LocationsCreateLocationsCre
  * @returns Order
  * @throws ApiError
  */
-export const orderRetrieve = (data: OrderRetrieveData): CancelablePromise<OrderRetrieveResponse> => { return __request(OpenAPI, {
+export const apiOrderRetrieve = (data: ApiOrderRetrieveData): CancelablePromise<ApiOrderRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/order/{id}/',
     path: {
@@ -569,7 +768,7 @@ export const orderRetrieve = (data: OrderRetrieveData): CancelablePromise<OrderR
  * @returns CustomerPortalURL
  * @throws ApiError
  */
-export const orderGetCustomerReceiptRetrieve = (data: OrderGetCustomerReceiptRetrieveData): CancelablePromise<OrderGetCustomerReceiptRetrieveResponse> => { return __request(OpenAPI, {
+export const apiOrderGetCustomerReceiptRetrieve = (data: ApiOrderGetCustomerReceiptRetrieveData): CancelablePromise<ApiOrderGetCustomerReceiptRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/order/{id}/get_customer_receipt/',
     path: {
@@ -583,7 +782,7 @@ export const orderGetCustomerReceiptRetrieve = (data: OrderGetCustomerReceiptRet
  * @returns CheckoutURL
  * @throws ApiError
  */
-export const orderGetCheckoutUrlCreate = (data: OrderGetCheckoutUrlCreateData): CancelablePromise<OrderGetCheckoutUrlCreateResponse> => { return __request(OpenAPI, {
+export const apiOrderGetCheckoutUrlCreate = (data: ApiOrderGetCheckoutUrlCreateData): CancelablePromise<ApiOrderGetCheckoutUrlCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/order/get_checkout_url/',
     body: data.requestBody,
@@ -597,7 +796,7 @@ export const orderGetCheckoutUrlCreate = (data: OrderGetCheckoutUrlCreateData): 
  * @returns Order
  * @throws ApiError
  */
-export const orderGetUserOrderRetrieve = (data: OrderGetUserOrderRetrieveData): CancelablePromise<OrderGetUserOrderRetrieveResponse> => { return __request(OpenAPI, {
+export const apiOrderGetUserOrderRetrieve = (data: ApiOrderGetUserOrderRetrieveData): CancelablePromise<ApiOrderGetUserOrderRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/order/get_user_order/',
     query: {
@@ -610,7 +809,7 @@ export const orderGetUserOrderRetrieve = (data: OrderGetUserOrderRetrieveData): 
  * @returns HasAccess
  * @throws ApiError
  */
-export const orderUserHasAccessRetrieve = (): CancelablePromise<OrderUserHasAccessRetrieveResponse> => { return __request(OpenAPI, {
+export const apiOrderUserHasAccessRetrieve = (): CancelablePromise<ApiOrderUserHasAccessRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/order/user_has_access/'
 }); };
@@ -619,7 +818,7 @@ export const orderUserHasAccessRetrieve = (): CancelablePromise<OrderUserHasAcce
  * @returns Plan
  * @throws ApiError
  */
-export const plansList = (): CancelablePromise<PlansListResponse> => { return __request(OpenAPI, {
+export const apiPlansList = (): CancelablePromise<ApiPlansListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/plans/'
 }); };
@@ -630,7 +829,7 @@ export const plansList = (): CancelablePromise<PlansListResponse> => { return __
  * @returns Plan
  * @throws ApiError
  */
-export const plansRetrieve = (data: PlansRetrieveData): CancelablePromise<PlansRetrieveResponse> => { return __request(OpenAPI, {
+export const apiPlansRetrieve = (data: ApiPlansRetrieveData): CancelablePromise<ApiPlansRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/plans/{id}/',
     path: {
@@ -643,7 +842,7 @@ export const plansRetrieve = (data: PlansRetrieveData): CancelablePromise<PlansR
  * @returns CountSubscriptions
  * @throws ApiError
  */
-export const subscriptionsGetCountSubscriptionsRetrieve = (): CancelablePromise<SubscriptionsGetCountSubscriptionsRetrieveResponse> => { return __request(OpenAPI, {
+export const apiSubscriptionsGetCountSubscriptionsRetrieve = (): CancelablePromise<ApiSubscriptionsGetCountSubscriptionsRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/subscriptions/get_count_subscriptions/'
 }); };
@@ -656,7 +855,7 @@ export const subscriptionsGetCountSubscriptionsRetrieve = (): CancelablePromise<
  * @returns unknown
  * @throws ApiError
  */
-export const subscriptionsSubscribeCreate = (data: SubscriptionsSubscribeCreateData): CancelablePromise<SubscriptionsSubscribeCreateResponse> => { return __request(OpenAPI, {
+export const apiSubscriptionsSubscribeCreate = (data: ApiSubscriptionsSubscribeCreateData): CancelablePromise<ApiSubscriptionsSubscribeCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/subscriptions/subscribe/',
     body: data.requestBody,
@@ -670,7 +869,7 @@ export const subscriptionsSubscribeCreate = (data: SubscriptionsSubscribeCreateD
  * @returns Tag
  * @throws ApiError
  */
-export const tagsList = (): CancelablePromise<TagsListResponse> => { return __request(OpenAPI, {
+export const apiTagsList = (): CancelablePromise<ApiTagsListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/tags/'
 }); };
@@ -681,7 +880,7 @@ export const tagsList = (): CancelablePromise<TagsListResponse> => { return __re
  * @returns Tag
  * @throws ApiError
  */
-export const tagsCreate = (data: TagsCreateData): CancelablePromise<TagsCreateResponse> => { return __request(OpenAPI, {
+export const apiTagsCreate = (data: ApiTagsCreateData): CancelablePromise<ApiTagsCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/tags/',
     body: data.requestBody,
@@ -696,7 +895,7 @@ export const tagsCreate = (data: TagsCreateData): CancelablePromise<TagsCreateRe
  * @returns PaginatedTagList
  * @throws ApiError
  */
-export const tagsListList = (data: TagsListListData = {}): CancelablePromise<TagsListListResponse> => { return __request(OpenAPI, {
+export const apiTagsListList = (data: ApiTagsListListData = {}): CancelablePromise<ApiTagsListListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/tags-list/',
     query: {
@@ -716,7 +915,7 @@ export const tagsListList = (data: TagsListListData = {}): CancelablePromise<Tag
  * @returns PaginatedTagList
  * @throws ApiError
  */
-export const tagsListBulkRetrieveCreate = (data: TagsListBulkRetrieveCreateData = {}): CancelablePromise<TagsListBulkRetrieveCreateResponse> => { return __request(OpenAPI, {
+export const apiTagsListBulkRetrieveCreate = (data: ApiTagsListBulkRetrieveCreateData = {}): CancelablePromise<ApiTagsListBulkRetrieveCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/tags-list/bulk-retrieve/',
     query: {
@@ -737,7 +936,7 @@ export const tagsListBulkRetrieveCreate = (data: TagsListBulkRetrieveCreateData 
  * @returns PaginatedTagList
  * @throws ApiError
  */
-export const tagsListTopTagsList = (data: TagsListTopTagsListData = {}): CancelablePromise<TagsListTopTagsListResponse> => { return __request(OpenAPI, {
+export const apiTagsListTopTagsList = (data: ApiTagsListTopTagsListData = {}): CancelablePromise<ApiTagsListTopTagsListResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/tags-list/top-tags/',
     query: {
@@ -753,7 +952,7 @@ export const tagsListTopTagsList = (data: TagsListTopTagsListData = {}): Cancela
  * @returns Tag
  * @throws ApiError
  */
-export const tagsRetrieve = (data: TagsRetrieveData): CancelablePromise<TagsRetrieveResponse> => { return __request(OpenAPI, {
+export const apiTagsRetrieve = (data: ApiTagsRetrieveData): CancelablePromise<ApiTagsRetrieveResponse> => { return __request(OpenAPI, {
     method: 'GET',
     url: '/api/tags/{id}/',
     path: {
@@ -768,7 +967,7 @@ export const tagsRetrieve = (data: TagsRetrieveData): CancelablePromise<TagsRetr
  * @returns Tag
  * @throws ApiError
  */
-export const tagsUpdate = (data: TagsUpdateData): CancelablePromise<TagsUpdateResponse> => { return __request(OpenAPI, {
+export const apiTagsUpdate = (data: ApiTagsUpdateData): CancelablePromise<ApiTagsUpdateResponse> => { return __request(OpenAPI, {
     method: 'PUT',
     url: '/api/tags/{id}/',
     path: {
@@ -785,7 +984,7 @@ export const tagsUpdate = (data: TagsUpdateData): CancelablePromise<TagsUpdateRe
  * @returns Tag
  * @throws ApiError
  */
-export const tagsPartialUpdate = (data: TagsPartialUpdateData): CancelablePromise<TagsPartialUpdateResponse> => { return __request(OpenAPI, {
+export const apiTagsPartialUpdate = (data: ApiTagsPartialUpdateData): CancelablePromise<ApiTagsPartialUpdateResponse> => { return __request(OpenAPI, {
     method: 'PATCH',
     url: '/api/tags/{id}/',
     path: {
@@ -801,7 +1000,7 @@ export const tagsPartialUpdate = (data: TagsPartialUpdateData): CancelablePromis
  * @returns void No response body
  * @throws ApiError
  */
-export const tagsDestroy = (data: TagsDestroyData): CancelablePromise<TagsDestroyResponse> => { return __request(OpenAPI, {
+export const apiTagsDestroy = (data: ApiTagsDestroyData): CancelablePromise<ApiTagsDestroyResponse> => { return __request(OpenAPI, {
     method: 'DELETE',
     url: '/api/tags/{id}/',
     path: {
@@ -816,7 +1015,7 @@ export const tagsDestroy = (data: TagsDestroyData): CancelablePromise<TagsDestro
  * @returns TagID
  * @throws ApiError
  */
-export const tagsCreateTagsCreate = (data: TagsCreateTagsCreateData): CancelablePromise<TagsCreateTagsCreateResponse> => { return __request(OpenAPI, {
+export const apiTagsCreateTagsCreate = (data: ApiTagsCreateTagsCreateData): CancelablePromise<ApiTagsCreateTagsCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/tags/create_tags/',
     body: data.requestBody,
@@ -828,7 +1027,7 @@ export const tagsCreateTagsCreate = (data: TagsCreateTagsCreateData): Cancelable
  * @returns unknown No response body
  * @throws ApiError
  */
-export const usersWebhookCreate = (): CancelablePromise<UsersWebhookCreateResponse> => { return __request(OpenAPI, {
+export const apiUsersWebhookCreate = (): CancelablePromise<ApiUsersWebhookCreateResponse> => { return __request(OpenAPI, {
     method: 'POST',
     url: '/api/users/webhook'
 }); };
