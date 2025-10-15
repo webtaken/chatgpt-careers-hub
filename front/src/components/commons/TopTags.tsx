@@ -1,7 +1,7 @@
 import { Skeleton } from "../ui/skeleton";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ClickableTag } from "./ClickableTag";
-import { apiTagsListTopTagsList } from "@/client";
+import { apiTagsListTopTagsList, Tag } from "@/client";
 import { setBasePathToAPI } from "@/lib/utils";
 import { Suspense } from "react";
 
@@ -13,41 +13,6 @@ export function TopTagsSkeleton() {
       ))}
     </div>
   );
-}
-
-export function TopTags() {
-  return (
-    <Suspense fallback={<TopTagsSkeleton />}>
-      <TopTagsWrapper />
-    </Suspense>
-  );
-}
-
-async function TopTagsWrapper() {
-  try {
-    setBasePathToAPI();
-    const response = await apiTagsListTopTagsList();
-    const topTags = response.results;
-
-    if (!topTags || topTags.length === 0) return null;
-
-    return (
-      <div className="w-full space-y-2">
-        <p className="text-center font-medium">Hot Topics 🔥</p>
-        <ScrollArea className="w-full">
-          <div className="flex items-center w-11/12 gap-x-2 mt-2 mb-3">
-            {topTags.map((tag) => (
-              <ClickableTag key={tag.id} tag={tag} />
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
-    );
-  } catch (error) {
-    console.error("Error fetching top tags:", error);
-    return null;
-  }
 }
 
 export function TopTagsBar() {
@@ -62,7 +27,7 @@ async function TopTagsBarWrapper() {
   try {
     setBasePathToAPI();
     const response = await apiTagsListTopTagsList();
-    const topTags = response.results;
+    const topTags = response as unknown as Tag[];
     console.log("topTags", topTags);
     if (!topTags || topTags.length === 0) return null;
 

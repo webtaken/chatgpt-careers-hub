@@ -23,11 +23,20 @@ class JobAdmin(admin.ModelAdmin):
         "get_tags",
         "get_locations",
         "get_categories",
+        "created_at",
         "remote",
         "verified",
         "visible",
     ]
-    list_filter = ["remote", "verified", "visible", "tags", "location", "category"]
+    list_filter = [
+        "remote",
+        "verified",
+        "visible",
+        "created_at",
+        "location",
+        "category",
+        "tags",
+    ]
     search_fields = [
         "title",
         "company_name",
@@ -35,6 +44,7 @@ class JobAdmin(admin.ModelAdmin):
         "location__location",
         "category__text",
     ]
+    ordering = ["-created_at"]
     list_per_page = 50
     list_max_show_all = 200
 
