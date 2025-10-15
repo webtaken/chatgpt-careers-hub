@@ -15,42 +15,15 @@ export function TopTagsSkeleton() {
   );
 }
 
-async function TopTagsContent() {
-  try {
-    setBasePathToAPI();
-    const response = await apiTagsListTopTagsList();
-    const topTags = response.results;
-
-    if (!topTags || topTags.length === 0) return null;
-
-    return (
-      <ScrollArea className="w-full">
-        <div className="flex items-center w-11/12 gap-x-2 mt-2 mb-3">
-          {topTags.map((tag) => (
-            <ClickableTag key={tag.id} tag={tag} />
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    );
-  } catch (error) {
-    console.error("Error fetching top tags:", error);
-    return null;
-  }
-}
-
 export function TopTags() {
   return (
-    <div className="w-full space-y-2">
-      <p className="text-center font-medium">Hot Topics 🔥</p>
-      <Suspense fallback={<TopTagsSkeleton />}>
-        <TopTagsContent />
-      </Suspense>
-    </div>
+    <Suspense fallback={<TopTagsSkeleton />}>
+      <TopTagsWrapper />
+    </Suspense>
   );
 }
 
-async function TopTagsBarContent() {
+async function TopTagsWrapper() {
   try {
     setBasePathToAPI();
     const response = await apiTagsListTopTagsList();
@@ -59,14 +32,17 @@ async function TopTagsBarContent() {
     if (!topTags || topTags.length === 0) return null;
 
     return (
-      <ScrollArea className="w-full">
-        <div className="flex items-center gap-2">
-          {topTags.map((tag) => (
-            <ClickableTag key={tag.id} tag={tag} />
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+      <div className="w-full space-y-2">
+        <p className="text-center font-medium">Hot Topics 🔥</p>
+        <ScrollArea className="w-full">
+          <div className="flex items-center w-11/12 gap-x-2 mt-2 mb-3">
+            {topTags.map((tag) => (
+              <ClickableTag key={tag.id} tag={tag} />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
     );
   } catch (error) {
     console.error("Error fetching top tags:", error);
@@ -76,17 +52,41 @@ async function TopTagsBarContent() {
 
 export function TopTagsBar() {
   return (
-    <div className="rounded-md border bg-card px-3 sm:px-5 md:px-6 py-4">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">
-            Trending tags
-          </h3>
-        </div>
-        <Suspense fallback={<TopTagsSkeleton />}>
-          <TopTagsBarContent />
-        </Suspense>
-      </div>
-    </div>
+    <Suspense fallback={<TopTagsSkeleton />}>
+      <TopTagsBarWrapper />
+    </Suspense>
   );
+}
+
+async function TopTagsBarWrapper() {
+  try {
+    setBasePathToAPI();
+    const response = await apiTagsListTopTagsList();
+    const topTags = response.results;
+    console.log("topTags", topTags);
+    if (!topTags || topTags.length === 0) return null;
+
+    return (
+      <div className="rounded-md border bg-card px-3 sm:px-5 md:px-6 py-4">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-foreground">
+              Trending tags
+            </h3>
+          </div>
+          <ScrollArea className="w-full">
+            <div className="flex items-center gap-2">
+              {topTags.map((tag) => (
+                <ClickableTag key={tag.id} tag={tag} />
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </div>
+      </div>
+    );
+  } catch (error) {
+    console.error("Error fetching top tags:", error);
+    return null;
+  }
 }
