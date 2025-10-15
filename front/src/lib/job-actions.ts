@@ -3,24 +3,22 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 
 import {
   CreateLocation,
-  JobsListListData,
+  ApiJobsListListData,
   LocationTypeEnum,
-  TagsListListData,
-  categoriesList,
-  jobsBySlugRetrieve,
-  jobsCreate,
-  jobsList,
-  jobsListList,
-  jobsPartialUpdate,
-  locationsCreateLocationsCreate,
-  locationsListBulkRetrieveCreate,
-  locationsListList,
-  orderGetCheckoutUrlCreate,
-  tagsCreateTagsCreate,
-  tagsListBulkRetrieveCreate,
-  tagsListTopTagsList,
-  tagsListList,
-  Tag,
+  ApiTagsListListData,
+  apiCategoriesList,
+  apiJobsBySlugRetrieve,
+  apiJobsCreate,
+  apiJobsList,
+  apiJobsListList,
+  apiJobsPartialUpdate,
+  apiLocationsCreateLocationsCreate,
+  apiLocationsListBulkRetrieveCreate,
+  apiLocationsListList,
+  apiOrderGetCheckoutUrlCreate,
+  apiTagsCreateTagsCreate,
+  apiTagsListBulkRetrieveCreate,
+  apiTagsListList,
 } from "@/client";
 import { z } from "zod";
 import { setBasePathToAPI, setCredentialsToAPI } from "./utils";
@@ -31,18 +29,18 @@ import { getPlans } from "./billing-actions";
 export async function getCategories() {
   try {
     setBasePathToAPI();
-    const categories = await categoriesList();
+    const categories = await apiCategoriesList();
     return categories;
   } catch (error) {
     return undefined;
   }
 }
 
-export async function getJobs(filters: JobsListListData) {
+export async function getJobs(filters: ApiJobsListListData) {
   try {
     noStore();
     setBasePathToAPI();
-    const jobsResponse = await jobsListList({ ...filters });
+    const jobsResponse = await apiJobsListList({ ...filters });
     return jobsResponse;
   } catch (error) {
     return undefined;
@@ -53,7 +51,7 @@ export async function getUserJobs() {
   try {
     noStore();
     await setCredentialsToAPI();
-    const jobsResponse = await jobsList();
+    const jobsResponse = await apiJobsList();
     return jobsResponse;
   } catch (error) {
     return undefined;
@@ -68,8 +66,8 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
       location_type: location.type as LocationTypeEnum,
     }));
     let promises = [
-      tagsCreateTagsCreate({ requestBody: { tags: tagNames } }),
-      locationsCreateLocationsCreate({
+      apiTagsCreateTagsCreate({ requestBody: { tags: tagNames } }),
+      apiLocationsCreateLocationsCreate({
         requestBody: { locations: locationNames },
       }),
     ];
@@ -95,7 +93,7 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
     if (session.user.is_staff) {
       let { tagIds, locationIds } = await createTagsAndLocations();
       let categoryIds = data.categories.map((category) => +category.id);
-      const job = await jobsCreate({
+      const job = await apiJobsCreate({
         // @ts-expect-error
         requestBody: {
           user: session.user.pk as number,
@@ -124,7 +122,7 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
 
     let { tagIds, locationIds } = await createTagsAndLocations();
     let categoryIds = data.categories.map((category) => +category.id);
-    const job = await jobsCreate({
+    const job = await apiJobsCreate({
       // @ts-expect-error
       requestBody: {
         user: session.user.pk as number,
@@ -147,7 +145,7 @@ export async function createJob(data: z.infer<typeof FormSchema>) {
     const selectedPlan = plans.find(
       (plan) => plan.variant_id === +process.env.JOB_POST_VARIANT!
     );
-    const checkoutURL = await orderGetCheckoutUrlCreate({
+    const checkoutURL = await apiOrderGetCheckoutUrlCreate({
       requestBody: {
         receipt_button_text: "Go to Dashboard",
         receipt_thank_you_note: "Thanks for posting on chatgpt-jobs!",
@@ -176,8 +174,8 @@ export async function updateJob(id: number, data: z.infer<typeof FormSchema>) {
       location_type: location.type as LocationTypeEnum,
     }));
     let promises = [
-      tagsCreateTagsCreate({ requestBody: { tags: tagNames } }),
-      locationsCreateLocationsCreate({
+      apiTagsCreateTagsCreate({ requestBody: { tags: tagNames } }),
+      apiLocationsCreateLocationsCreate({
         requestBody: { locations: locationNames },
       }),
     ];
@@ -195,7 +193,7 @@ export async function updateJob(id: number, data: z.infer<typeof FormSchema>) {
         ? locationNamesResponse.value.map((item) => item.id)
         : [];
     const categoryIds = data.categories.map((category) => +category.id);
-    const job = await jobsPartialUpdate({
+    const job = await apiJobsPartialUpdate({
       id: id,
       requestBody: {
         company_name: data.companyName,
@@ -223,16 +221,16 @@ export async function updateJob(id: number, data: z.infer<typeof FormSchema>) {
 
 export async function getJobBySlug(slug: string) {
   try {
-    const job = await jobsBySlugRetrieve({ slug: slug });
+    const job = await apiJobsBySlugRetrieve({ slug: slug });
     return job;
   } catch (error) {
     return undefined;
   }
 }
 
-export async function getTags(data: TagsListListData) {
+export async function getTags(data: ApiTagsListListData) {
   try {
-    const tags = await tagsListList({ ...data });
+    const tags = await apiTagsListList({ ...data });
     return tags.results;
   } catch (error) {
     return undefined;
@@ -241,7 +239,7 @@ export async function getTags(data: TagsListListData) {
 
 export async function getBulkTags(ids: number[]) {
   try {
-    const tags = await tagsListBulkRetrieveCreate({
+    const tags = await apiTagsListBulkRetrieveCreate({
       requestBody: { ids: ids },
     });
     return tags;
@@ -252,7 +250,7 @@ export async function getBulkTags(ids: number[]) {
 
 export async function getLocations(text: string) {
   try {
-    const locations = await locationsListList({ location: text });
+    const locations = await apiLocationsListList({ location: text });
     return locations.results;
   } catch (error) {
     return undefined;
@@ -261,7 +259,7 @@ export async function getLocations(text: string) {
 
 export async function getBulkLocations(ids: number[]) {
   try {
-    const locations = await locationsListBulkRetrieveCreate({
+    const locations = await apiLocationsListBulkRetrieveCreate({
       requestBody: { ids: ids },
     });
     return locations;

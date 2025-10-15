@@ -1,4 +1,4 @@
-import { categoriesList, jobsListList } from "@/client";
+import { apiCategoriesList, apiJobsListList } from "@/client";
 import { setBasePathToAPI } from "@/lib/utils";
 import type { MetadataRoute } from "next";
 
@@ -8,7 +8,7 @@ export default async function sitemap() {
   const getCategories = async () => {
     try {
       setBasePathToAPI();
-      const categories = await categoriesList();
+      const categories = await apiCategoriesList();
       return categories;
     } catch (error) {
       return undefined;
@@ -23,7 +23,7 @@ export default async function sitemap() {
       const pagesToFetch = 5;
       let jobUrls: MetadataRoute.Sitemap = [];
       for (let page = 1; page <= pagesToFetch; page++) {
-        const jobsResponse = await jobsListList({ page, pageSize });
+        const jobsResponse = await apiJobsListList({ page, pageSize });
         const items = jobsResponse?.results || [];
         jobUrls.push(
           ...items.map((job) => ({

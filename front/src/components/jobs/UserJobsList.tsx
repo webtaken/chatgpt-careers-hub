@@ -1,10 +1,10 @@
-import { JobsListResponse } from "@/client";
+import { ApiJobsListResponse } from "@/client";
 import { TriangleAlertIcon } from "lucide-react";
 import { generateUniqueId } from "@/lib/utils";
 import Link from "next/link";
 import JobListUserCard from "./JobListUserCard";
 
-export default function UserJobsList({ jobs }: { jobs: JobsListResponse }) {
+export default function UserJobsList({ jobs }: { jobs: ApiJobsListResponse }) {
   return (
     <div className="flex flex-col py-4 px-2 sm:px-5 md:px-20 space-y-2">
       {jobs.length === 0 && (

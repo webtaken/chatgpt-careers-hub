@@ -1,12 +1,12 @@
 "use server";
 
-import { plansList } from "@/client";
+import { apiPlansList } from "@/client";
 import { setBasePathToAPI } from "./utils";
 
 export async function getPlans() {
   try {
     setBasePathToAPI();
-    const plans = await plansList();
+    const plans = await apiPlansList();
     return plans;
   } catch (error) {
     return undefined;

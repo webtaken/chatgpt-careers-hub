@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { tagsListTopTagsList } from "@/client";
+import { apiTagsListTopTagsList } from "@/client";
 import { Skeleton } from "../ui/skeleton";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ClickableTag } from "./ClickableTag";
@@ -23,7 +23,7 @@ export function TopTags() {
   useEffect(() => {
     const fetchTopTags = async () => {
       try {
-        const response = await tagsListTopTagsList();
+        const response = await apiTagsListTopTagsList();
         setTopTags(response.results);
       } catch (error) {
         console.error("Error fetching top Tags:", error);
@@ -64,7 +64,7 @@ export function TopTagsBar() {
   useEffect(() => {
     const fetchTopTags = async () => {
       try {
-        const response = await tagsListTopTagsList();
+        const response = await apiTagsListTopTagsList();
         setTopTags(response.results);
       } catch (error) {
         console.error("Error fetching top tags:", error);

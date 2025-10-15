@@ -1,4 +1,4 @@
-import { JobsListListResponse } from "@/client";
+import { ApiJobsListListResponse } from "@/client";
 import { TriangleAlertIcon } from "lucide-react";
 import JobListCard from "./JobListCard";
 import { PaginationWithLinks } from "../ui/pagination-with-links";
@@ -9,7 +9,7 @@ export default function JobsList({
   page,
   pageSize,
 }: {
-  jobs: JobsListListResponse;
+  jobs: ApiJobsListListResponse;
   page?: number;
   pageSize?: number;
 }) {

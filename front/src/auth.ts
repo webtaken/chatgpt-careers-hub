@@ -2,10 +2,10 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import {
-  authLoginCreate,
-  authGoogleCreate,
-  authTokenRefreshCreate,
-  authLogoutCreate,
+  apiAuthLoginCreate,
+  apiAuthGoogleCreate,
+  apiAuthTokenRefreshCreate,
+  apiAuthLogoutCreate,
   OpenAPI,
 } from "./client";
 import { setBasePathToAPI } from "./lib/utils";
@@ -50,7 +50,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       async authorize(credentials, req) {
         try {
           setBasePathToAPI();
-          const response = await authLoginCreate({
+          const response = await apiAuthLoginCreate({
             requestBody: {
               // @ts-expect-error Expected
               email: credentials?.email,
@@ -78,7 +78,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         if (account.provider === "google") {
           try {
             setBasePathToAPI();
-            const response = await authGoogleCreate({
+            const response = await apiAuthGoogleCreate({
               requestBody: {
                 access_token: account["access_token"],
                 id_token: account["id_token"],
@@ -113,7 +113,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (getCurrentEpochTime() > token["ref"]) {
         try {
           setBasePathToAPI();
-          const response = await authTokenRefreshCreate({
+          const response = await apiAuthTokenRefreshCreate({
             // @ts-expect-error
             requestBody: { refresh: token["refresh_token"] },
           });
@@ -135,7 +135,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   events: {
     async signOut() {
       setBasePathToAPI();
-      await authLogoutCreate();
+      await apiAuthLogoutCreate();
       OpenAPI.TOKEN = undefined;
     },
   },

@@ -1,5 +1,5 @@
 "use client";
-import { CategoriesListResponse } from "@/client";
+import { ApiCategoriesListResponse } from "@/client";
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 export default function CategoriesSelect({
   categories,
 }: {
-  categories: CategoriesListResponse;
+  categories: ApiCategoriesListResponse;
 }) {
   const router = useRouter();
 

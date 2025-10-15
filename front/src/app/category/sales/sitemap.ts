@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { jobsListList } from "@/client";
+import { apiJobsListList } from "@/client";
 import { setBasePathToAPI } from "@/lib/utils";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const pagesToFetch = 5;
       let jobUrls: MetadataRoute.Sitemap = [];
       for (let page = 1; page <= pagesToFetch; page++) {
-        const jobsResponse = await jobsListList({
+        const jobsResponse = await apiJobsListList({
           page,
           pageSize,
           categoryText: "sales",

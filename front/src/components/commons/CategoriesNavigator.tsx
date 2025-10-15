@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { categoriesList } from "@/client";
+import { apiCategoriesList } from "@/client";
 import {
   BookOpenIcon,
   PaletteIcon,
@@ -29,7 +29,7 @@ const categoryIconMap: Record<
 };
 
 export default async function CategoriesNavigator() {
-  const categories = await categoriesList();
+  const categories = await apiCategoriesList();
   if (!categories || categories.length === 0) return null;
 
   return (

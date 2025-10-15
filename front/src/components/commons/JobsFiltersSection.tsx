@@ -1,8 +1,8 @@
-import { CategoriesListResponse } from "@/client";
+import { ApiCategoriesListResponse } from "@/client";
 import { JobsFilterForm } from "../jobs/JobsFilterForm";
 
 interface JobsFiltersSectionProps {
-  categories?: CategoriesListResponse;
+  categories?: ApiCategoriesListResponse;
 }
 
 export default function JobsFiltersSection({

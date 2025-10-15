@@ -1,15 +1,15 @@
 "use server";
 
 import {
-  subscriptionsGetCountSubscriptionsRetrieve,
-  subscriptionsSubscribeCreate,
+  apiSubscriptionsGetCountSubscriptionsRetrieve,
+  apiSubscriptionsSubscribeCreate,
 } from "@/client";
 import { setBasePathToAPI } from "./utils";
 
 export async function subscribe(email: string) {
   try {
     setBasePathToAPI();
-    const status = await subscriptionsSubscribeCreate({
+    const status = await apiSubscriptionsSubscribeCreate({
       requestBody: { email },
     });
     return status;
@@ -21,7 +21,7 @@ export async function subscribe(email: string) {
 export async function getSubscriptionsCount() {
   try {
     setBasePathToAPI();
-    const response = await subscriptionsGetCountSubscriptionsRetrieve();
+    const response = await apiSubscriptionsGetCountSubscriptionsRetrieve();
     return response.count;
   } catch (error) {
     return undefined;

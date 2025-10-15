@@ -4,7 +4,7 @@ import { HireFormSetValueSchema } from "./HireForm";
 import { defaultCategories } from "@/data/constants";
 import MultipleSelector, { Option } from "../ui/multiple-selector";
 import { getCategories } from "@/lib/job-actions";
-import { CategoriesListResponse } from "@/client";
+import { ApiCategoriesListResponse } from "@/client";
 import { JobsFilterFormSetValueSchema } from "../jobs/JobsFilterForm";
 
 export function CategorySelector({
@@ -16,7 +16,7 @@ export function CategorySelector({
   setValueFilter?: JobsFilterFormSetValueSchema;
   defaultValue?: Option[];
 }) {
-  const [categories, setCategories] = useState<CategoriesListResponse>([]);
+  const [categories, setCategories] = useState<ApiCategoriesListResponse>([]);
 
   useEffect(() => {
     async function getCategoriesFromServer() {
