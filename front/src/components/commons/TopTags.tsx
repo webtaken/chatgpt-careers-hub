@@ -5,6 +5,7 @@ import { Skeleton } from "../ui/skeleton";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ClickableTag } from "./ClickableTag";
 import { Tag } from "@/client";
+import { setBasePathToAPI } from "@/lib/utils";
 
 export function TopTagsSkeleton() {
   return (
@@ -23,6 +24,7 @@ export function TopTags() {
   useEffect(() => {
     const fetchTopTags = async () => {
       try {
+        setBasePathToAPI();
         const response = await apiTagsListTopTagsList();
         setTopTags(response.results);
       } catch (error) {
@@ -64,6 +66,7 @@ export function TopTagsBar() {
   useEffect(() => {
     const fetchTopTags = async () => {
       try {
+        setBasePathToAPI();
         const response = await apiTagsListTopTagsList();
         setTopTags(response.results);
       } catch (error) {
