@@ -4,6 +4,8 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import OpenApiExample, extend_schema
+from jobs.models import Category, Job, Location, Tag
+from jobs.utils import get_current_week_jobs
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
@@ -11,9 +13,6 @@ from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
-
-from jobs.models import Category, Job, Location, Tag
-from jobs.utils import get_current_week_jobs
 
 from .filters import JobFilter, LocationFilter, TagFilter
 from .pagination import StandardResultsSetPagination
@@ -143,7 +142,7 @@ class TagListViewSet(ListModelMixin, GenericViewSet):
             Tag.objects.filter(job__in=weekly_jobs_ids)
             .annotate(frequency=Count("job"))  # Count how many jobs use each tag
             .order_by("-frequency")  # Sort by frequency in descending order
-            .distinct()
+            .distinct()[:20]  # Limit to top 20 tags
         )
         serializer = self.get_serializer(top_tags, many=True)
         return Response(serializer.data)
@@ -293,4 +292,6 @@ class LocationViewSet(ModelViewSet):
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    serializer_class = CategorySerializer
     serializer_class = CategorySerializer

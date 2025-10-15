@@ -269,12 +269,3 @@ export async function getBulkLocations(ids: number[]) {
     return undefined;
   }
 }
-
-export async function getWeeklyTopTags() {
-  try {
-    const tags = await tagsListTopTagsList();
-    return tags as unknown as Tag[];
-  } catch (error) {
-    return undefined;
-  }
-}

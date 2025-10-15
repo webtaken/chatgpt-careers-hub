@@ -94,7 +94,7 @@ THIRD_PARTY_APPS = [
     "django_apscheduler",
 ]
 
-LOCAL_APPS = ["users", "authentication", "core", "jobs", "billing"]
+LOCAL_APPS = ["users", "authentication", "core", "jobs", "billing", "newsletter"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 

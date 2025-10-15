@@ -45,14 +45,15 @@ urlpatterns = [
     path("api/", include("jobs.urls")),
     path("api/", include("users.urls")),
     path("api/", include("billing.urls")),
+    path("api/", include("newsletter.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "api/schema/swagger-ui/",
+        "docs/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
     path(
-        "api/schema/redoc/",
+        "redoc/",
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
