@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
-import HeroSection from "@/components/commons/HeroSection";
-import SocialLinks from "@/components/commons/SocialLinks";
-import SubscriptionSection from "@/components/commons/SubscriptionSection";
-import JobsFiltersSection from "@/components/commons/JobsFiltersSection";
 import JobsList from "@/components/jobs/JobsList";
 import { getCategories, getJobs } from "@/lib/job-actions";
 import { handlePaginationParams, parseNumbersList } from "@/lib/utils";
+import {
+  TrendingTagsPanel,
+  TopTagsPanelSkeleton,
+} from "@/components/commons/TopTags";
 import CategoriesNavigator from "@/components/commons/CategoriesNavigator";
-import { TopTagsBar } from "@/components/commons/TopTags";
+import { JobsFilterCard } from "@/components/jobs/JobsFilterCard";
+import { Suspense } from "react";
+import NewsPanel from "@/components/news/NewsPanel";
+import PromoPanel from "@/components/news/PromoPanel";
+import TrainingPanel from "@/components/news/TrainingPanel";
+import {
+  LeftPanelSkeleton,
+  RightPanelSkeleton,
+} from "@/components/news/NewsPanelsSkeleton";
 
 // Type definition for search params
 interface PagesParams {
@@ -87,30 +95,63 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <HeroSection title="FIND THE BEST ChatGPT JOBS IN DATA ANNOTATION" />
-      <CategoriesNavigator />
-      <SocialLinks />
-      <SubscriptionSection />
-      <section className="px-2 sm:px-5 md:px-20 py-6 space-y-6">
-        <TopTagsBar />
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <aside className="md:col-span-4 lg:col-span-3">
-            <div className="sticky top-4 space-y-4">
-              <JobsFiltersSection categories={categories} />
-            </div>
+
+      {/* Mobile: Stack vertically, Desktop: 3-column layout */}
+      <section className="px-2 sm:px-5 py-4">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* Left sidebar - Hidden on mobile, visible on large screens */}
+          <aside className="hidden lg:block w-full lg:w-1/5 space-y-4">
+            <Suspense fallback={<TopTagsPanelSkeleton />}>
+              <TrendingTagsPanel />
+            </Suspense>
+            <Suspense fallback={<LeftPanelSkeleton />}>
+              <NewsPanel />
+            </Suspense>
           </aside>
-          <div className="md:col-span-8 lg:col-span-9">
-            {jobs ? (
-              <JobsList jobs={jobs} page={page} pageSize={pageSize} />
-            ) : (
-              <div className="flex flex-col items-center justify-center py-10">
-                <h2 className="text-2xl font-semibold mb-2">No jobs found</h2>
-                <p className="text-muted-foreground mb-4">
-                  We couldn&apos;t find any jobs for your query. Please try
-                  again with different filters or keywords.
-                </p>
-              </div>
-            )}
+
+          {/* Main content area */}
+          <div className="w-full lg:w-3/5 space-y-4">
+            <JobsFilterCard jobsCount={jobs?.count ?? 0} />
+            <CategoriesNavigator />
+            <div className="space-y-2">
+              {jobs ? (
+                <JobsList jobs={jobs} page={page} pageSize={pageSize} />
+              ) : (
+                <div className="flex flex-col items-center justify-center py-10">
+                  <h2 className="text-2xl font-semibold mb-2">No jobs found</h2>
+                  <p className="text-muted-foreground mb-4">
+                    We couldn&apos;t find any jobs for your query. Please try
+                    again with different filters or keywords.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right sidebar - Hidden on mobile, visible on large screens */}
+          <aside className="hidden lg:block w-full lg:w-1/5 space-y-4">
+            <Suspense fallback={<RightPanelSkeleton />}>
+              <PromoPanel />
+              <TrainingPanel />
+            </Suspense>
+          </aside>
+        </div>
+
+        {/* Mobile-only sections - Show below main content on small screens */}
+        <div className="lg:hidden space-y-4 mt-6">
+          <Suspense fallback={<TopTagsPanelSkeleton />}>
+            <TrendingTagsPanel />
+          </Suspense>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Suspense fallback={<LeftPanelSkeleton />}>
+              <NewsPanel />
+            </Suspense>
+            <div className="space-y-4">
+              <Suspense fallback={<RightPanelSkeleton />}>
+                <PromoPanel />
+                <TrainingPanel />
+              </Suspense>
+            </div>
           </div>
         </div>
       </section>

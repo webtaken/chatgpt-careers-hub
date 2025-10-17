@@ -8,7 +8,6 @@ import { getCategories, getJobs } from "@/lib/job-actions";
 import { handlePaginationParams, parseNumbersList } from "@/lib/utils";
 import type { Metadata } from "next";
 import {
-  TopTagsBar,
   TrendingTagsPanel,
   TopTagsPanelSkeleton,
 } from "@/components/commons/TopTags";
