@@ -1,33 +1,17 @@
 "use client";
 
-import { HireFormSetValueSchema } from "./HireForm";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
-import { JobsFilterFormSetValueSchema } from "../jobs/JobsFilterForm";
 import { apiTagsListList } from "@/client";
+import { JobsFilterFormSetValueSchema } from "../jobs/JobsFilterForm";
 
-export function TagsSelector({
-  setValue,
-  setValueFilter,
+export function TagsSelectorFilter({
   defaultValue,
-  defaultOptions,
+  setValueFilter,
 }: {
-  setValue?: HireFormSetValueSchema;
-  setValueFilter?: JobsFilterFormSetValueSchema;
   defaultValue?: Option[];
-  defaultOptions?: Option[];
+  setValueFilter?: JobsFilterFormSetValueSchema;
 }) {
   const onChange = (options: Option[]) => {
-    setValue &&
-      setValue(
-        "tags",
-        options.map((option) => {
-          return {
-            id: option.value,
-            text: option.label,
-          };
-        })
-      );
-
     setValueFilter &&
       setValueFilter(
         "tags",
@@ -56,13 +40,12 @@ export function TagsSelector({
         const res = await mockSearch(value);
         return res;
       }}
-      defaultOptions={defaultOptions}
       triggerSearchOnFocus
-      creatable={setValueFilter ? undefined : true}
       groupBy="group"
-      value={defaultValue}
+      hideSelectedBadges={true}
       onChange={onChange}
-      placeholder="Type to search tag..."
+      value={defaultValue}
+      placeholder="Search tag..."
       loadingIndicator={
         <p className="py-2 text-center text-muted-foreground">searching...</p>
       }

@@ -1,3 +1,4 @@
+from commons.pagination import StandardResultsSetPagination
 from commons.permissions import NewsletterPostPermission
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
@@ -34,6 +35,7 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [NewsletterPostPermission]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         """
@@ -72,6 +74,11 @@ class PostViewSet(ModelViewSet):
         No authentication required.
         """
         published_posts = Post.objects.filter(is_published=True).order_by("-created_at")
+        page = self.paginate_queryset(published_posts)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
         serializer = self.get_serializer(published_posts, many=True)
         return Response(serializer.data)
 

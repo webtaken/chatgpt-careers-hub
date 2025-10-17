@@ -1,3 +1,4 @@
+from commons.pagination import StandardResultsSetPagination
 from commons.permissions import CustomJobAuthenticationPermission
 from django.db import transaction
 from django.db.models import Count
@@ -16,7 +17,6 @@ from jobs.models import Category, Job, Location, Tag
 from jobs.utils import get_current_week_jobs
 
 from .filters import JobFilter, LocationFilter, TagFilter
-from .pagination import StandardResultsSetPagination
 from .serializers import (
     CategorySerializer,
     CreateMultipleLocationsSerializer,

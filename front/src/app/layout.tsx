@@ -71,7 +71,7 @@ export default function RootLayout({
       <CSPostHogProvider>
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-slate-50 font-sans antialiased",
             fontSans.variable
           )}
         >

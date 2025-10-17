@@ -195,6 +195,13 @@ export type PaginatedLocationList = {
     results: Array<Location>;
 };
 
+export type PaginatedPostList = {
+    count: number;
+    next?: string | null;
+    previous?: string | null;
+    results: Array<Post>;
+};
+
 export type PaginatedTagList = {
     count: number;
     next?: string | null;
@@ -617,7 +624,18 @@ export type ApiLocationsCreateLocationsCreateData = {
 
 export type ApiLocationsCreateLocationsCreateResponse = Array<LocationID>;
 
-export type ApiNewsletterPostsListResponse = Array<Post>;
+export type ApiNewsletterPostsListData = {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number;
+};
+
+export type ApiNewsletterPostsListResponse = PaginatedPostList;
 
 export type ApiNewsletterPostsCreateData = {
     requestBody: Post;
@@ -1090,8 +1108,9 @@ export type $OpenApiTs = {
     };
     '/api/newsletter/posts/': {
         get: {
+            req: ApiNewsletterPostsListData;
             res: {
-                200: Array<Post>;
+                200: PaginatedPostList;
             };
         };
         post: {

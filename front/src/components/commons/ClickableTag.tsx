@@ -26,7 +26,7 @@ export function ClickableTag({ tag }: { tag: Tag }) {
   return (
     <Badge
       key={tag.id}
-      className="hover:cursor-pointer"
+      className="hover:cursor-pointer bg-gray-200 text-gray-800 text-xs font-semibold"
       onClick={() => onSelectTag()}
     >
       {tag.text}
