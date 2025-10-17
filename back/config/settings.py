@@ -21,7 +21,7 @@ from environ import Env
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = Env(
-    ENV_PATH=(str, str(".env")),
+    ENV_PATH=(str, str(".env.prod")),
     ENV_MODE=(str, "development"),
     DEBUG=(bool, False),
     SECRET_KEY=(str, "SECRET_KEY"),

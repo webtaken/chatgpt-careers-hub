@@ -62,36 +62,36 @@ export function JobsFilterCard({ jobsCount }: { jobsCount?: number }) {
 
   // Apply filters when debounced values change
   useEffect(() => {
-    if (loading || !hasUserInteracted) return;
+    if (!hasUserInteracted) return;
 
-    startLoading(async () => {
-      const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams);
 
-      if (debouncedTitle !== "") {
-        params.set("title", debouncedTitle);
-      } else {
-        params.delete("title");
-      }
+    if (debouncedTitle !== "") {
+      params.set("title", debouncedTitle);
+    } else {
+      params.delete("title");
+    }
 
-      if (debouncedTags.length > 0) {
-        params.set("tags", debouncedTags.map((tag) => tag.id).join(","));
-      } else {
-        params.delete("tags");
-      }
+    if (debouncedTags.length > 0) {
+      params.set("tags", debouncedTags.map((tag) => tag.id).join(","));
+    } else {
+      params.delete("tags");
+    }
 
-      if (debouncedLocations.length > 0) {
-        params.set(
-          "locations",
-          debouncedLocations.map((location) => location.id).join(",")
-        );
-      } else {
-        params.delete("locations");
-      }
+    if (debouncedLocations.length > 0) {
+      params.set(
+        "locations",
+        debouncedLocations.map((location) => location.id).join(",")
+      );
+    } else {
+      params.delete("locations");
+    }
 
-      params.delete("page");
-      params.delete("pageSize");
-      replace(`${pathname}?${params.toString()}`);
-    });
+    params.delete("page");
+    params.delete("pageSize");
+
+    // Use replace with scroll: false to prevent scrolling issues
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [
     debouncedTitle,
     debouncedTags,
@@ -99,7 +99,6 @@ export function JobsFilterCard({ jobsCount }: { jobsCount?: number }) {
     pathname,
     replace,
     searchParams,
-    loading,
     hasUserInteracted,
   ]);
 

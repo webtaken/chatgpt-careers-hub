@@ -53,6 +53,7 @@ export default async function sitemap() {
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${baseURL}/`, lastModified: new Date() },
+    { url: `${baseURL}/news`, lastModified: new Date() },
   ];
 
   return [...staticPages, ...categoriesSitemap, ...(jobUrls || [])];
