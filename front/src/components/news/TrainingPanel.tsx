@@ -24,7 +24,7 @@ export default async function TrainingPanel() {
         {posts.slice(0, 6).map((post) => (
           <Link
             key={post.id}
-            href={post.external_url || `/news/${post.slug}`}
+            href={`/news/${post.slug}`}
             className="block bg-card hover:bg-accent transition-colors"
           >
             <p className="text-xs font-medium">{post.title}</p>

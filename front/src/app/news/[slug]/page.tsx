@@ -220,7 +220,22 @@ export default async function NewsDetailPage({ params }: Params) {
           </div>
           <Card className="bg-white border shadow-sm">
             <CardHeader>
-              <h1 className="text-3xl font-bold">{post.title}</h1>
+              {post.external_url ? (
+                <a
+                  href={post.external_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <h1 className="text-3xl font-bold hover:text-primary">
+                    {post.title}
+                  </h1>
+                </a>
+              ) : (
+                <h1 className="text-3xl font-bold hover:text-primary">
+                  {post.title}
+                </h1>
+              )}
+
               {post.published_at ? (
                 <p className="text-sm text-muted-foreground">
                   {new Date(post.published_at).toLocaleDateString()}

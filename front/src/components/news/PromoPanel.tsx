@@ -24,7 +24,7 @@ export default async function PromoPanel() {
         {posts.slice(0, 4).map((post) => (
           <Link
             key={post.id}
-            href={post.external_url || `/news/${post.slug}`}
+            href={`/news/${post.slug}`}
             className="block rounded-md bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-colors"
           >
             <p className="text-xs font-medium">{post.title}</p>
