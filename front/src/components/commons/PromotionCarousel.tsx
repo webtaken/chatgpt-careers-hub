@@ -212,7 +212,7 @@ export function PromotionCarousel() {
 
   return (
     <div className="bg-white border border-gray-100 rounded-lg overflow-hidden mb-2 sm:mb-4 shadow-sm">
-      <div className="relative h-28 sm:h-36 bg-gradient-to-r from-gray-50 to-gray-100">
+      <div className="relative h-36 sm:h-40 bg-gradient-to-r from-gray-50 to-gray-100">
         <div
           className={`absolute inset-0 bg-gradient-to-r ${currentPromo.gradient} opacity-90`}
         />
@@ -225,25 +225,25 @@ export function PromotionCarousel() {
         />
 
         {/* Content */}
-        <div className="relative flex items-center h-full px-3 sm:px-6 z-10">
+        <div className="relative flex items-center h-full px-3 sm:px-6 py-2 sm:py-4 z-10">
           <div className="flex-1">
             {/* Header with discount badge and title */}
-            <div className="flex items-center gap-2 mb-2">
-              <span className="bg-white text-purple-700 text-xs font-bold px-2 sm:px-3 py-1 rounded-full shadow-sm">
+            <div className="flex items-center gap-2 mb-1 sm:mb-2">
+              <span className="bg-white text-purple-700 text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-sm">
                 {currentPromo.discount}
               </span>
-              <h3 className="text-white text-sm sm:text-base font-semibold line-clamp-1">
+              <h3 className="text-white text-xs sm:text-sm font-semibold line-clamp-1">
                 {currentPromo.title}
               </h3>
             </div>
 
-            {/* Subtitle */}
-            <p className="text-white/90 text-xs sm:text-sm mb-2 line-clamp-1">
+            {/* Subtitle - Hidden on mobile to save space */}
+            <p className="text-white/90 text-xs sm:text-sm mb-1 sm:mb-2 line-clamp-1 hidden sm:block">
               {currentPromo.description}
             </p>
 
             {/* Course details */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+            <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
               <div className="flex items-center gap-1">
                 <span className="text-white/80 text-xs">⭐</span>
                 <span className="text-white text-xs font-medium">
@@ -268,8 +268,8 @@ export function PromotionCarousel() {
               </div>
             </div>
 
-            {/* Features */}
-            <div className="flex flex-wrap gap-1 mb-2">
+            {/* Features - Hidden on mobile to save space */}
+            <div className="hidden sm:flex flex-wrap gap-1 mb-1 sm:mb-2">
               {currentPromo.features.map((feature, index) => (
                 <span
                   key={index}
@@ -281,14 +281,13 @@ export function PromotionCarousel() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <Link href={currentPromo.link} target="_blank">
                 <Button
                   size="sm"
-                  className="bg-white text-gray-900 hover:bg-gray-100 h-6 sm:h-7 px-3 sm:px-4 text-xs font-medium shadow-sm"
+                  className="bg-white text-gray-900 hover:bg-gray-100 h-6 sm:h-7 px-2 sm:px-4 text-xs font-medium shadow-sm"
                 >
-                  <span className="hidden sm:inline">Get Discount</span>
-                  <span className="sm:hidden">Get Discount</span>
+                  <span className="text-xs">Get Discount</span>
                   <ExternalLink className="w-3 h-3 ml-1" />
                 </Button>
               </Link>
