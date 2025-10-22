@@ -6,7 +6,11 @@ import { setBasePathToAPI } from "@/lib/utils";
 async function fetchPosts(): Promise<Post[]> {
   try {
     setBasePathToAPI();
-    const data = await apiNewsletterPostsList({ pageSize: 5, type: "promo" });
+    const data = await apiNewsletterPostsList({
+      pageSize: 5,
+      type: "promo",
+      pinned: false,
+    });
     return data?.results ?? [];
   } catch {
     return [];
