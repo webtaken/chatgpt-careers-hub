@@ -6,7 +6,10 @@ import { setBasePathToAPI } from "@/lib/utils";
 async function fetchPosts(): Promise<Post[]> {
   try {
     setBasePathToAPI();
-    const data = await apiNewsletterPostsList({ pageSize: 20 });
+    const data = await apiNewsletterPostsList({
+      pageSize: 6,
+      type: "training",
+    });
     return data?.results ?? [];
   } catch {
     return [];
@@ -14,14 +17,14 @@ async function fetchPosts(): Promise<Post[]> {
 }
 
 export default async function TrainingPanel() {
-  const posts = (await fetchPosts()).filter((p) => p.type === "training");
+  const posts = await fetchPosts();
   if (!posts.length) return null;
 
   return (
     <section className="space-y-3 bg-white rounded-md border p-4">
       <h3 className="text-sm font-semibold">Training</h3>
       <div className="space-y-3">
-        {posts.slice(0, 6).map((post) => (
+        {posts.map((post) => (
           <Link
             key={post.id}
             href={`/news/${post.slug}`}

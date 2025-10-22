@@ -272,6 +272,8 @@ export type PatchedPost = {
     external_url?: string | null;
     image_url?: string | null;
     is_published?: boolean;
+    pinned?: boolean;
+    metadata?: unknown;
     published_at?: string | null;
     readonly created_at?: string;
     readonly updated_at?: string;
@@ -309,6 +311,8 @@ export type Post = {
     external_url?: string | null;
     image_url?: string | null;
     is_published?: boolean;
+    pinned?: boolean;
+    metadata?: unknown;
     published_at?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
@@ -625,6 +629,7 @@ export type ApiLocationsCreateLocationsCreateData = {
 export type ApiLocationsCreateLocationsCreateResponse = Array<LocationID>;
 
 export type ApiNewsletterPostsListData = {
+    isPublished?: boolean;
     /**
      * A page number within the paginated result set.
      */
@@ -633,6 +638,18 @@ export type ApiNewsletterPostsListData = {
      * Number of results to return per page.
      */
     pageSize?: number;
+    pinned?: boolean;
+    /**
+     * A search term.
+     */
+    search?: string;
+    /**
+     * * `news` - News
+     * * `training` - Training
+     * * `promo` - Promo
+     * * `other` - Other
+     */
+    type?: 'news' | 'other' | 'promo' | 'training';
 };
 
 export type ApiNewsletterPostsListResponse = PaginatedPostList;

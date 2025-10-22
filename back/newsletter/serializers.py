@@ -23,6 +23,8 @@ class PostSerializer(serializers.ModelSerializer):
             "external_url",
             "image_url",
             "is_published",
+            "pinned",
+            "metadata",
             "published_at",
             "created_at",
             "updated_at",

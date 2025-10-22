@@ -1,4 +1,3 @@
-import HeroSection from "@/components/commons/HeroSection";
 import SocialLinks from "@/components/commons/SocialLinks";
 import SubscriptionSection from "@/components/commons/SubscriptionSection";
 import JobsFiltersSection from "@/components/commons/JobsFiltersSection";
@@ -20,6 +19,7 @@ import {
   LeftPanelSkeleton,
   RightPanelSkeleton,
 } from "@/components/news/NewsPanelsSkeleton";
+import { PromotionCarousel } from "@/components/commons/PromotionCarousel";
 
 // Type definition for search params
 interface PagesParams {
@@ -61,7 +61,6 @@ export default async function Page({
   searchParams: PagesParams;
 }) {
   const { page, pageSize } = handlePaginationParams(searchParams);
-  const categories = await getCategories();
   const jobs = await getJobs({
     page,
     pageSize,
@@ -104,6 +103,7 @@ export default async function Page({
 
           {/* Main content area */}
           <div className="w-full lg:w-3/5 space-y-4">
+            <PromotionCarousel />
             <JobsFilterCard jobsCount={jobs?.count ?? 0} />
             <CategoriesNavigator />
             <div className="space-y-2">

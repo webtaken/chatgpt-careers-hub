@@ -51,6 +51,8 @@ class Post(TimeStampedModel):
         max_length=2048, null=True, blank=True, verbose_name="Image URL"
     )
     is_published = models.BooleanField(default=False, verbose_name="Published")
+    pinned = models.BooleanField(default=False, verbose_name="Pinned")
+    metadata = models.JSONField(default=dict, verbose_name="Metadata")
     published_at = models.DateTimeField(
         null=True, blank=True, verbose_name="Published At"
     )

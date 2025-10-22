@@ -1,7 +1,9 @@
 from commons.pagination import StandardResultsSetPagination
 from commons.permissions import NewsletterPostPermission
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -36,6 +38,9 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [NewsletterPostPermission]
     pagination_class = StandardResultsSetPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ["type", "is_published", "pinned"]
+    search_fields = ["title", "body"]
 
     def get_queryset(self):
         """
@@ -67,13 +72,23 @@ class PostViewSet(ModelViewSet):
         url_path="published",
         url_name="published_posts",
         permission_classes=[AllowAny],
+        filter_backends=[DjangoFilterBackend, SearchFilter],
+        filterset_fields=["type", "pinned"],
+        search_fields=["title", "body"],
     )
     def published_posts(self, request):
         """
         Public endpoint to retrieve only published posts.
         No authentication required.
+        Supports filtering by post type and pinned status via query parameters.
         """
-        published_posts = Post.objects.filter(is_published=True).order_by("-created_at")
+        published_posts = Post.objects.filter(is_published=True)
+
+        # Apply Django filters
+        for backend in [DjangoFilterBackend(), SearchFilter()]:
+            published_posts = backend.filter_queryset(request, published_posts, self)
+
+        published_posts = published_posts.order_by("-created_at")
         page = self.paginate_queryset(published_posts)
         if page is not None:
             serializer = self.get_serializer(page, many=True)

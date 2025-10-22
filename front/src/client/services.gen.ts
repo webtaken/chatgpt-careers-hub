@@ -561,8 +561,15 @@ export const apiLocationsCreateLocationsCreate = (data: ApiLocationsCreateLocati
  * - GET /newsletter/posts/published/ - List only published posts (public)
  * - GET /newsletter/posts/by-slug/{slug}/ - Retrieve post by slug (public)
  * @param data The data for the request.
+ * @param data.isPublished
  * @param data.page A page number within the paginated result set.
  * @param data.pageSize Number of results to return per page.
+ * @param data.pinned
+ * @param data.search A search term.
+ * @param data.type * `news` - News
+ * * `training` - Training
+ * * `promo` - Promo
+ * * `other` - Other
  * @returns PaginatedPostList
  * @throws ApiError
  */
@@ -570,8 +577,12 @@ export const apiNewsletterPostsList = (data: ApiNewsletterPostsListData = {}): C
     method: 'GET',
     url: '/api/newsletter/posts/',
     query: {
+        is_published: data.isPublished,
         page: data.page,
-        page_size: data.pageSize
+        page_size: data.pageSize,
+        pinned: data.pinned,
+        search: data.search,
+        type: data.type
     }
 }); };
 
@@ -724,6 +735,7 @@ export const apiNewsletterPostsBySlugRetrieve = (data: ApiNewsletterPostsBySlugR
 /**
  * Public endpoint to retrieve only published posts.
  * No authentication required.
+ * Supports filtering by post type and pinned status via query parameters.
  * @returns Post
  * @throws ApiError
  */

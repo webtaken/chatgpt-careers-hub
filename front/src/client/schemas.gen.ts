@@ -945,6 +945,10 @@ export const $PatchedPost = {
             type: 'boolean',
             title: 'Published'
         },
+        pinned: {
+            type: 'boolean'
+        },
+        metadata: {},
         published_at: {
             type: 'string',
             format: 'date-time',
@@ -1096,6 +1100,10 @@ export const $Post = {
             type: 'boolean',
             title: 'Published'
         },
+        pinned: {
+            type: 'boolean'
+        },
+        metadata: {},
         published_at: {
             type: 'string',
             format: 'date-time',
