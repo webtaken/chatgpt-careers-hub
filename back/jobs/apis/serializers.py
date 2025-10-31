@@ -15,6 +15,10 @@ class TagSerializer(ModelSerializer):
         fields = "__all__"
 
 
+class TagWithFrequencySerializer(TagSerializer):
+    frequency = IntegerField(read_only=True)
+
+
 class CreateMultipleTagsSerializer(Serializer):
     tags = ListField(child=CharField(max_length=150), allow_empty=True)
 

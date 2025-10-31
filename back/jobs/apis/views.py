@@ -28,6 +28,7 @@ from .serializers import (
     LocationSerializer,
     TagIDSerializer,
     TagSerializer,
+    TagWithFrequencySerializer,
 )
 
 
@@ -132,7 +133,7 @@ class TagListViewSet(ListModelMixin, GenericViewSet):
 
     @extend_schema(
         parameters=None,
-        responses={200: TagSerializer(many=True)},
+        responses={200: TagWithFrequencySerializer(many=True)},
         description="Retrieve the top tags of all the jobs of the week",
     )
     @action(detail=False, methods=["get"], url_path="top-tags")
@@ -145,7 +146,7 @@ class TagListViewSet(ListModelMixin, GenericViewSet):
             .order_by("-frequency")  # Sort by frequency in descending order
             .distinct()[:20]  # Limit to top 20 tags
         )
-        serializer = self.get_serializer(top_tags, many=True)
+        serializer = TagWithFrequencySerializer(top_tags, many=True)
         return Response(serializer.data)
 
 
