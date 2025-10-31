@@ -721,6 +721,35 @@ export const $PaginatedTagList = {
     }
 } as const;
 
+export const $PaginatedTagWithFrequencyList = {
+    type: 'object',
+    required: ['count', 'results'],
+    properties: {
+        count: {
+            type: 'integer',
+            example: 123
+        },
+        next: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=4'
+        },
+        previous: {
+            type: 'string',
+            nullable: true,
+            format: 'uri',
+            example: 'http://api.example.org/accounts/?page=2'
+        },
+        results: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/TagWithFrequency'
+            }
+        }
+    }
+} as const;
+
 export const $PatchedCategory = {
     type: 'object',
     properties: {
@@ -1208,6 +1237,26 @@ export const $TagID = {
         }
     },
     required: ['id']
+} as const;
+
+export const $TagWithFrequency = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'integer',
+            readOnly: true
+        },
+        frequency: {
+            type: 'integer',
+            readOnly: true
+        },
+        text: {
+            type: 'string',
+            title: 'Tag',
+            maxLength: 150
+        }
+    },
+    required: ['frequency', 'id', 'text']
 } as const;
 
 export const $TokenRefresh = {

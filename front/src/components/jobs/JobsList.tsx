@@ -46,7 +46,7 @@ export default function JobsList({
       {jobs.count > 0 && (
         <PaginationWithLinks
           page={page || 1}
-          pageSize={pageSize || 10}
+          pageSize={pageSize || 20}
           totalCount={jobs.count}
         />
       )}

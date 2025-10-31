@@ -209,6 +209,13 @@ export type PaginatedTagList = {
     results: Array<Tag>;
 };
 
+export type PaginatedTagWithFrequencyList = {
+    count: number;
+    next?: string | null;
+    previous?: string | null;
+    results: Array<TagWithFrequency>;
+};
+
 export type PatchedCategory = {
     readonly id?: number;
     text?: string;
@@ -346,6 +353,12 @@ export type Tag = {
 
 export type TagID = {
     id: number;
+};
+
+export type TagWithFrequency = {
+    readonly id: number;
+    readonly frequency: number;
+    text: string;
 };
 
 export type TokenRefresh = {
@@ -824,7 +837,7 @@ export type ApiTagsListTopTagsListData = {
     text?: string;
 };
 
-export type ApiTagsListTopTagsListResponse = PaginatedTagList;
+export type ApiTagsListTopTagsListResponse = PaginatedTagWithFrequencyList;
 
 export type ApiTagsRetrieveData = {
     /**
@@ -1301,7 +1314,7 @@ export type $OpenApiTs = {
         get: {
             req: ApiTagsListTopTagsListData;
             res: {
-                200: PaginatedTagList;
+                200: PaginatedTagWithFrequencyList;
             };
         };
     };

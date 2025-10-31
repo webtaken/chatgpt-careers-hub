@@ -952,7 +952,7 @@ export const apiTagsListBulkRetrieveCreate = (data: ApiTagsListBulkRetrieveCreat
  * @param data.page A page number within the paginated result set.
  * @param data.pageSize Number of results to return per page.
  * @param data.text
- * @returns PaginatedTagList
+ * @returns PaginatedTagWithFrequencyList
  * @throws ApiError
  */
 export const apiTagsListTopTagsList = (data: ApiTagsListTopTagsListData = {}): CancelablePromise<ApiTagsListTopTagsListResponse> => { return __request(OpenAPI, {
