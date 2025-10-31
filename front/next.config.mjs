@@ -14,6 +14,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "public-files.gumroad.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -29,6 +29,18 @@ export default async function Navbar() {
           >
             News
           </Link>
+          <Link
+            href="/trainings"
+            className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+          >
+            Trainings
+          </Link>
+          <Link
+            href="/promotions"
+            className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+          >
+            Promotions
+          </Link>
           <Button asChild>
             <Link href={session ? "/hiring" : "/signin"}>Start Hiring</Link>
           </Button>

@@ -3,6 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { setBasePathToAPI } from "@/lib/utils";
 
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
 function getExcerptFromHtml(html: string | undefined | null, maxLength = 180) {
   if (!html) return "";
   const text = html
