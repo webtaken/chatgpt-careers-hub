@@ -2,7 +2,7 @@ import logging
 import re
 from collections import defaultdict, deque
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Optional, Set, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple, Union
 
 from django.db import transaction
 from jobs.models import Job, Tag
@@ -48,7 +48,7 @@ def score_similarity(a: str, b: str) -> float:
 
 
 def _build_similarity_graph(tags: List[Tag], threshold: int) -> Dict[int, Set[int]]:
-    normalized: List[Tuple[int, str]] = [(t.id, normalize_token(t.name)) for t in tags]
+    normalized: List[Tuple[int, str]] = [(t.id, normalize_token(t.text)) for t in tags]
     norm_bucket: Dict[str, List[int]] = defaultdict(list)
     for tag_id, norm in normalized:
         if norm:
@@ -118,15 +118,9 @@ def choose_canonical(cluster: List[Tag]) -> Tag:
         )
     cluster_sorted = sorted(
         cluster,
-        key=lambda t: (-(tag_to_usage.get(t.id, 0)), len(t.name), t.id),
+        key=lambda t: (-(tag_to_usage.get(t.id, 0)), len(t.text), t.id),
     )
     preferred = cluster_sorted[0]
-
-    preferred_case = _prefer_casing([t.name for t in cluster])
-    if preferred_case and preferred_case != preferred.name:
-        preferred.name = preferred_case
-        preferred.save(update_fields=["name"])
-
     return preferred
 
 
@@ -173,14 +167,14 @@ def merge_cluster(
             jobs_relinked_total += len(job_ids)
 
         merged_ids.append(dup.id)
-        merged_names.append(dup.name)
+        merged_names.append(dup.text)
 
     if not dry_run:
         Tag.objects.filter(id__in=merged_ids).delete()
 
     return MergeReport(
         canonical_tag_id=canonical.id,
-        canonical_tag_name=canonical.name,
+        canonical_tag_name=canonical.text,
         merged_tag_ids=merged_ids,
         merged_tag_names=merged_names,
         jobs_relinked_count=jobs_relinked_total,
@@ -233,3 +227,38 @@ def normalize_all_tags(
     )
 
     return reports
+
+
+# Lightweight helper: find similar tags to a given tag or free text
+def find_similar_tags(
+    query: Union[str, Tag], threshold: int = 80, top_k: int = 20
+) -> List[Tuple[Tag, int]]:
+    if isinstance(query, Tag):
+        query_text = query.text
+        exclude_id = query.id
+    else:
+        query_text = str(query)
+        exclude_id = None
+
+    qnorm = normalize_token(query_text)
+    if not qnorm:
+        return []
+
+    qtokens = set(qnorm.split())
+    results: List[Tuple[Tag, int]] = []
+
+    for tag in Tag.objects.all():
+        if exclude_id is not None and tag.id == exclude_id:
+            continue
+        tnorm = normalize_token(tag.text)
+        if not tnorm:
+            continue
+        # Fast prefilter: require some token overlap
+        if qtokens.isdisjoint(set(tnorm.split())):
+            continue
+        score = int(score_similarity(qnorm, tnorm))
+        if score >= threshold:
+            results.append((tag, score))
+
+    results.sort(key=lambda x: (-x[1], len(x[0].text), x[0].id))
+    return results[:top_k]

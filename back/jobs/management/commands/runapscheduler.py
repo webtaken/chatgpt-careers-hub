@@ -73,8 +73,8 @@ def normalize_job_tags():
     logger.info(
         "Running tag normalization with threshold=%s dry_run=%s", threshold, dry_run
     )
-    reports = normalize_all_tags(threshold=threshold, dry_run=dry_run)
-    logger.info("Completed tag normalization. Clusters affected: %s", len(reports))
+    # reports = normalize_all_tags(threshold=threshold, dry_run=dry_run)
+    # logger.info("Completed tag normalization. Clusters affected: %s", len(reports))
 
 
 class Command(BaseCommand):
