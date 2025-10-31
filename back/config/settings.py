@@ -285,3 +285,7 @@ APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 # that supports multiple background worker processes instead (e.g. Dramatiq, Celery, Django-RQ,
 # etc. See: https://djangopackages.org/grids/g/workers-queues-tasks/ for popular options).
 APSCHEDULER_RUN_NOW_TIMEOUT = 60 * 5  # Seconds
+
+# Tag normalization settings
+TAG_NORMALIZATION_THRESHOLD = 85
+TAG_NORMALIZATION_DRY_RUN = False

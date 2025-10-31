@@ -10,9 +10,11 @@ from django.utils import timezone
 from django_apscheduler import util
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
-from jobs.models import Job
-from jobs.utils import get_current_week_jobs
 from users.models import Subscription
+
+from jobs.models import Job
+from jobs.services.tag_normalization import normalize_all_tags
+from jobs.utils import get_current_week_jobs
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +67,16 @@ def delete_old_job_executions(max_age=604_800):
     DjangoJobExecution.objects.delete_old_job_executions(max_age)
 
 
+def normalize_job_tags():
+    threshold = getattr(settings, "TAG_NORMALIZATION_THRESHOLD", 85)
+    dry_run = getattr(settings, "TAG_NORMALIZATION_DRY_RUN", True)
+    logger.info(
+        "Running tag normalization with threshold=%s dry_run=%s", threshold, dry_run
+    )
+    reports = normalize_all_tags(threshold=threshold, dry_run=dry_run)
+    logger.info("Completed tag normalization. Clusters affected: %s", len(reports))
+
+
 class Command(BaseCommand):
     help = "Runs APScheduler."
 
@@ -80,6 +92,15 @@ class Command(BaseCommand):
             replace_existing=True,
         )
         print("Added job 'remove_old_jobs'.")
+
+        scheduler.add_job(
+            normalize_job_tags,
+            trigger=CronTrigger(minute="30", hour="01", day_of_week="sun"),
+            id="normalize_job_tags",
+            max_instances=1,
+            replace_existing=True,
+        )
+        print("Added job 'normalize_job_tags'.")
 
         scheduler.add_job(
             send_weekly_email,
